@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Cospace - Co-working Space HTML Template</title>
+    <title>9o旅行家</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="App and Saas Landing Template" />
     <meta name="keywords" content="Application, Clean, Saas, Dashboard, Bootstrap4" />
@@ -45,7 +45,7 @@
     <!-- Loader End -->
 
     <!-- Navbar STart -->
-    <header id="topnav" class="defaultscroll sticky bg-white">
+    <header id="topnav" class="defaultscroll sticky fixed-top bg-white">
         @include('layouts.header')
     </header>
     <!--end header-->
@@ -57,7 +57,7 @@
     @include('layouts.footer')
     <!-- Footer End -->
 
-    <div class="social-link d-grid text-center">
+    <div class="social-link d-grid text-center pb-2">
         <a href="">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_line icon.png') }}" width="35px" alt="">
@@ -77,7 +77,7 @@
     </div>
 
     <!-- Back to top -->
-    <a href="#" class="btn btn-icon btn-primary back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
+    <a href="#" class="btn btn-icon btn-primary2 back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
     <!-- Back to top -->
 
     <!-- javascript -->

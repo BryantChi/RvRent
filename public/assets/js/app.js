@@ -73,16 +73,16 @@
     });
 
     //Scroll menu
-    var prevScrollpos = window.pageYOffset;
-    $(window).scroll(function(){
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("topnav").style.top = "0";
-        } else {
-            document.getElementById("topnav").style.top = "-500px";
-        }
-        prevScrollpos = currentScrollPos;
-    });
+    // var prevScrollpos = window.pageYOffset;
+    // $(window).scroll(function(){
+    //     var currentScrollPos = window.pageYOffset;
+    //     if (prevScrollpos > currentScrollPos) {
+    //         document.getElementById("topnav").style.top = "0";
+    //     } else {
+    //         document.getElementById("topnav").style.top = "-500px";
+    //     }
+    //     prevScrollpos = currentScrollPos;
+    // });
 
     //Scroll down
     $('.scroll-down').on('click', function(event) {

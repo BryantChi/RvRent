@@ -2,7 +2,7 @@
     style="background: url('{{ asset('assets/img/hero/首頁模擬1-背景圖.jpg') }}') center center;height: 75vh;background-size:cover;"
     id="hero">
 
-    <div class="h-100 w-100 hero-slick d-none d-md-block mt-md-6 mt-5">
+    <div class="h-100 w-100 hero-slick d-none d-md-block mt-md-6 mt-74">
         <img src="{{ asset('assets/img/hero/首頁模擬1-背景圖.jpg') }}" class="img-fluid hero-img"
             alt="">
         <img src="{{ asset('assets/img/hero/首頁模擬2-背景圖.jpg') }}" class="img-fluid hero-img"
@@ -15,8 +15,8 @@
             alt="">
     </div>
 
-    <div class="h-100 w-100 hero-slick d-block d-md-none mt-md-6 mt-5" style="height: 100vmax">
-        <img src="{{ asset('assets/img/hero/手機模擬1-背景圖.jpg') }}" class="img-fluid hero-img"
+    <div class="h-100 w-100 hero-slick d-block d-md-none mt-md-6 mt-74" style="height: 100vmax">
+        <img src="{{ asset('assets/img/hero/手機模擬1-背景圖-3.jpg') }}" class="img-fluid hero-img"
             alt="">
         <img src="{{ asset('assets/img/hero/手機模擬2-背景圖.jpg') }}" class="img-fluid hero-img"
             alt="">

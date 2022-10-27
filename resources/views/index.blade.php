@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-md-4 mb-4" style="overflow: hidden;">
                     <div class="middle-menu-item item-2 position-relative">
-                        <div class="middle-menu-txt text-center">
+                        <div class="middle-menu-txt text-center" style="transform: translate(-50%, -33%) !important;">
                             <h3>推薦行程</h3>
                             <a class="btn btn-danger" style="background: #ff9c35 !important;border:1px solid#ff9c35 !important;" href="">Learn More</a>
                             <p class="text-light mt-3">特約營地 / 行程規劃</p>

@@ -563,6 +563,25 @@ a.text-footer:focus {
     color: #ffffff !important;
 }
 
+.btn-primary2 {
+    background-color: #ff9c35 !important;
+    border: 1px solid #ff9c35 !important;
+    color: #ffffff !important;
+    -webkit-box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5);
+    box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5);
+}
+
+.btn-primary2:hover,
+.btn-primary2:focus,
+.btn-primary2:active,
+.btn-primary2.active,
+.btn-primary2.focus {
+    background-color: #ff9e32 !important;
+    border-color: #ff9e32 !important;
+    color: #ffffff !important;
+}
+
+
 .btn-soft-primary {
     background-color: rgba(114, 106, 233, 0.15) !important;
     border: 1px solid rgba(114, 106, 233, 0.1) !important;
@@ -2165,8 +2184,8 @@ button:not(:disabled) {
 }
 
 .social-icon li a:hover {
-    background-color: #726ae9;
-    border-color: #726ae9 !important;
+    background-color: #ff9c35;
+    border-color: #ff9c35 !important;
     color: #ffffff !important;
 }
 
@@ -2220,6 +2239,10 @@ button:not(:disabled) {
     top: 30px;
 }
 
+.owl-next:hover, .owl-prev:hover {
+    background-color: transparent !important;
+}
+
 .social-link {
     position: fixed;
     right: 0;
@@ -2230,7 +2253,7 @@ button:not(:disabled) {
     /* border-top-left-radius: 3.5px;
     border-bottom-left-radius: 3.5px; */
     border-radius: 5px;
-    box-shadow: 2px 3px 7px #495057;
+    /* box-shadow: 2px 3px 7px #495057; */
     background: #00000099 !important;
     z-index: 2;
 }
@@ -3115,9 +3138,12 @@ button:not(:disabled) {
     width: 100%;
     height: 75vh;
     object-fit: cover;
-    object-position: top center;
+    object-position: center center;
 }
 
+.mt-74 {
+    margin-top: 74px;
+}
 /* .hero-box2 input.form-control {
     border: unset !important;
 } */
@@ -3132,19 +3158,19 @@ button:not(:disabled) {
 }
 
 .middle-menu-item.item-1 {
-    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/2.jpg');
+    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/NEWS.jpg');
     background-size: cover;
     background-position: center center;
 }
 
 .middle-menu-item.item-2 {
-    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/3.jpg');
+    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/推薦行程.jpg');
     background-size: cover;
     background-position: center center;
 }
 
 .middle-menu-item.item-3 {
-    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/4.jpg');
+    background-image: linear-gradient(0deg, rgb(30 30 30 / 65%) 0%, rgb(200 200 200 / 30%) 100%), url('../img/middle-menu/租車見證.jpg');
     background-size: cover;
     background-position: center center;
 }
