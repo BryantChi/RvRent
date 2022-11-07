@@ -14,4 +14,11 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+    $router->resource('/about_us', 'AboutUsInfoController');
+    $router->resource('/page_settings', 'PageSettingInfoController');
+    $router->resource('/news', 'NewsInfoController');
+    $router->resource('/customer', 'CustomerInfoController');
+    $router->resource('/firm', 'FirmInfoController');
+    $router->resource('/accessory', 'AccessoryInfoController');
+
 });
