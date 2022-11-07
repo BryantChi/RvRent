@@ -34,7 +34,7 @@ class PageSettingInfoController extends AdminController
 
             });
             $grid->disableDeleteButton();
-            // $grid->disableCreateButton();
+            $grid->disableCreateButton();
         });
     }
 
