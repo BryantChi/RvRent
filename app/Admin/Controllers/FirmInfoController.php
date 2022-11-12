@@ -77,7 +77,7 @@ class FirmInfoController extends AdminController
             }
 
             // $form->display('id');
-            $form->hidden('firm_id')->value('F-'.date('Ymd'.sprintf("%03d", mt_rand(1, 100))));
+            $form->hidden('firm_id')->value($firm_id);
             $form->text('firm_name');
             $form->text('firm_vat_number');
             $form->mobile('firm_phone')->options(['mask' => '999 999 9999']);
