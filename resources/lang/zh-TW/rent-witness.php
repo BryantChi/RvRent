@@ -1,13 +1,14 @@
 <?php
 return [
     'labels' => [
-        'NewsInfo' => '最新消息',
+        'RentWitness' => '租車見證',
     ],
     'fields' => [
         'title' => '標題',
-        'category' => '分類',
+        'witness_front_cover' => '封面',
         'content' => '內容',
-        'content_en' => '內容(EN)'
+        'content_en' => '內容(EN)',
+        'path' => '圖片',
     ],
     'options' => [
     ],

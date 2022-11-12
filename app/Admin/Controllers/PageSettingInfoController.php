@@ -25,6 +25,7 @@ class PageSettingInfoController extends AdminController
             $grid->column('page_url');
             $grid->column('page_title');
             $grid->column('page_banner_img')->image();
+            $grid->column('page_banner_img_mob')->image();
             $grid->column('page_meta_description');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -52,6 +53,7 @@ class PageSettingInfoController extends AdminController
             $show->field('page_url');
             $show->field('page_title');
             $show->field('page_banner_img')->image();
+            $show->field('page_banner_img_mob')->image();
             $show->field('page_meta_description');
             $show->field('created_at');
             $show->field('updated_at');
@@ -70,6 +72,7 @@ class PageSettingInfoController extends AdminController
             $form->display('page_url', __('page-setting-info.fields.page_url'));
             $form->text('page_title', __('page-setting-info.fields.page_title'));
             $form->multipleImage('page_banner_img', __('page-setting-info.fields.page_banner_img'))->move('images/banner/'.date('Ym'))->maxSize(3072)->rules('mimes:jpg,jpeg,png,gif|nullable')->sortable();//->uniqueName()
+            $form->multipleImage('page_banner_img', __('page-setting-info.fields.page_banner_img'))->move('images/banner_mob/'.date('Ym'))->maxSize(3072)->rules('mimes:jpg,jpeg,png,gif|nullable')->sortable();
             $form->textarea('page_meta_description', __('page-setting-info.fields.page_meta_description'))->rows(10);
 
             $form->display('created_at', __('admin.created_at'));

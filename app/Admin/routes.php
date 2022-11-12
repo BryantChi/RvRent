@@ -20,5 +20,7 @@ Route::group([
     $router->resource('/customer', 'CustomerInfoController');
     $router->resource('/firm', 'FirmInfoController');
     $router->resource('/accessory', 'AccessoryInfoController');
+    $router->resource('/recommended_itinerary', 'RecommendedItineraryInfoController');
+    $router->resource('/rent_witness', 'RentWitnessController');
 
 });

@@ -7,7 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
-
+use App\Models\FirmInfo as Firm;
 class FirmInfoController extends AdminController
 {
     /**
@@ -70,6 +70,12 @@ class FirmInfoController extends AdminController
     protected function form()
     {
         return Form::make(new FirmInfo(), function (Form $form) {
+            $firm_id = 'F' . date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            $infos = Firm::where('firm_id', '=', $firm_id)->get();
+            if (count($infos) > 0) {
+                $firm_id = 'F' . date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            }
+
             // $form->display('id');
             $form->hidden('firm_id')->value('F-'.date('Ymd'.sprintf("%03d", mt_rand(1, 100))));
             $form->text('firm_name');
