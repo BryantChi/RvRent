@@ -27,6 +27,9 @@ class AboutUsInfoController extends AdminController
             $grid->column('content')->display(function ($content) {
                 return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
             });
+            $grid->column('content_en')->display(function ($content) {
+                return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
+            });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -64,6 +67,7 @@ class AboutUsInfoController extends AdminController
             });
             $show->field('id');
             $show->field('content')->unescape();
+            $show->field('content_en')->unescape();
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -80,7 +84,10 @@ class AboutUsInfoController extends AdminController
             $form->display('id');
             $form->editor('content')->options(['menubar' => false, 'toolbar' => ['code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
-            table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']])->imageDirectory('editor/images');;
+            table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']])->imageDirectory('editor/images');
+            $form->editor('content_en')->options(['menubar' => false, 'toolbar' => ['code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
+            styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
+            table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']])->imageDirectory('editor/images');
 
             $form->display('created_at');
             $form->display('updated_at');

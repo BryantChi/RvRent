@@ -47,6 +47,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection page_url
      * @property Grid\Column|Collection page_title
      * @property Grid\Column|Collection page_banner_img
+     * @property Grid\Column|Collection page_banner_img_mob
      * @property Grid\Column|Collection page_meta_description
      * @property Grid\Column|Collection tokenable_type
      * @property Grid\Column|Collection tokenable_id
@@ -76,6 +77,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
      * @property Grid\Column|Collection email_verified_at
+     * @property Grid\Column|Collection witness_front_cover
+     * @property Grid\Column|Collection content
+     * @property Grid\Column|Collection path
      * @property Grid\Column|Collection firm_id
      * @property Grid\Column|Collection firm_name
      * @property Grid\Column|Collection firm_vat_number
@@ -84,10 +88,13 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection firm_email
      * @property Grid\Column|Collection firm_line_id
      * @property Grid\Column|Collection firm_verify
-     * @property Grid\Column|Collection content
+     * @property Grid\Column|Collection itinerary_name
+     * @property Grid\Column|Collection itinerary_content
+     * @property Grid\Column|Collection itinerary_content_en
+     * @property Grid\Column|Collection itinerary_star
+     * @property Grid\Column|Collection content_en
      * @property Grid\Column|Collection category
      * @property Grid\Column|Collection user_id
-     * @property Grid\Column|Collection path
      * @property Grid\Column|Collection method
      * @property Grid\Column|Collection ip
      * @property Grid\Column|Collection input
@@ -128,6 +135,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection page_url(string $label = null)
      * @method Grid\Column|Collection page_title(string $label = null)
      * @method Grid\Column|Collection page_banner_img(string $label = null)
+     * @method Grid\Column|Collection page_banner_img_mob(string $label = null)
      * @method Grid\Column|Collection page_meta_description(string $label = null)
      * @method Grid\Column|Collection tokenable_type(string $label = null)
      * @method Grid\Column|Collection tokenable_id(string $label = null)
@@ -157,6 +165,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
+     * @method Grid\Column|Collection witness_front_cover(string $label = null)
+     * @method Grid\Column|Collection content(string $label = null)
+     * @method Grid\Column|Collection path(string $label = null)
      * @method Grid\Column|Collection firm_id(string $label = null)
      * @method Grid\Column|Collection firm_name(string $label = null)
      * @method Grid\Column|Collection firm_vat_number(string $label = null)
@@ -165,10 +176,13 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection firm_email(string $label = null)
      * @method Grid\Column|Collection firm_line_id(string $label = null)
      * @method Grid\Column|Collection firm_verify(string $label = null)
-     * @method Grid\Column|Collection content(string $label = null)
+     * @method Grid\Column|Collection itinerary_name(string $label = null)
+     * @method Grid\Column|Collection itinerary_content(string $label = null)
+     * @method Grid\Column|Collection itinerary_content_en(string $label = null)
+     * @method Grid\Column|Collection itinerary_star(string $label = null)
+     * @method Grid\Column|Collection content_en(string $label = null)
      * @method Grid\Column|Collection category(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
-     * @method Grid\Column|Collection path(string $label = null)
      * @method Grid\Column|Collection method(string $label = null)
      * @method Grid\Column|Collection ip(string $label = null)
      * @method Grid\Column|Collection input(string $label = null)
@@ -214,6 +228,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection page_url
      * @property Show\Field|Collection page_title
      * @property Show\Field|Collection page_banner_img
+     * @property Show\Field|Collection page_banner_img_mob
      * @property Show\Field|Collection page_meta_description
      * @property Show\Field|Collection tokenable_type
      * @property Show\Field|Collection tokenable_id
@@ -243,6 +258,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
      * @property Show\Field|Collection email_verified_at
+     * @property Show\Field|Collection witness_front_cover
+     * @property Show\Field|Collection content
+     * @property Show\Field|Collection path
      * @property Show\Field|Collection firm_id
      * @property Show\Field|Collection firm_name
      * @property Show\Field|Collection firm_vat_number
@@ -251,10 +269,13 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection firm_email
      * @property Show\Field|Collection firm_line_id
      * @property Show\Field|Collection firm_verify
-     * @property Show\Field|Collection content
+     * @property Show\Field|Collection itinerary_name
+     * @property Show\Field|Collection itinerary_content
+     * @property Show\Field|Collection itinerary_content_en
+     * @property Show\Field|Collection itinerary_star
+     * @property Show\Field|Collection content_en
      * @property Show\Field|Collection category
      * @property Show\Field|Collection user_id
-     * @property Show\Field|Collection path
      * @property Show\Field|Collection method
      * @property Show\Field|Collection ip
      * @property Show\Field|Collection input
@@ -295,6 +316,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection page_url(string $label = null)
      * @method Show\Field|Collection page_title(string $label = null)
      * @method Show\Field|Collection page_banner_img(string $label = null)
+     * @method Show\Field|Collection page_banner_img_mob(string $label = null)
      * @method Show\Field|Collection page_meta_description(string $label = null)
      * @method Show\Field|Collection tokenable_type(string $label = null)
      * @method Show\Field|Collection tokenable_id(string $label = null)
@@ -324,6 +346,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
+     * @method Show\Field|Collection witness_front_cover(string $label = null)
+     * @method Show\Field|Collection content(string $label = null)
+     * @method Show\Field|Collection path(string $label = null)
      * @method Show\Field|Collection firm_id(string $label = null)
      * @method Show\Field|Collection firm_name(string $label = null)
      * @method Show\Field|Collection firm_vat_number(string $label = null)
@@ -332,10 +357,13 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection firm_email(string $label = null)
      * @method Show\Field|Collection firm_line_id(string $label = null)
      * @method Show\Field|Collection firm_verify(string $label = null)
-     * @method Show\Field|Collection content(string $label = null)
+     * @method Show\Field|Collection itinerary_name(string $label = null)
+     * @method Show\Field|Collection itinerary_content(string $label = null)
+     * @method Show\Field|Collection itinerary_content_en(string $label = null)
+     * @method Show\Field|Collection itinerary_star(string $label = null)
+     * @method Show\Field|Collection content_en(string $label = null)
      * @method Show\Field|Collection category(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
-     * @method Show\Field|Collection path(string $label = null)
      * @method Show\Field|Collection method(string $label = null)
      * @method Show\Field|Collection ip(string $label = null)
      * @method Show\Field|Collection input(string $label = null)

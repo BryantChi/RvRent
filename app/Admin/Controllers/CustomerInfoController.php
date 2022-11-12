@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Controllers\AdminController;
+use App\Models\CustomerInfo as Customer;
 
 class CustomerInfoController extends AdminController
 {
@@ -81,7 +82,14 @@ class CustomerInfoController extends AdminController
     {
         return Form::make(new CustomerInfo(), function (Form $form) {
             // $form->display('id')->hidden();
-            $form->hidden('customer_id')->value(date('Ymd'.sprintf("%03d", mt_rand(1, 100))));
+            // $customer_id = date('Ymd'.sprintf("%03d", mt_rand(1, 100)));
+            $customer_id = 'C' . date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            $infos = Customer::where('customer_id', '=', $customer_id)->get();
+            if (count($infos) > 0) {
+                $customer_id = 'C' . date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            }
+
+            $form->hidden('customer_id')->value($customer_id);
             $form->text('customer_name');
             $form->text('customer_nick_name');
             $form->mobile('customer_phone')->options(['mask' => '9999 999 999']);

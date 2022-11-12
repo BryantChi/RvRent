@@ -5,6 +5,7 @@ return [
     ],
     'fields' => [
         'content' => '內文',
+        'content_en' => '內文(EN)'
     ],
     'options' => [
     ],

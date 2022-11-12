@@ -1,11 +1,11 @@
 <?php
 return [
     'labels' => [
-        'FirmInfo' => '廠商管理',
+        'FirmInfo' => '客戶管理',
     ],
     'fields' => [
-        'firm_id' => '廠商編號',
-        'firm_name' => '廠商名稱',
+        'firm_id' => '客戶編號',
+        'firm_name' => '客戶名稱',
         'firm_vat_number' => '統一編號',
         'firm_phone' => '電話',
         'firm_fax' => '傳真',
