@@ -88,7 +88,7 @@ class RecommendedItineraryInfoController extends AdminController
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
             table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']])->imageDirectory('editor/images');
 
-            $form->number('itinerary_star');
+            $form->number('itinerary_star')->attribute('min', 0)->attribute('max', 5)->placeholder('請輸入星等數值，最高值5');
 
             $form->display('created_at');
             $form->display('updated_at');
