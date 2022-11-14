@@ -10,5 +10,9 @@ class RentWitness extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'rent_witness_infos';
-    
+
+    protected $casts = [
+        'path' => 'json',
+    ];
+
 }

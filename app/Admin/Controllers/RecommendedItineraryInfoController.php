@@ -88,7 +88,7 @@ class RecommendedItineraryInfoController extends AdminController
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
             table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']])->imageDirectory('editor/images');
 
-            $form->text('itinerary_star');
+            $form->number('itinerary_star');
 
             $form->display('created_at');
             $form->display('updated_at');
