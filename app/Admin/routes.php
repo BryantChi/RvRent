@@ -22,5 +22,7 @@ Route::group([
     $router->resource('/accessory', 'AccessoryInfoController');
     $router->resource('/recommended_itinerary', 'RecommendedItineraryInfoController');
     $router->resource('/rent_witness', 'RentWitnessController');
+    $router->resource('/rv_series', 'RvSeriesInfoController');
+    $router->resource('/rv_model', 'RvModelInfoController');
 
 });

@@ -73,12 +73,14 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection customer_country
      * @property Grid\Column|Collection customer_verify
      * @property Grid\Column|Collection customer_token
+     * @property Grid\Column|Collection rv_series_name
      * @property Grid\Column|Collection email
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
      * @property Grid\Column|Collection email_verified_at
      * @property Grid\Column|Collection witness_front_cover
      * @property Grid\Column|Collection content
+     * @property Grid\Column|Collection content_en
      * @property Grid\Column|Collection path
      * @property Grid\Column|Collection firm_id
      * @property Grid\Column|Collection firm_name
@@ -92,12 +94,16 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection itinerary_content
      * @property Grid\Column|Collection itinerary_content_en
      * @property Grid\Column|Collection itinerary_star
-     * @property Grid\Column|Collection content_en
      * @property Grid\Column|Collection category
      * @property Grid\Column|Collection user_id
      * @property Grid\Column|Collection method
      * @property Grid\Column|Collection ip
      * @property Grid\Column|Collection input
+     * @property Grid\Column|Collection rv_name
+     * @property Grid\Column|Collection rv_front_cover
+     * @property Grid\Column|Collection rv_series_id
+     * @property Grid\Column|Collection rv_rent_setting
+     * @property Grid\Column|Collection rv_discription
      *
      * @method Grid\Column|Collection name(string $label = null)
      * @method Grid\Column|Collection version(string $label = null)
@@ -161,12 +167,14 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection customer_country(string $label = null)
      * @method Grid\Column|Collection customer_verify(string $label = null)
      * @method Grid\Column|Collection customer_token(string $label = null)
+     * @method Grid\Column|Collection rv_series_name(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
      * @method Grid\Column|Collection witness_front_cover(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
+     * @method Grid\Column|Collection content_en(string $label = null)
      * @method Grid\Column|Collection path(string $label = null)
      * @method Grid\Column|Collection firm_id(string $label = null)
      * @method Grid\Column|Collection firm_name(string $label = null)
@@ -180,12 +188,16 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection itinerary_content(string $label = null)
      * @method Grid\Column|Collection itinerary_content_en(string $label = null)
      * @method Grid\Column|Collection itinerary_star(string $label = null)
-     * @method Grid\Column|Collection content_en(string $label = null)
      * @method Grid\Column|Collection category(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
      * @method Grid\Column|Collection method(string $label = null)
      * @method Grid\Column|Collection ip(string $label = null)
      * @method Grid\Column|Collection input(string $label = null)
+     * @method Grid\Column|Collection rv_name(string $label = null)
+     * @method Grid\Column|Collection rv_front_cover(string $label = null)
+     * @method Grid\Column|Collection rv_series_id(string $label = null)
+     * @method Grid\Column|Collection rv_rent_setting(string $label = null)
+     * @method Grid\Column|Collection rv_discription(string $label = null)
      */
     class Grid {}
 
@@ -254,12 +266,14 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection customer_country
      * @property Show\Field|Collection customer_verify
      * @property Show\Field|Collection customer_token
+     * @property Show\Field|Collection rv_series_name
      * @property Show\Field|Collection email
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
      * @property Show\Field|Collection email_verified_at
      * @property Show\Field|Collection witness_front_cover
      * @property Show\Field|Collection content
+     * @property Show\Field|Collection content_en
      * @property Show\Field|Collection path
      * @property Show\Field|Collection firm_id
      * @property Show\Field|Collection firm_name
@@ -273,12 +287,16 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection itinerary_content
      * @property Show\Field|Collection itinerary_content_en
      * @property Show\Field|Collection itinerary_star
-     * @property Show\Field|Collection content_en
      * @property Show\Field|Collection category
      * @property Show\Field|Collection user_id
      * @property Show\Field|Collection method
      * @property Show\Field|Collection ip
      * @property Show\Field|Collection input
+     * @property Show\Field|Collection rv_name
+     * @property Show\Field|Collection rv_front_cover
+     * @property Show\Field|Collection rv_series_id
+     * @property Show\Field|Collection rv_rent_setting
+     * @property Show\Field|Collection rv_discription
      *
      * @method Show\Field|Collection name(string $label = null)
      * @method Show\Field|Collection version(string $label = null)
@@ -342,12 +360,14 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection customer_country(string $label = null)
      * @method Show\Field|Collection customer_verify(string $label = null)
      * @method Show\Field|Collection customer_token(string $label = null)
+     * @method Show\Field|Collection rv_series_name(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
      * @method Show\Field|Collection witness_front_cover(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
+     * @method Show\Field|Collection content_en(string $label = null)
      * @method Show\Field|Collection path(string $label = null)
      * @method Show\Field|Collection firm_id(string $label = null)
      * @method Show\Field|Collection firm_name(string $label = null)
@@ -361,12 +381,16 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection itinerary_content(string $label = null)
      * @method Show\Field|Collection itinerary_content_en(string $label = null)
      * @method Show\Field|Collection itinerary_star(string $label = null)
-     * @method Show\Field|Collection content_en(string $label = null)
      * @method Show\Field|Collection category(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
      * @method Show\Field|Collection method(string $label = null)
      * @method Show\Field|Collection ip(string $label = null)
      * @method Show\Field|Collection input(string $label = null)
+     * @method Show\Field|Collection rv_name(string $label = null)
+     * @method Show\Field|Collection rv_front_cover(string $label = null)
+     * @method Show\Field|Collection rv_series_id(string $label = null)
+     * @method Show\Field|Collection rv_rent_setting(string $label = null)
+     * @method Show\Field|Collection rv_discription(string $label = null)
      */
     class Show {}
 
