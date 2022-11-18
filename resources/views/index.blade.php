@@ -62,7 +62,7 @@
                     <div class="middle-menu-item item-1 position-relative">
                         <div class="middle-menu-txt text-center">
                             <h3>NEWS</h3>
-                            <a class="btn btn-danger" href="">Learn More</a>
+                            <a class="btn btn-danger" href="{{ route('news') }}">Learn More</a>
                         </div>
 
                     </div>

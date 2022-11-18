@@ -5,13 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-12 text-center">
                 <div class="title-heading">
-                    <h3 class="text-white">Page Name</h3>
+                    <h3 class="text-white">{{ $title }}</h3>
                     <div class="breadcrumb-position">
                         <nav aria-label="breadcrumb" class="d-inline-block">
                             <ul class="breadcrumb bg-white rounded shadow-md mb-0">
                                 <li class="breadcrumb-item"><a href="{{ route('index') }}">9oTravel</a></li>
                                 <li class="breadcrumb-item"><a href="#">Page</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Page Name</li>
+                                <li class="breadcrumb-item active" aria-current="page" style="text-transform: capitalize;">{{ request()->route()->getName() }}</li>
                             </ul>
                         </nav>
                     </div>

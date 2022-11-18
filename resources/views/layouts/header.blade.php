@@ -51,9 +51,9 @@
                 </ul> --}}
             </li>
 
-            <li class="has-submenu">
-                <a href="javascript:void(0)">最新消息</a><span class="menu-arrow"></span>
-                <ul class="submenu">
+            <li class="{{ request()->is('news') ? 'active' : '' }}">
+                <a href="{{ route('news') }}">最新消息</a>
+                {{-- <ul class="submenu">
                     <li><a href="page-about.html">About us</a></li>
                     <li><a href="page-services.html">Services</a></li>
                     <li><a href="page-pricing.html">Pricing</a></li>
@@ -79,7 +79,7 @@
                     </li>
                     <li><a href="404.html">404</a></li>
                     <li><a href="page-blank.html">Blank Page</a></li>
-                </ul>
+                </ul> --}}
             </li>
 
             <li class="has-submenu">

@@ -27,21 +27,25 @@ Route::any('/clear-cache', function () {
 });
 
 Route::get('/car_rent', function () {
-    return view('car_rent');
+    return view('car_rent', ['title' => '即刻租車']);
 })->name('car_rent');
 
 Route::get('/car_rent_s2', function () {
-    return view('rv_rent_s2');
+    return view('rv_rent_s2', ['title' => '即刻租車']);
 })->name('car_rent_s2');
 
 Route::get('/car_rent_s3', function () {
-    return view('rv_rent_s3');
+    return view('rv_rent_s3', ['title' => '即刻租車']);
 })->name('car_rent_s3');
 
 Route::get('/car_rent_s4', function () {
-    return view('rv_rent_s4');
+    return view('rv_rent_s4', ['title' => '即刻租車']);
 })->name('car_rent_s4');
 
 Route::get('/car_rent_s5', function () {
-    return view('rv_rent_s5');
+    return view('rv_rent_s5', ['title' => '即刻租車']);
 })->name('car_rent_s5');
+
+Route::any('/news', 'App\Http\Controllers\NewsController@index')->name('news');
+Route::any('/news/{id}', 'App\Http\Controllers\NewsController@show');
+// Route::resource('/news', 'App\Http\Controllers\NewsController');
