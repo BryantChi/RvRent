@@ -2084,7 +2084,8 @@ button:not(:disabled) {
 
 .title-heading .breadcrumb-position {
     position: relative;
-    top: 110px;
+    /* top: 110px; */
+    top: 220px;
     z-index: 99;
 }
 
@@ -2305,7 +2306,7 @@ button:not(:disabled) {
 
 @media (max-width: 768px) {
     .title-heading .breadcrumb-position {
-        top: 70px;
+        /* top: 70px; */
     }
 }
 
@@ -2975,6 +2976,16 @@ button:not(:disabled) {
 
 .bg-half-260 {
     padding: 260px 0;
+    background-size: cover;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+    position: relative;
+    background-position: center center;
+}
+
+.bg-half-200 {
+    padding: 200px 0;
     background-size: cover;
     -ms-flex-item-align: center;
     -ms-grid-row-align: center;

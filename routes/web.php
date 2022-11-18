@@ -29,3 +29,19 @@ Route::any('/clear-cache', function () {
 Route::get('/car_rent', function () {
     return view('car_rent');
 })->name('car_rent');
+
+Route::get('/car_rent_s2', function () {
+    return view('rv_rent_s2');
+})->name('car_rent_s2');
+
+Route::get('/car_rent_s3', function () {
+    return view('rv_rent_s3');
+})->name('car_rent_s3');
+
+Route::get('/car_rent_s4', function () {
+    return view('rv_rent_s4');
+})->name('car_rent_s4');
+
+Route::get('/car_rent_s5', function () {
+    return view('rv_rent_s5');
+})->name('car_rent_s5');
