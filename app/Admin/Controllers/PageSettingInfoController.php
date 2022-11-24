@@ -72,7 +72,7 @@ class PageSettingInfoController extends AdminController
             $form->display('page_url', __('page-setting-info.fields.page_url'));
             $form->text('page_title', __('page-setting-info.fields.page_title'));
             $form->multipleImage('page_banner_img', __('page-setting-info.fields.page_banner_img'))->move('images/banner/'.date('Ym'))->maxSize(3072)->rules('mimes:jpg,jpeg,png,gif|nullable')->sortable();//->uniqueName()
-            $form->multipleImage('page_banner_img', __('page-setting-info.fields.page_banner_img'))->move('images/banner_mob/'.date('Ym'))->maxSize(3072)->rules('mimes:jpg,jpeg,png,gif|nullable')->sortable();
+            $form->multipleImage('page_banner_img_mob', __('page-setting-info.fields.page_banner_img_mob'))->move('images/banner_mob/'.date('Ym'))->maxSize(3072)->rules('mimes:jpg,jpeg,png,gif|nullable')->sortable();
             $form->textarea('page_meta_description', __('page-setting-info.fields.page_meta_description'))->rows(10);
 
             $form->display('created_at', __('admin.created_at'));
