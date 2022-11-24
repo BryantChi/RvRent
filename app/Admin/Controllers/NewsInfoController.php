@@ -25,12 +25,12 @@ class NewsInfoController extends AdminController
             $grid->column('id')->sortable();
             $grid->column('title');
             $grid->column('category');
-            $grid->column('content')->display(function ($content) {
-                return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            });
-            $grid->column('content_en')->display(function ($content) {
-                return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            });
+            // $grid->column('content')->display(function ($content) {
+            //     return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
+            // });
+            // $grid->column('content_en')->display(function ($content) {
+            //     return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
+            // });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
