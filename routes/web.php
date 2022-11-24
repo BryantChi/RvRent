@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 
 /*
@@ -14,9 +15,9 @@ use App\Http\Controllers\NewsController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+// Route::get('/', function () {
+//     return view('index');
+// })->name('index');
 
 Route::any('/clear-cache', function () {
     Artisan::call('cache:clear');
@@ -26,6 +27,9 @@ Route::any('/clear-cache', function () {
     Artisan::call('view:clear');
     return "All Cache is cleared";
 });
+
+// Route::resource('/', 'App\Http\Controllers\IndexController');
+Route::any('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/car_rent', function () {
     return view('car_rent', ['title' => '即刻租車']);

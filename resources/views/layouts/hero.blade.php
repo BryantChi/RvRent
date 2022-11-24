@@ -1,29 +1,30 @@
 <section class="bg-half-00 d- w-100"
-    style="background: url('{{ asset('assets/img/hero/首頁模擬1-背景圖.jpg') }}') center center;height: 75vh;background-size:cover;"
+    style="/*background: url('{{ asset('assets/img/hero/首頁模擬1-背景圖.jpg') }}') center center;*/height: 75vh;background-size:cover;"
     id="hero">
 
     <div class="h-100 w-100 hero-slick d-none d-md-block mt-md-6 mt-74">
-        <img src="{{ asset('assets/img/hero/首頁模擬1-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/首頁模擬2-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/首頁模擬4-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/首頁模擬5-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/首頁模擬7-背景圖.png') }}" class="img-fluid hero-img"
-            alt="">
+        @foreach ($pageInfo as $item)
+            @foreach ($item->page_banner_img as $item_img)
+                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img }}" class="img-fluid hero-img" alt="">
+            @endforeach
+        @endforeach
+
+        {{-- <img src="{{ asset('assets/img/hero/首頁模擬2-背景圖.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/首頁模擬4-背景圖.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/首頁模擬5-背景圖.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/首頁模擬7-背景圖.png') }}" class="img-fluid hero-img" alt=""> --}}
     </div>
 
     <div class="h-100 w-100 hero-slick d-block d-md-none mt-md-6 mt-74" style="height: 100vmax">
-        <img src="{{ asset('assets/img/hero/手機模擬1-背景圖-3.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/手機模擬2-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/手機模擬4-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
-        <img src="{{ asset('assets/img/hero/手機模擬5-背景圖.jpg') }}" class="img-fluid hero-img"
-            alt="">
+        @foreach ($pageInfo as $item)
+            @foreach ($item->page_banner_img_mob as $item_img_mob)
+                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img_mob }}" class="img-fluid hero-img" alt="">
+            @endforeach
+        @endforeach
+        {{-- <img src="{{ asset('assets/img/hero/手機模擬1-背景圖-3.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/手機模擬2-背景圖.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/手機模擬4-背景圖.jpg') }}" class="img-fluid hero-img" alt="">
+        <img src="{{ asset('assets/img/hero/手機模擬5-背景圖.jpg') }}" class="img-fluid hero-img" alt=""> --}}
     </div>
 
 
