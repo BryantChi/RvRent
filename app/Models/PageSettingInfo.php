@@ -13,6 +13,7 @@ class PageSettingInfo extends Model
 
     protected $casts = [
         'page_banner_img' => 'json',
+        'page_banner_img_mob' => 'json',
     ];
 
 }
