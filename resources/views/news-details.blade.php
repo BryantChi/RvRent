@@ -14,7 +14,7 @@
             </div>
 
             <div class="container mt-3">
-                <div class="row" style="overflow: overlay;">
+                <div class="row news-content">
                     {!! $newsInfo->content !!}
                 </div>
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,5 @@ Route::get('/car_rent_s5', function () {
     return view('rv_rent_s5', ['title' => '即刻租車']);
 })->name('car_rent_s5');
 
-Route::any('/news', 'App\Http\Controllers\NewsController@index')->name('news');
-Route::any('/news/{id}', 'App\Http\Controllers\NewsController@show');
-// Route::resource('/news', 'App\Http\Controllers\NewsController');
+Route::any('/news', [NewsController::class, 'index'])->name('news');
+Route::any('/news/{id}', [NewsController::class, 'show']);

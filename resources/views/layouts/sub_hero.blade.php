@@ -11,7 +11,8 @@
                             <ul class="breadcrumb bg-white rounded shadow-md mb-0">
                                 <li class="breadcrumb-item"><a href="{{ route('index') }}">9oTravel</a></li>
                                 <li class="breadcrumb-item"><a href="#">Page</a></li>
-                                <li class="breadcrumb-item active" aria-current="page" style="text-transform: capitalize;">{{ request()->route()->getName() }}</li>
+                                <li class="breadcrumb-item active" aria-current="page" style="text-transform: capitalize;">{{ $title }}</li>
+                                {{-- {{ request()->route()->getName() }} --}}
                             </ul>
                         </nav>
                     </div>

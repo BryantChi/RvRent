@@ -1,4 +1,4 @@
-<footer class="footer bg-footer pb-1">
+<footer class="footer bg-footer pb-1 text-md-start text-center">
     <div class="container">
 
 
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4 align-self-end">
                 <ul class="list-unstyled footer-list mt-4 text-md-right">
-                    <li><a href="javascript:void(0)" class="text-foot"><i class="fa-solid fa-clock"></i> <span style="">週一～週五</span>&emsp;AM08:30-PM19:00</a></li>
+                    <li><a href="javascript:void(0)" class="text-foot"><i class="fa-solid fa-clock"></i> <span style="">平日</span>&emsp;AM08:30-PM19:00</a></li>
                     <li><a href="javascript:void(0)" class="text-foot">&emsp; <span style="padding-end: 50px;">週六</span>&emsp;AM09:00-PM19:00</a></li>
                     <li><a href="javascript:void(0)" class="text-foot">&emsp; <span style="padding-end: 50px;">週日</span>&emsp;AM10:00-PM18:00</a></li>
                 </ul>
@@ -41,7 +41,7 @@
     <div class="container text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <p class="mb-0">© 2022 Airstream,lnc. | OMA.lnc. | All rights reserved. Design by MWStudio-Bryant.
+                <p class="mb-0" style="font-size: 1rem">© 2022 Airstream,lnc. | OMA.lnc. | All rights reserved. Design by MWStudio-Bryant.
                 </p>
                 {{-- with <i class="mdi mdi-heart text-danger"></i> --}}
             </div>
