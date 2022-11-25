@@ -6,7 +6,7 @@ use App\Admin\Repositories\CustomerInfo;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
+use Dcat\Admin\Http\Controllers\AdminController;
 use App\Models\CustomerInfo as Customer;
 
 class CustomerInfoController extends AdminController
