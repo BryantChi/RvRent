@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'NewsInfo' => '最新消息',
+        'news' => '最新消息'
     ],
     'fields' => [
         'title' => '標題',

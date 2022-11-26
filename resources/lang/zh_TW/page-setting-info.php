@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'PageSettingInfo' => '頁面基本設定',
+        'page_settings' => '頁面基本設定',
     ],
     'fields' => [
         'page_url' => '頁面網址',

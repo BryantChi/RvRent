@@ -18,6 +18,10 @@ class FirmInfoController extends AdminController
     protected function grid()
     {
         return Grid::make(new FirmInfo(), function (Grid $grid) {
+            $grid->disableFilterButton();
+            $grid->showColumnSelector();
+            // 显示快捷编辑按钮
+            $grid->showQuickEditButton();
             // $grid->column('id')->sortable();
             $grid->column('firm_id');
             $grid->column('firm_name');

@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'RecommendedItineraryInfo' => '推薦行程',
+        'recommended_itinerary' => '推薦行程',
     ],
     'fields' => [
         'itinerary_name' => '行程名稱',

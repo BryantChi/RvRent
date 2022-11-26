@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'AccessoryInfo' => '配件管理',
+        'accessory' => '配件管理',
     ],
     'fields' => [
         'accessory_id' => '配件編號',

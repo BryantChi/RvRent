@@ -19,18 +19,18 @@ class NewsInfoController extends AdminController
     {
         return Grid::make(new NewsInfo(), function (Grid $grid) {
             $grid->disableFilterButton();
-            // $grid->showColumnSelector();
+            $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
             $grid->column('id')->sortable();
             $grid->column('title');
             $grid->column('category');
-            // $grid->column('content')->display(function ($content) {
-            //     return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            // });
-            // $grid->column('content_en')->display(function ($content) {
-            //     return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            // });
+            $grid->column('content')->display(function ($content) {
+                return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
+            })->hide();
+            $grid->column('content_en')->display(function ($content) {
+                return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
+            })->hide();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

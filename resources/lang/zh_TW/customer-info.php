@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'CustomerInfo' => '會員管理',
+        'customer' => '會員管理',
     ],
     'fields' => [
         'customer_id' => '會員編號',

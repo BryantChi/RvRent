@@ -20,7 +20,7 @@ class RentWitnessController extends AdminController
         return Grid::make(new RentWitness(), function (Grid $grid) {
             // $grid->export();
             $grid->disableFilterButton();
-            // $grid->showColumnSelector();
+            $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
             $grid->column('id')->sortable();
@@ -28,10 +28,10 @@ class RentWitnessController extends AdminController
             $grid->column('witness_front_cover')->image();
             $grid->column('content')->display(function ($content) {
                 return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            });
+            })->hide();
             $grid->column('content_en')->display(function ($content) {
                 return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
-            });
+            })->hide();
             // $grid->column('path');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

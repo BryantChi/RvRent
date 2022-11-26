@@ -18,6 +18,10 @@ class AccessoryInfoController extends AdminController
     protected function grid()
     {
         return Grid::make(new AccessoryInfo(), function (Grid $grid) {
+            $grid->disableFilterButton();
+            $grid->showColumnSelector();
+            // 显示快捷编辑按钮
+            $grid->showQuickEditButton();
             // $grid->column('id')->sortable();
             $grid->column('accessory_id');
             $grid->column('accessory_name');

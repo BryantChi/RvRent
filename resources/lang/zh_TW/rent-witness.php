@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'RentWitness' => '租車見證',
+        'rent_witness' => '租車見證',
     ],
     'fields' => [
         'title' => '標題',

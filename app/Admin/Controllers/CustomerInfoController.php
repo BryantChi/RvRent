@@ -19,7 +19,11 @@ class CustomerInfoController extends AdminController
     protected function grid()
     {
         return Grid::make(new CustomerInfo(), function (Grid $grid) {
-            // $grid->column('id')->sortable()->hidden();
+            $grid->disableFilterButton();
+            $grid->showColumnSelector();
+            // 显示快捷编辑按钮
+            $grid->showQuickEditButton();
+            // $grid->column('id')->sortable();
             $grid->column('customer_id')->sortable();
             $grid->column('customer_name');
             $grid->column('customer_nick_name');

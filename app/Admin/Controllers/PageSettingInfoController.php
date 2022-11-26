@@ -19,14 +19,14 @@ class PageSettingInfoController extends AdminController
     {
         return Grid::make(new PageSettingInfo(), function (Grid $grid) {
             $grid->disableFilterButton();
-            // $grid->showColumnSelector();
+            $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
             $grid->column('id')->sortable();
             $grid->column('page_url');
             $grid->column('page_title');
-            // $grid->column('page_banner_img')->image();
-            // $grid->column('page_banner_img_mob')->image();
+            $grid->column('page_banner_img')->image()->hide();
+            $grid->column('page_banner_img_mob')->image()->hide();
             $grid->column('page_meta_description');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();

@@ -2,6 +2,7 @@
 return [
     'labels' => [
         'FirmInfo' => '客戶管理',
+        'firm' => '客戶管理',
     ],
     'fields' => [
         'firm_id' => '客戶編號',

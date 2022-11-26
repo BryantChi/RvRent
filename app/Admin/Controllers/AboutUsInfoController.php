@@ -20,7 +20,7 @@ class AboutUsInfoController extends AdminController
     {
         return Grid::make(new AboutUsInfo(), function (Grid $grid) {
             $grid->disableFilterButton();
-            // $grid->showColumnSelector();
+            $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
             // $grid->column('id')->sortable();
