@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
     <!-- Main css File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/news.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/car_rent.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/footer.css') }}" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -77,7 +80,7 @@
     </div>
 
     <!-- Back to top -->
-    <a href="#" class="btn btn-icon btn-primary2 back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
+    <a href="#" class="btn btn-icon btn-primary3 back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
     <!-- Back to top -->
 
     <!-- javascript -->

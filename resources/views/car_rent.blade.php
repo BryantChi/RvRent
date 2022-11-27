@@ -3,6 +3,8 @@
 @section('content_section')
     @include('layouts.sub_hero')
 
+    @include('layouts.rent_step_bar')
+
     <section class="section">
         <div class="container" style="overflow: hidden;">
             <div class="row">
@@ -90,8 +92,8 @@
 
                             </div>
 
-                            <div class="recommend-icon">
-                                <i class="recommend-container"></i>
+                            <div class="rent-count-icon">
+                                <i class="rent-count-container"></i>
                                 <p class="text-center">
                                     <span class="d-block">租車次數</span>
                                     <span class="d-block"><i class="fa-solid fa-caravan"></i> 21</span>
@@ -152,8 +154,8 @@
 
                             </div>
 
-                            <div class="recommend-icon">
-                                <i class="recommend-container"></i>
+                            <div class="rent-count-icon">
+                                <i class="rent-count-container"></i>
                                 <p class="text-center">
                                     <span class="d-block">租車次數</span>
                                     <span class="d-block"><i class="fa-solid fa-caravan"></i> 21</span>
@@ -183,68 +185,6 @@
     </section>
 
     <style>
-        .recommend-icon {
-            position: absolute;
-            right: -108px;
-            top: -20px;
-            transform: rotateZ(45deg);
-        }
 
-        .recommend-container {
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 0 100px 100px 100px;
-            border-color: transparent transparent #1c466f transparent;
-        }
-
-        .recommend-icon p {
-            position: absolute;
-            top: 60px;
-            right: 60px;
-            display: inline-block;
-            /* width: 50px; */
-            color: #FFF;
-            transform: rotateZ(-45deg);
-        }
-
-        .rent-action {
-            position: absolute;
-            bottom: 20px;
-            right: 50px;
-        }
-
-        .rv_item_box {
-            padding-bottom: 5.5rem !important;
-        }
-
-        .liner {
-            margin: 20px 0px;
-            width: 100%;
-            height: 1px;
-            background-color: rgb(60, 60, 60, 0.5);
-        }
-
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .rv_item_box {
-                padding-bottom: 6.5rem !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .rv_item_box {
-                padding-bottom: unset !important;
-            }
-
-            .rent-action {
-                position: unset;
-            }
-
-            .liner {
-                margin: 10px 0px !important;
-                width: 1px;
-                height: 80%;
-            }
-        }
     </style>
 @endsection

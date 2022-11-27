@@ -3,6 +3,8 @@
 @section('content_section')
     @include('layouts.sub_hero')
 
+    @include('layouts.rent_step_bar')
+
     <section class="section">
         <div class="container">
             {{-- <div class="section-title mx-auto text-center">
@@ -75,16 +77,16 @@
                     <h3 class="text-danger h2">XXX露營車</h3>
                     <h5 class="text-warning">承租人資料</h5>
 
-                    <hr style="background-color: #ff832b">
+                    <hr style="background-color: #f0a000">
 
                     <h3 class="text-danger h2">XXX露營車</h3>
                     <h5 class="text-warning">司機資料</h5>
 
 
-                    <hr style="background-color: #ff832b">
+                    <hr style="background-color: #f0a000">
 
                     <div class="row justify-content-center">
-                        <a href="{{ route('car_rent_s5') }}" class="btn btn-primary2">送出</a>
+                        <a href="{{ route('car_rent_s5') }}" class="btn btn-primary3">送出</a>
                     </div>
                 </div>
             </div>

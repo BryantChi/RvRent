@@ -15,9 +15,11 @@
         </a>
     </div>
     <div class="buy-button">
-        <a href="#signup" class="text-dark login scroll-down mr-md-2"><i data-feather="user"
-                class="fea icon-ex-md"></i></a>
-        <a href="reserve-seat.html" class="btn btn-primary book-seat d-none">Reserve Seat</a>
+        <a href="#signup" class="text-dark login scroll-down mr-md-2">
+            {{-- <i data-feather="user"class="fea icon-ex-md"></i> --}}
+            <i class="fa-regular fa-user"></i>
+        </a>
+        {{-- <a href="" class="btn btn-primary book-seat d-none">Reserve Seat</a> --}}
     </div>
     <!--end login button-->
     <!-- End Logo container-->
@@ -82,8 +84,9 @@
                 </ul> --}}
             </li>
 
-            <li class="has-submenu">
-                <a href="javascript:void(0)">推薦行程</a><span class="menu-arrow"></span>
+            <li class="/*has-submenu*/">
+                <a href="javascript:void(0)">推薦行程</a>
+                {{-- <span class="menu-arrow"></span>
                 <ul class="submenu">
                     <li><a href="page-spaces.html">All Spaces</a></li>
                     <li><a href="page-spaces-sidebar.html">Spaces - Sidebar</a></li>
@@ -91,23 +94,25 @@
                     <li><a href="page-all-cities.html">All Cities</a></li>
                     <li><a href="page-cities-sidebar.html">Cities - Sidebar</a></li>
                     <li><a href="page-cities-detail.html">Cities Detail</a></li>
-                </ul>
+                </ul> --}}
             </li>
 
-            <li class="has-submenu">
-                <a href="javascript:void(0)">聯繫我們</a><span class="menu-arrow"></span>
+            <li class="/*has-submenu*/">
+                <a href="javascript:void(0)">聯繫我們</a>
+                {{-- <span class="menu-arrow"></span>
                 <ul class="submenu">
                     <li><a href="event-over.html">Overview</a></li>
                     <li><a href="event-list.html">Event List</a></li>
-                </ul>
+                </ul> --}}
             </li>
 
-            <li><a href="page-contact.html">我想買車</a></li>
+            <li><a href="javascript:void(0)">我想買車</a></li>
+            <li><a href="javascript:void(0)">會員中心</a></li>
         </ul>
         <!--end navigation menu-->
-        <div class="buy-menu-btn d-none">
+        {{-- <div class="buy-menu-btn d-none">
             <a href="reserve-seat.html" class="btn btn-primary">Reserve Seat</a>
-        </div>
+        </div> --}}
         <!--end login button-->
     </div>
     <!--end navigation-->

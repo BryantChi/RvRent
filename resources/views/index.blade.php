@@ -16,7 +16,7 @@
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/2.png') }}" class="img-fluid" alt="">
+                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
@@ -24,7 +24,7 @@
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/2.png') }}" class="img-fluid" alt="">
+                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
@@ -32,7 +32,7 @@
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/2.png') }}" class="img-fluid" alt="">
+                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
@@ -40,7 +40,7 @@
                     <h5>Cliff 600TR</h5>
                 </div>
                 <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/2.png') }}" class="img-fluid" alt="">
+                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
                     <h5>Cliff 600TR</h5>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <div class="middle-menu-item item-1 position-relative">
                         <div class="middle-menu-txt text-center">
                             <h3>NEWS</h3>
-                            <a class="btn btn-danger" href="{{ route('news') }}">Learn More</a>
+                            <a class="btn btn-primary3" href="{{ route('news') }}">Learn More</a>
                         </div>
 
                     </div>
@@ -71,7 +71,7 @@
                     <div class="middle-menu-item item-2 position-relative">
                         <div class="middle-menu-txt text-center" style="transform: translate(-50%, -33%) !important;">
                             <h3>推薦行程</h3>
-                            <a class="btn btn-danger" style="background: #ff9c35 !important;border:1px solid#ff9c35 !important;" href="">Learn More</a>
+                            <a class="btn btn-primary3" href="">Learn More</a>
                             <p class="text-light mt-3">特約營地 / 行程規劃</p>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="middle-menu-item item-3 position-relative">
                         <div class="middle-menu-txt text-center">
                             <h3>租車見證</h3>
-                            <a class="btn btn-danger" style="background: #ff9c35 !important;border:1px solid#ff9c35 !important;" href="">Learn More</a>
+                            <a class="btn btn-primary3" href="">Learn More</a>
                         </div>
                     </div>
                 </div>

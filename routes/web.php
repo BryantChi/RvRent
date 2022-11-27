@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
+use App\Admin\Repositories\PageSettingInfo;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,30 +26,36 @@ Route::any('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('config:cache');
     Artisan::call('view:clear');
-    return "All Cache is cleared";
+    // return "All Cache is cleared";
+    return view('index');
 });
 
 // Route::resource('/', 'App\Http\Controllers\IndexController');
 Route::any('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/car_rent', function () {
-    return view('car_rent', ['title' => '即刻租車']);
+    $pageInfo = PageSettingInfo::getBanners('/car_rent');
+    return view('car_rent', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 })->name('car_rent');
 
 Route::get('/car_rent_s2', function () {
-    return view('rv_rent_s2', ['title' => '即刻租車']);
+    $pageInfo = PageSettingInfo::getBanners('/car_rent');
+    return view('rv_rent_s2', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 })->name('car_rent_s2');
 
 Route::get('/car_rent_s3', function () {
-    return view('rv_rent_s3', ['title' => '即刻租車']);
+    $pageInfo = PageSettingInfo::getBanners('/car_rent');
+    return view('rv_rent_s3', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 })->name('car_rent_s3');
 
 Route::get('/car_rent_s4', function () {
-    return view('rv_rent_s4', ['title' => '即刻租車']);
+    $pageInfo = PageSettingInfo::getBanners('/car_rent');
+    return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 })->name('car_rent_s4');
 
 Route::get('/car_rent_s5', function () {
-    return view('rv_rent_s5', ['title' => '即刻租車']);
+    $pageInfo = PageSettingInfo::getBanners('/car_rent');
+    return view('rv_rent_s5', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 })->name('car_rent_s5');
 
 Route::any('/news', [NewsController::class, 'index'])->name('news');

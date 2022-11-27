@@ -586,8 +586,8 @@ a.text-footer:focus {
     background-image: linear-gradient(to bottom, #f7c000 0%, #f0a000 100%);
     /* border: 1px solid #ff9c35 !important; */
     color: #ffffff !important;
-    -webkit-box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5);
-    box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5);
+    /* -webkit-box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5);
+    box-shadow: 0 3px 7px rgba(114, 106, 233, 0.5); */
 }
 
 .btn-primary3:hover,
@@ -2105,7 +2105,7 @@ button:not(:disabled) {
 .title-heading .breadcrumb-position {
     position: relative;
     /* top: 110px; */
-    top: 220px;
+    top: 170px;
     z-index: 99;
 }
 
@@ -2429,6 +2429,7 @@ button:not(:disabled) {
 #topnav .buy-button .login {
     -webkit-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    font-size: 23px !important;
 }
 
 #topnav .buy-button .login.login-light {
@@ -2965,6 +2966,9 @@ button:not(:disabled) {
         margin-left: 0;
         margin-right: 0;
     }
+    #topnav .buy-button .login {
+        font-size: 20px !important;
+    }
     .navbar-toggle {
         display: block;
     }
@@ -3016,6 +3020,16 @@ button:not(:disabled) {
 
 .bg-half-170 {
     padding: 170px 0;
+    background-size: cover;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+    position: relative;
+    background-position: center center;
+}
+
+.bg-half-150 {
+    padding: 150px 0;
     background-size: cover;
     -ms-flex-item-align: center;
     -ms-grid-row-align: center;
@@ -3170,6 +3184,15 @@ button:not(:disabled) {
     height: 75vh;
     object-fit: cover;
     object-position: center center;
+}
+
+.sub-hero {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow:hidden;
 }
 
 .mt-74 {
@@ -3881,26 +3904,4 @@ button:not(:disabled) {
 
 .footer.footer-bar {
     padding: 0 0 30px 0;
-}
-
-.news-content {
-
-}
-
-.news-content img {
-    max-width: 100% !important;
-    height: auto !important;
-}
-
-.news-content iframe {
-    width: 100% !important;
-}
-
-.newinfo-content .date .day {
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-    background: rgba(114, 106, 233, 0.1);
-    line-height: 48px;
-    border: 3px solid #ffffff;
 }

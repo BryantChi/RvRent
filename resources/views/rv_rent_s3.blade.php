@@ -3,6 +3,8 @@
 @section('content_section')
     @include('layouts.sub_hero')
 
+    @include('layouts.rent_step_bar')
+
     <section class="section">
         <div class="container">
             <div class="section-title mx-auto text-center">
@@ -12,7 +14,7 @@
 
             </div>
             <div class="row justify-content-center">
-                <a href="{{ route('car_rent_s4') }}" class="btn btn-primary2">下一步</a>
+                <a href="{{ route('car_rent_s4') }}" class="btn btn-primary3">下一步</a>
             </div>
         </div>
     </section>

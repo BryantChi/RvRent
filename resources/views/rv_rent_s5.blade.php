@@ -3,6 +3,8 @@
 @section('content_section')
     @include('layouts.sub_hero')
 
+    @include('layouts.rent_step_bar')
+
     <section class="section">
         <div class="container">
             {{-- <div class="section-title mx-auto text-center">

@@ -3,7 +3,7 @@
 
 
         <div class="row justify-content-center">
-            <div class="col-md-4 align-self-end">
+            <div class="col-md-4 align-self-end text-md-left">
                 <ul class="list-unstyled footer-list mt-4">
                     <li><i class="fa-sharp fa-solid fa-phone"></i> <a href="tel:04-23804386"
                             class="text-foot">04-2380-4386</a></li>
@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="col-md-4 text-md-center mt-md-0 mt-4">
-                <a href="javascript:void(0)"><img src="{{ asset('assets/img/icon/9O_logo_02.png') }}" width="180px" alt="{{ __('') }}"></a>
+                <a href="javascript:void(0)"><img src="{{ asset('assets/img/icon/9O_logo_03.png') }}" width="250px" alt="{{ __('') }}"></a>
                 <ul class="list-unstyled social-icon social mb-0 mt-4">
                     <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-facebook-f"></i></a></li>
                     <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-instagram"></i></a></li>
@@ -30,7 +30,7 @@
                 </ul>
             </div>
         </div>
-        <hr style="border-top: 1px solid rgba(255, 255, 255, 0.3);">
+        <hr>
     </div>
     <!--end container-->
 
@@ -41,7 +41,7 @@
     <div class="container text-center">
         <div class="row justify-content-center">
             <div class="col-12">
-                <p class="mb-0" style="font-size: 1rem">© 2022 Airstream,lnc. | OMA.lnc. | All rights reserved. Design by MWStudio-Bryant.
+                <p class="mb-0 copyright">© 2022 Airstream,lnc. | OMA.lnc. | All rights reserved. <br class="d-md-none d-block">Design by MWStudio-Bryant.
                 </p>
                 {{-- with <i class="mdi mdi-heart text-danger"></i> --}}
             </div>

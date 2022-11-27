@@ -1,0 +1,103 @@
+.bg-step-bar {
+    background-color: #ececec !important;
+}
+
+.rent-count-icon {
+    position: absolute;
+    right: -108px;
+    top: -20px;
+    transform: rotateZ(45deg);
+}
+
+.rent-count-container {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 100px 100px 100px;
+    border-color: transparent transparent #1c466f transparent;
+}
+
+.rent-count-icon p {
+    position: absolute;
+    top: 60px;
+    right: 60px;
+    display: inline-block;
+    /* width: 50px; */
+    color: #FFF;
+    transform: rotateZ(-45deg);
+}
+
+.rent-action {
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+}
+
+.rv_item_box {
+    padding-bottom: 5.5rem !important;
+}
+
+.liner {
+    margin: 20px 0px;
+    width: 100%;
+    height: 1px;
+    background-color: rgb(60, 60, 60, 0.5);
+}
+
+.step-num {
+    padding: 8px 15px;
+    border-radius: 50px;
+}
+
+.step-box-default .step-num {
+    color: #fff;
+    background-color: #939393;
+}
+
+.step-box-default .step-txt {
+    color: #666666;
+}
+
+.step-box-pass .step-num {
+    color: #fff;
+    background-color: #f0a000;
+}
+
+.step-box-pass .step-txt {
+    color: #f0a000;
+}
+
+.step-box-active .step-num {
+    color: #fff;
+    background-color: #ed7702;
+}
+
+.step-box-active .step-txt {
+    color: #ed7702;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .rv_item_box {
+        padding-bottom: 6.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .rv_item_box {
+        padding-bottom: unset !important;
+    }
+
+    .rent-action {
+        position: unset;
+    }
+
+    .liner {
+        margin: 10px 0px !important;
+        width: 1px;
+        height: 80%;
+    }
+
+    .step-box {
+        margin-bottom: 10px;
+    }
+}

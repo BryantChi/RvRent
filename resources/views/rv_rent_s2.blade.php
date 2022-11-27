@@ -3,6 +3,8 @@
 @section('content_section')
     @include('layouts.sub_hero')
 
+    @include('layouts.rent_step_bar')
+
     <section class="section">
         <div class="container">
             <div class="section-title">
@@ -10,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h4 style="color: #ff832b">1 - 額外公里數優惠套餐</h4>
+                    <h4 style="color: #f0a000">1 - 額外公里數優惠套餐</h4>
                     <p>租金內含100公里/晚，如未事先加購公里套餐或已加購仍超出限定里程每一公里收取新台幣$80</p>
                 </div>
                 <div class="col-12">
@@ -37,11 +39,11 @@
                 </div>
             </div>
 
-            <hr style="background-color: #ff832b">
+            <hr style="background-color: #f0a000">
 
             <div class="row">
                 <div class="col-12">
-                    <h4 style="color: #ff832b">2 - 露營設備套餐</h4>
+                    <h4 style="color: #f0a000">2 - 露營設備套餐</h4>
                 </div>
                 <div class="col-12">
                     <div class="equipment-box p-3">
@@ -49,7 +51,7 @@
                             <div class="form-check align-items-center">
                                 <input class="form-check-input h5" type="checkbox" value="HEMKOMST鍋具 + 餐具套組"
                                     id="flexCheckDefault">
-                                <label class="form-check-label h5 my-auto" for="flexCheckDefault">
+                                <label class="form-check-label h5 my-auto equipment-item-title" for="flexCheckDefault">
                                     HEMKOMST鍋具 + 餐具套組
                                 </label>
                             </div>
@@ -59,7 +61,7 @@
                                     <input type="number" value="1" class="form-control" style="width: 20% !important;" aria-label="Text input with checkbox">
                                     組
                                 </p>
-                                <p class="h3 text-danger px-3">
+                                <p class="h3 px-3" style="color: #ea3c06;">
                                     $500
                                 </p>
                             </div>
@@ -80,14 +82,14 @@
                 </div>
             </div>
 
-            <hr style="background-color: #ff832b">
+            <hr style="background-color: #f0a000">
 
             <div class="row justify-content-end px-3">
-                <p style="color: #ff832b">合計 <span class="h3 text-danger">$12439</span></p>
+                <p style="color: #f0a000">合計 <span class="h3" style="color: #ea3c06;">$12439</span></p>
             </div>
 
             <div class="row justify-content-center">
-                <a href="{{ route('car_rent_s3') }}" class="btn btn-primary2">下一步</a>
+                <a href="{{ route('car_rent_s3') }}" class="btn btn-primary3">下一步</a>
             </div>
 
         </div>
@@ -109,7 +111,7 @@
             margin: 0 20px 15px 0;
             padding: 15px 25px;
             /* background: #f7f7f7; */
-            border: 1px solid #eeeeee;
+            border: 1px solid #cccccc;
             color: #333;
             cursor: pointer;
         }
@@ -126,9 +128,14 @@
         }
 
         .equipment-box {
-            background-color: #fff7e899;
+            /* background-color: #fff7e899; */
+            background-color: #fdfaf5;
+            /* border: 1px solid #b7b7b7a2; */
             border: 1px solid #b7b7b7a2;
             border-radius: 10px
+        }
+        .equipment-item-title {
+            color: #4d4d4d;
         }
     </style>
 @endsection

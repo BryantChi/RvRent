@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\NewsInfo as NewsInfo;
+use App\Admin\Repositories\PageSettingInfo as PageSettingRepository;
 
 class NewsController extends Controller
 {
+    protected $title = '最新消息';
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class NewsController extends Controller
     {
         //
         $newInfo = NewsInfo::orderBy('updated_at', 'desc')->limit(15)->get();
-        return view('news', ['newInfo' => $newInfo, 'title' => '最新消息']);
+        return view('news', ['newInfo' => $newInfo, 'title' => $this->title, 'pageInfo' => $this->getBanner()]);
     }
 
     /**
@@ -50,7 +52,7 @@ class NewsController extends Controller
     {
         //
         $newsInfo = NewsInfo::find($id);
-        return view('news-details', ['newsInfo' => $newsInfo, 'title' => '最新消息']);
+        return view('news-details', ['newsInfo' => $newsInfo, 'title' => $this->title, 'pageInfo' => $this->getBanner()]);
     }
 
     /**
@@ -85,5 +87,9 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function getBanner() {
+        return PageSettingRepository::getBanners('/news');
     }
 }
