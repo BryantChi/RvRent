@@ -14,6 +14,11 @@ class PageSettingInfo extends EloquentRepository
      */
     protected $eloquentClass = Model::class;
 
+    public static function getHomeBanner($uri) {
+        $pageInfo = Model::where('page_url', '=', '/index')->get();
+        return $pageInfo;
+    }
+
     public static function getBanners($uri)
     {
         $pageInfos = Model::where('page_url', '=', $uri)->first();

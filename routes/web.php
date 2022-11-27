@@ -27,7 +27,9 @@ Route::any('/clear-cache', function () {
     Artisan::call('config:cache');
     Artisan::call('view:clear');
     // return "All Cache is cleared";
-    return view('index');
+    // $pageInfo = PageSettingInfo::getHomeBanner('/index');
+    // return view('index', ['pageInfo' => $pageInfo]);
+    return redirect()->route('index');
 });
 
 // Route::resource('/', 'App\Http\Controllers\IndexController');
