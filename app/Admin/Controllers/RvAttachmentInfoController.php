@@ -2,13 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Repositories\RvSeriesInfo;
+use App\Admin\Repositories\RvAttachmentInfo;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
-class RvSeriesInfoController extends AdminController
+class RvAttachmentInfoController extends AdminController
 {
     /**
      * Make a grid builder.
@@ -17,13 +17,14 @@ class RvSeriesInfoController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new RvSeriesInfo(), function (Grid $grid) {
+        return Grid::make(new RvAttachmentInfo(), function (Grid $grid) {
             $grid->disableFilterButton();
             $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
             $grid->column('id')->sortable();
-            $grid->column('rv_series_name');
+            $grid->column('attachment_name');
+            $grid->column('attachment_icon')->image();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -43,9 +44,10 @@ class RvSeriesInfoController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new RvSeriesInfo(), function (Show $show) {
+        return Show::make($id, new RvAttachmentInfo(), function (Show $show) {
             $show->field('id');
-            $show->field('rv_series_name');
+            $show->field('attachment_name');
+            $show->field('attachment_icon')->image();
             $show->field('created_at');
             $show->field('updated_at');
         });
@@ -58,9 +60,10 @@ class RvSeriesInfoController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new RvSeriesInfo(), function (Form $form) {
+        return Form::make(new RvAttachmentInfo(), function (Form $form) {
             $form->display('id');
-            $form->text('rv_series_name');
+            $form->text('attachment_name')->required();
+            $form->image('attachment_icon')->move('images/attachment_icon/')->maxSize(512)->rules('mimes:jpg,jpeg,png,gif')->required();
 
             $form->display('created_at');
             $form->display('updated_at');

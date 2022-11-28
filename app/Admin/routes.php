@@ -24,5 +24,6 @@ Route::group([
     $router->resource('/rent_witness', 'RentWitnessController');
     $router->resource('/rv_series', 'RvSeriesInfoController');
     $router->resource('/rv_model', 'RvModelInfoController');
+    $router->resource('/rv_attachment', 'RvAttachmentInfoController');
 
 });

@@ -24,6 +24,7 @@ class NewsInfoController extends AdminController
             $grid->showQuickEditButton();
             $grid->column('id')->sortable();
             $grid->column('title');
+            $grid->column('news_front_cover')->image();
             $grid->column('category');
             $grid->column('content')->display(function ($content) {
                 return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
@@ -31,6 +32,7 @@ class NewsInfoController extends AdminController
             $grid->column('content_en')->display(function ($content) {
                 return "<p style=\"width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;\">".str_replace("</p>", "",str_replace("<p>", "", $content))."</p>";
             })->hide();
+            $grid->column('show_status')->switch();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -62,6 +64,7 @@ class NewsInfoController extends AdminController
             });
             $show->field('id');
             $show->field('title');
+            $show->field('news_front_cover')->image();
             $show->field('category');
             $show->field('content')->unescape();
             $show->field('content_en')->unescape();
@@ -80,6 +83,7 @@ class NewsInfoController extends AdminController
         return Form::make(new NewsInfo(), function (Form $form) {
             $form->display('id');
             $form->text('title');
+            $form->image('news_front_cover')->move('images/news/'.date('Ym').'/frontCover')->maxSize(1024)->rules('mimes:jpg,jpeg,png,gif');
             $form->text('category')->default('未分類');
             $form->editor('content')->options(['menubar' => false, 'toolbar' => ['code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
@@ -87,6 +91,7 @@ class NewsInfoController extends AdminController
             $form->editor('content_en')->options(['menubar' => false, 'toolbar' => ['code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | \
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
             table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']]);
+            $form->switch('show_status');
 
             $form->display('created_at');
             $form->display('updated_at');

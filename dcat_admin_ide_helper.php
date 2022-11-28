@@ -11,16 +11,6 @@ namespace Dcat\Admin {
     use Illuminate\Support\Collection;
 
     /**
-     * @property Grid\Column|Collection name
-     * @property Grid\Column|Collection version
-     * @property Grid\Column|Collection alias
-     * @property Grid\Column|Collection authors
-     * @property Grid\Column|Collection enable
-     * @property Grid\Column|Collection imported
-     * @property Grid\Column|Collection config
-     * @property Grid\Column|Collection require
-     * @property Grid\Column|Collection require_dev
-     * @property Grid\Column|Collection showColumnSelector
      * @property Grid\Column|Collection id
      * @property Grid\Column|Collection uuid
      * @property Grid\Column|Collection connection
@@ -34,6 +24,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection updated_at
      * @property Grid\Column|Collection username
      * @property Grid\Column|Collection password
+     * @property Grid\Column|Collection name
      * @property Grid\Column|Collection avatar
      * @property Grid\Column|Collection remember_token
      * @property Grid\Column|Collection accessory_id
@@ -75,8 +66,10 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection customer_token
      * @property Grid\Column|Collection rv_series_name
      * @property Grid\Column|Collection email
+     * @property Grid\Column|Collection value
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
+     * @property Grid\Column|Collection extension
      * @property Grid\Column|Collection email_verified_at
      * @property Grid\Column|Collection witness_front_cover
      * @property Grid\Column|Collection content
@@ -90,31 +83,28 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection firm_email
      * @property Grid\Column|Collection firm_line_id
      * @property Grid\Column|Collection firm_verify
+     * @property Grid\Column|Collection attachment_name
+     * @property Grid\Column|Collection attachment_icon
      * @property Grid\Column|Collection itinerary_name
      * @property Grid\Column|Collection itinerary_content
      * @property Grid\Column|Collection itinerary_content_en
      * @property Grid\Column|Collection itinerary_star
+     * @property Grid\Column|Collection news_front_cover
      * @property Grid\Column|Collection category
      * @property Grid\Column|Collection user_id
      * @property Grid\Column|Collection method
      * @property Grid\Column|Collection ip
      * @property Grid\Column|Collection input
+     * @property Grid\Column|Collection type
+     * @property Grid\Column|Collection version
+     * @property Grid\Column|Collection detail
+     * @property Grid\Column|Collection is_enabled
      * @property Grid\Column|Collection rv_name
      * @property Grid\Column|Collection rv_front_cover
      * @property Grid\Column|Collection rv_series_id
      * @property Grid\Column|Collection rv_rent_setting
      * @property Grid\Column|Collection rv_discription
      *
-     * @method Grid\Column|Collection name(string $label = null)
-     * @method Grid\Column|Collection version(string $label = null)
-     * @method Grid\Column|Collection alias(string $label = null)
-     * @method Grid\Column|Collection authors(string $label = null)
-     * @method Grid\Column|Collection enable(string $label = null)
-     * @method Grid\Column|Collection imported(string $label = null)
-     * @method Grid\Column|Collection config(string $label = null)
-     * @method Grid\Column|Collection require(string $label = null)
-     * @method Grid\Column|Collection require_dev(string $label = null)
-     * @method Grid\Column|Collection showColumnSelector(string $label = null)
      * @method Grid\Column|Collection id(string $label = null)
      * @method Grid\Column|Collection uuid(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
@@ -128,6 +118,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection updated_at(string $label = null)
      * @method Grid\Column|Collection username(string $label = null)
      * @method Grid\Column|Collection password(string $label = null)
+     * @method Grid\Column|Collection name(string $label = null)
      * @method Grid\Column|Collection avatar(string $label = null)
      * @method Grid\Column|Collection remember_token(string $label = null)
      * @method Grid\Column|Collection accessory_id(string $label = null)
@@ -169,8 +160,10 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection customer_token(string $label = null)
      * @method Grid\Column|Collection rv_series_name(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
+     * @method Grid\Column|Collection value(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
+     * @method Grid\Column|Collection extension(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
      * @method Grid\Column|Collection witness_front_cover(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
@@ -184,15 +177,22 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection firm_email(string $label = null)
      * @method Grid\Column|Collection firm_line_id(string $label = null)
      * @method Grid\Column|Collection firm_verify(string $label = null)
+     * @method Grid\Column|Collection attachment_name(string $label = null)
+     * @method Grid\Column|Collection attachment_icon(string $label = null)
      * @method Grid\Column|Collection itinerary_name(string $label = null)
      * @method Grid\Column|Collection itinerary_content(string $label = null)
      * @method Grid\Column|Collection itinerary_content_en(string $label = null)
      * @method Grid\Column|Collection itinerary_star(string $label = null)
+     * @method Grid\Column|Collection news_front_cover(string $label = null)
      * @method Grid\Column|Collection category(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
      * @method Grid\Column|Collection method(string $label = null)
      * @method Grid\Column|Collection ip(string $label = null)
      * @method Grid\Column|Collection input(string $label = null)
+     * @method Grid\Column|Collection type(string $label = null)
+     * @method Grid\Column|Collection version(string $label = null)
+     * @method Grid\Column|Collection detail(string $label = null)
+     * @method Grid\Column|Collection is_enabled(string $label = null)
      * @method Grid\Column|Collection rv_name(string $label = null)
      * @method Grid\Column|Collection rv_front_cover(string $label = null)
      * @method Grid\Column|Collection rv_series_id(string $label = null)
@@ -204,16 +204,6 @@ namespace Dcat\Admin {
     class MiniGrid extends Grid {}
 
     /**
-     * @property Show\Field|Collection name
-     * @property Show\Field|Collection version
-     * @property Show\Field|Collection alias
-     * @property Show\Field|Collection authors
-     * @property Show\Field|Collection enable
-     * @property Show\Field|Collection imported
-     * @property Show\Field|Collection config
-     * @property Show\Field|Collection require
-     * @property Show\Field|Collection require_dev
-     * @property Show\Field|Collection showColumnSelector
      * @property Show\Field|Collection id
      * @property Show\Field|Collection uuid
      * @property Show\Field|Collection connection
@@ -227,6 +217,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection updated_at
      * @property Show\Field|Collection username
      * @property Show\Field|Collection password
+     * @property Show\Field|Collection name
      * @property Show\Field|Collection avatar
      * @property Show\Field|Collection remember_token
      * @property Show\Field|Collection accessory_id
@@ -268,8 +259,10 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection customer_token
      * @property Show\Field|Collection rv_series_name
      * @property Show\Field|Collection email
+     * @property Show\Field|Collection value
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
+     * @property Show\Field|Collection extension
      * @property Show\Field|Collection email_verified_at
      * @property Show\Field|Collection witness_front_cover
      * @property Show\Field|Collection content
@@ -283,31 +276,28 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection firm_email
      * @property Show\Field|Collection firm_line_id
      * @property Show\Field|Collection firm_verify
+     * @property Show\Field|Collection attachment_name
+     * @property Show\Field|Collection attachment_icon
      * @property Show\Field|Collection itinerary_name
      * @property Show\Field|Collection itinerary_content
      * @property Show\Field|Collection itinerary_content_en
      * @property Show\Field|Collection itinerary_star
+     * @property Show\Field|Collection news_front_cover
      * @property Show\Field|Collection category
      * @property Show\Field|Collection user_id
      * @property Show\Field|Collection method
      * @property Show\Field|Collection ip
      * @property Show\Field|Collection input
+     * @property Show\Field|Collection type
+     * @property Show\Field|Collection version
+     * @property Show\Field|Collection detail
+     * @property Show\Field|Collection is_enabled
      * @property Show\Field|Collection rv_name
      * @property Show\Field|Collection rv_front_cover
      * @property Show\Field|Collection rv_series_id
      * @property Show\Field|Collection rv_rent_setting
      * @property Show\Field|Collection rv_discription
      *
-     * @method Show\Field|Collection name(string $label = null)
-     * @method Show\Field|Collection version(string $label = null)
-     * @method Show\Field|Collection alias(string $label = null)
-     * @method Show\Field|Collection authors(string $label = null)
-     * @method Show\Field|Collection enable(string $label = null)
-     * @method Show\Field|Collection imported(string $label = null)
-     * @method Show\Field|Collection config(string $label = null)
-     * @method Show\Field|Collection require(string $label = null)
-     * @method Show\Field|Collection require_dev(string $label = null)
-     * @method Show\Field|Collection showColumnSelector(string $label = null)
      * @method Show\Field|Collection id(string $label = null)
      * @method Show\Field|Collection uuid(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
@@ -321,6 +311,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection updated_at(string $label = null)
      * @method Show\Field|Collection username(string $label = null)
      * @method Show\Field|Collection password(string $label = null)
+     * @method Show\Field|Collection name(string $label = null)
      * @method Show\Field|Collection avatar(string $label = null)
      * @method Show\Field|Collection remember_token(string $label = null)
      * @method Show\Field|Collection accessory_id(string $label = null)
@@ -362,8 +353,10 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection customer_token(string $label = null)
      * @method Show\Field|Collection rv_series_name(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
+     * @method Show\Field|Collection value(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
+     * @method Show\Field|Collection extension(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
      * @method Show\Field|Collection witness_front_cover(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
@@ -377,15 +370,22 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection firm_email(string $label = null)
      * @method Show\Field|Collection firm_line_id(string $label = null)
      * @method Show\Field|Collection firm_verify(string $label = null)
+     * @method Show\Field|Collection attachment_name(string $label = null)
+     * @method Show\Field|Collection attachment_icon(string $label = null)
      * @method Show\Field|Collection itinerary_name(string $label = null)
      * @method Show\Field|Collection itinerary_content(string $label = null)
      * @method Show\Field|Collection itinerary_content_en(string $label = null)
      * @method Show\Field|Collection itinerary_star(string $label = null)
+     * @method Show\Field|Collection news_front_cover(string $label = null)
      * @method Show\Field|Collection category(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
      * @method Show\Field|Collection method(string $label = null)
      * @method Show\Field|Collection ip(string $label = null)
      * @method Show\Field|Collection input(string $label = null)
+     * @method Show\Field|Collection type(string $label = null)
+     * @method Show\Field|Collection version(string $label = null)
+     * @method Show\Field|Collection detail(string $label = null)
+     * @method Show\Field|Collection is_enabled(string $label = null)
      * @method Show\Field|Collection rv_name(string $label = null)
      * @method Show\Field|Collection rv_front_cover(string $label = null)
      * @method Show\Field|Collection rv_series_id(string $label = null)

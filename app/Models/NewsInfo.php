@@ -10,5 +10,9 @@ class NewsInfo extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'news_infos';
-    
+
+    protected $casts = [
+        'news_front_cover' => 'json',
+    ];
+
 }

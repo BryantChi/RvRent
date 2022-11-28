@@ -30,7 +30,7 @@ class FirmInfoController extends AdminController
             $grid->column('firm_fax');
             $grid->column('firm_email');
             $grid->column('firm_line_id');
-            $grid->column('firm_verify');
+            $grid->column('firm_verify')->switch();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 

@@ -27,9 +27,10 @@
                 @endforeach --}}
 
                 @foreach ($newInfo as $item)
+                @if ($item->show_status)
                 <div class="col-lg-4 col-md-6 col-12 mb-4 pb-2">
                     <div class="card blog-post border-0 rounded shadow overflow-hidden">
-                        <img src="{{ asset('assets/images/work/7.jpg') }}" class="img-fluid" alt="">
+                        <img src="{{ $item->news_front_cover != '' ? 'http://9o-traveller.com.tw/uploads/' . $item->news_front_cover : asset('assets/img/hero/hero-02.jpg') }}" class="img-fluid" alt="">
                         <div class="card-body content p-4 newinfo-content">
                             <div class="d-flex">
                                 <ul class="date text-center text-primary mr-3 mb-0 list-unstyled">
@@ -49,6 +50,7 @@
                         </div>
                     </div>
                 </div><!--end col-->
+                @endif
                 @endforeach
 
 

@@ -35,7 +35,7 @@ class CustomerInfoController extends AdminController
             $grid->column('customer_mail');
             $grid->column('customer_line_id');
             $grid->column('customer_country');
-            $grid->column('customer_verify');
+            $grid->column('customer_verify')->switch();
             // $grid->column('customer_token')->hidden();
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -104,8 +104,8 @@ class CustomerInfoController extends AdminController
             $form->email('customer_mail');
             $form->text('customer_line_id');
             $form->text('customer_country')->default('台灣');
-            // $form->switch('customer_verify');
-            $form->text('customer_token')->disable();
+            $form->switch('customer_verify');
+            // $form->text('customer_token')->disable();
 
             $form->display('created_at');
             $form->display('updated_at');
