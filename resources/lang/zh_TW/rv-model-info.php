@@ -1,0 +1,17 @@
+<?php
+return [
+    'labels' => [
+        'RvModelInfo' => '車型管理',
+        'rv_model' => '車型管理',
+    ],
+    'fields' => [
+        'rv_name' => '名稱',
+        'rv_front_cover' => '露營車封面照',
+        'rv_series_id' => '露營車系列',
+        'rv_rent_setting' => '租金設定',
+        'attachment_id' => '車輛配件',
+        'rv_discription' => '露營車介紹',
+    ],
+    'options' => [
+    ],
+];

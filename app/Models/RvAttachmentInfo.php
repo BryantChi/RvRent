@@ -6,13 +6,13 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NewsInfo extends Model
+class RvAttachmentInfo extends Model
 {
 	use HasDateTimeFormatter;
-    protected $table = 'news_infos';
+    protected $table = 'rv_attachment_infos';
 
     protected $casts = [
-        'news_front_cover' => 'json',
+        'attachment_icon' => 'json',
     ];
 
 }
