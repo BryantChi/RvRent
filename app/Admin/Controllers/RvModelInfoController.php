@@ -32,7 +32,7 @@ class RvModelInfoController extends AdminController
                 $result = array();
                 foreach ($rvAttachment as $key => $value) {
                     $info = RvAttachment::where('id', $value)->first();
-                    $result[] = $info->optionalName;
+                    $result[] = $info->attachment_name;
                 }
 
                 return $result;
@@ -67,7 +67,7 @@ class RvModelInfoController extends AdminController
                 $result = array();
                 foreach ($rvAttachment as $key => $value) {
                     $info = RvAttachment::where('id', $value)->first();
-                    $result[] = $info->optionalName;
+                    $result[] = $info->attachment_name;
                 }
 
                 return $result;

@@ -22,6 +22,8 @@ class RvAttachmentInfoController extends AdminController
             $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
+            // $grid->model()->orderBy('order');
+            $grid->sortable('order');
             $grid->column('id')->sortable();
             $grid->column('attachment_name');
             $grid->column('attachment_icon')->image();
@@ -63,7 +65,7 @@ class RvAttachmentInfoController extends AdminController
         return Form::make(new RvAttachmentInfo(), function (Form $form) {
             $form->display('id');
             $form->text('attachment_name')->required();
-            $form->image('attachment_icon')->move('images/attachment_icon/')->maxSize(512)->rules('mimes:jpg,jpeg,png,gif')->required();
+            $form->image('attachment_icon')->move('images/attachment_icon/')->maxSize(512)->rules('mimes:jpg,jpeg,png,gif');
 
             $form->display('created_at');
             $form->display('updated_at');
