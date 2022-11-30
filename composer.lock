@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8237d3aafed8db1aa52a859ca91312f",
+    "content-hash": "6262cd5f4ef6f2dcec134c2e682757c7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2940,6 +2940,62 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "pstldz/dcat-admin-grid-sotrable",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pstldz/dcat-admin-grid-sotrable.git",
+                "reference": "0ca9e60dfd6ba49b6a1e10b83a449d0474e18898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pstldz/dcat-admin-grid-sotrable/zipball/0ca9e60dfd6ba49b6a1e10b83a449d0474e18898",
+                "reference": "0ca9e60dfd6ba49b6a1e10b83a449d0474e18898",
+                "shasum": ""
+            },
+            "require": {
+                "dcat/laravel-admin": "~2.0",
+                "php": ">=7.1.0",
+                "spatie/eloquent-sortable": "*"
+            },
+            "type": "library",
+            "extra": {
+                "dcat-admin": "Pstldz\\DcatAdminGridSotrable\\DcatAdminGridSotrableServiceProvider",
+                "laravel": {
+                    "providers": [
+                        "Pstldz\\DcatAdminGridSotrable\\DcatAdminGridSotrableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pstldz\\DcatAdminGridSotrable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "pstldz",
+                    "email": "1170525100@qq.com"
+                }
+            ],
+            "description": "拖动排序",
+            "homepage": "https://github.com/pstldz/dcat-admin-grid-sotrable",
+            "keywords": [
+                "dcat-admin",
+                "extension",
+                "grid-sortable"
+            ],
+            "support": {
+                "issues": "https://github.com/pstldz/dcat-admin-grid-sotrable/issues",
+                "source": "https://github.com/pstldz/dcat-admin-grid-sotrable/tree/v1.0.1"
+            },
+            "time": "2022-05-18T06:05:26+00:00"
         },
         {
             "name": "psy/psysh",
@@ -7873,5 +7929,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }
