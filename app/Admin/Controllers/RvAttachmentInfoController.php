@@ -22,7 +22,7 @@ class RvAttachmentInfoController extends AdminController
             $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
-            // $grid->model()->orderBy('order');
+            $grid->model()->orderBy('order');
             $grid->sortable('order');
             $grid->column('id')->sortable();
             $grid->column('attachment_name');
