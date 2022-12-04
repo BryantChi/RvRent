@@ -50,6 +50,15 @@ class PageSettingInfoController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new PageSettingInfo(), function (Show $show) {
+            $show->panel()
+                ->tools(function ($tools) {
+                    // $tools->disableEdit();
+                    // $tools->disableList();
+                    // $tools->disableDelete();
+                    // 显示快捷编辑按钮
+                    $tools->showQuickEdit();
+
+            });
             $show->field('id');
             $show->field('page_url');
             $show->field('page_title');

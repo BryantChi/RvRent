@@ -2,7 +2,7 @@
 
 namespace App\Admin\Repositories;
 
-use App\Models\CustomerInfo as Model;
+use App\Models\User as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 
 class CustomerInfo extends EloquentRepository

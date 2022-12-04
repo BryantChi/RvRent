@@ -59,6 +59,15 @@ class RvModelInfoController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new RvModelInfo(), function (Show $show) {
+            $show->panel()
+                ->tools(function ($tools) {
+                    // $tools->disableEdit();
+                    // $tools->disableList();
+                    // $tools->disableDelete();
+                    // 显示快捷编辑按钮
+                    $tools->showQuickEdit();
+
+            });
             $show->field('id');
             $show->field('rv_name');
             $show->field('rv_front_cover')->image();

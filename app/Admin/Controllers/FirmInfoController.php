@@ -52,6 +52,15 @@ class FirmInfoController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new FirmInfo(), function (Show $show) {
+            $show->panel()
+                ->tools(function ($tools) {
+                    // $tools->disableEdit();
+                    // $tools->disableList();
+                    // $tools->disableDelete();
+                    // 显示快捷编辑按钮
+                    $tools->showQuickEdit();
+
+            });
             // $show->field('id');
             $show->field('firm_id');
             $show->field('firm_name');

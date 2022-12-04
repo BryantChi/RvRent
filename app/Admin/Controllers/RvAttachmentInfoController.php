@@ -47,6 +47,15 @@ class RvAttachmentInfoController extends AdminController
     protected function detail($id)
     {
         return Show::make($id, new RvAttachmentInfo(), function (Show $show) {
+            $show->panel()
+                ->tools(function ($tools) {
+                    // $tools->disableEdit();
+                    // $tools->disableList();
+                    // $tools->disableDelete();
+                    // 显示快捷编辑按钮
+                    $tools->showQuickEdit();
+
+            });
             $show->field('id');
             $show->field('attachment_name');
             $show->field('attachment_icon')->image();

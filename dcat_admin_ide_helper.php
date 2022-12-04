@@ -11,6 +11,7 @@ namespace Dcat\Admin {
     use Illuminate\Support\Collection;
 
     /**
+     * @property Grid\Column|Collection sortable
      * @property Grid\Column|Collection id
      * @property Grid\Column|Collection uuid
      * @property Grid\Column|Collection connection
@@ -70,7 +71,15 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
      * @property Grid\Column|Collection extension
+     * @property Grid\Column|Collection nick_name
      * @property Grid\Column|Collection email_verified_at
+     * @property Grid\Column|Collection country
+     * @property Grid\Column|Collection phone
+     * @property Grid\Column|Collection line_id
+     * @property Grid\Column|Collection gender
+     * @property Grid\Column|Collection birthday
+     * @property Grid\Column|Collection driving_licence_number
+     * @property Grid\Column|Collection driving_licence_type
      * @property Grid\Column|Collection witness_front_cover
      * @property Grid\Column|Collection content
      * @property Grid\Column|Collection content_en
@@ -91,6 +100,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection itinerary_star
      * @property Grid\Column|Collection news_front_cover
      * @property Grid\Column|Collection category
+     * @property Grid\Column|Collection show_status
      * @property Grid\Column|Collection user_id
      * @property Grid\Column|Collection method
      * @property Grid\Column|Collection ip
@@ -103,8 +113,10 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection rv_front_cover
      * @property Grid\Column|Collection rv_series_id
      * @property Grid\Column|Collection rv_rent_setting
+     * @property Grid\Column|Collection attachment_id
      * @property Grid\Column|Collection rv_discription
      *
+     * @method Grid\Column|Collection sortable(string $label = null)
      * @method Grid\Column|Collection id(string $label = null)
      * @method Grid\Column|Collection uuid(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
@@ -164,7 +176,15 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
      * @method Grid\Column|Collection extension(string $label = null)
+     * @method Grid\Column|Collection nick_name(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
+     * @method Grid\Column|Collection country(string $label = null)
+     * @method Grid\Column|Collection phone(string $label = null)
+     * @method Grid\Column|Collection line_id(string $label = null)
+     * @method Grid\Column|Collection gender(string $label = null)
+     * @method Grid\Column|Collection birthday(string $label = null)
+     * @method Grid\Column|Collection driving_licence_number(string $label = null)
+     * @method Grid\Column|Collection driving_licence_type(string $label = null)
      * @method Grid\Column|Collection witness_front_cover(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
      * @method Grid\Column|Collection content_en(string $label = null)
@@ -185,6 +205,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection itinerary_star(string $label = null)
      * @method Grid\Column|Collection news_front_cover(string $label = null)
      * @method Grid\Column|Collection category(string $label = null)
+     * @method Grid\Column|Collection show_status(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
      * @method Grid\Column|Collection method(string $label = null)
      * @method Grid\Column|Collection ip(string $label = null)
@@ -197,6 +218,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection rv_front_cover(string $label = null)
      * @method Grid\Column|Collection rv_series_id(string $label = null)
      * @method Grid\Column|Collection rv_rent_setting(string $label = null)
+     * @method Grid\Column|Collection attachment_id(string $label = null)
      * @method Grid\Column|Collection rv_discription(string $label = null)
      */
     class Grid {}
@@ -204,6 +226,7 @@ namespace Dcat\Admin {
     class MiniGrid extends Grid {}
 
     /**
+     * @property Show\Field|Collection sortable
      * @property Show\Field|Collection id
      * @property Show\Field|Collection uuid
      * @property Show\Field|Collection connection
@@ -263,7 +286,15 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
      * @property Show\Field|Collection extension
+     * @property Show\Field|Collection nick_name
      * @property Show\Field|Collection email_verified_at
+     * @property Show\Field|Collection country
+     * @property Show\Field|Collection phone
+     * @property Show\Field|Collection line_id
+     * @property Show\Field|Collection gender
+     * @property Show\Field|Collection birthday
+     * @property Show\Field|Collection driving_licence_number
+     * @property Show\Field|Collection driving_licence_type
      * @property Show\Field|Collection witness_front_cover
      * @property Show\Field|Collection content
      * @property Show\Field|Collection content_en
@@ -284,6 +315,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection itinerary_star
      * @property Show\Field|Collection news_front_cover
      * @property Show\Field|Collection category
+     * @property Show\Field|Collection show_status
      * @property Show\Field|Collection user_id
      * @property Show\Field|Collection method
      * @property Show\Field|Collection ip
@@ -296,8 +328,10 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection rv_front_cover
      * @property Show\Field|Collection rv_series_id
      * @property Show\Field|Collection rv_rent_setting
+     * @property Show\Field|Collection attachment_id
      * @property Show\Field|Collection rv_discription
      *
+     * @method Show\Field|Collection sortable(string $label = null)
      * @method Show\Field|Collection id(string $label = null)
      * @method Show\Field|Collection uuid(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
@@ -357,7 +391,15 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
      * @method Show\Field|Collection extension(string $label = null)
+     * @method Show\Field|Collection nick_name(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
+     * @method Show\Field|Collection country(string $label = null)
+     * @method Show\Field|Collection phone(string $label = null)
+     * @method Show\Field|Collection line_id(string $label = null)
+     * @method Show\Field|Collection gender(string $label = null)
+     * @method Show\Field|Collection birthday(string $label = null)
+     * @method Show\Field|Collection driving_licence_number(string $label = null)
+     * @method Show\Field|Collection driving_licence_type(string $label = null)
      * @method Show\Field|Collection witness_front_cover(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
      * @method Show\Field|Collection content_en(string $label = null)
@@ -378,6 +420,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection itinerary_star(string $label = null)
      * @method Show\Field|Collection news_front_cover(string $label = null)
      * @method Show\Field|Collection category(string $label = null)
+     * @method Show\Field|Collection show_status(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
      * @method Show\Field|Collection method(string $label = null)
      * @method Show\Field|Collection ip(string $label = null)
@@ -390,6 +433,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection rv_front_cover(string $label = null)
      * @method Show\Field|Collection rv_series_id(string $label = null)
      * @method Show\Field|Collection rv_rent_setting(string $label = null)
+     * @method Show\Field|Collection attachment_id(string $label = null)
      * @method Show\Field|Collection rv_discription(string $label = null)
      */
     class Show {}
