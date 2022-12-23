@@ -1,10 +1,13 @@
 <?php
 
+use App\Admin\Repositories\AboutUsInfo;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Admin\Repositories\PageSettingInfo;
+use App\Http\Controllers\AboutUsController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,12 @@ Route::any('/clear-cache', function () {
 // Route::resource('/', 'App\Http\Controllers\IndexController');
 Route::any('/', [IndexController::class, 'index'])->name('index');
 
+Route::get('/about', [AboutUsController::class, 'index'])->name('about');
+
+Route::get('/contact', function() {
+    return view('contact');
+})->name('contact');
+
 Route::get('/car_rent', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('car_rent', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
@@ -45,22 +54,35 @@ Route::get('/car_rent', function () {
 Route::get('/car_rent_s2', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s2', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s2');
+})->middleware(['auth', 'verified'])->name('car_rent_s2');
 
 Route::get('/car_rent_s3', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s3', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s3');
+})->middleware(['auth', 'verified'])->name('car_rent_s3');
 
 Route::get('/car_rent_s4', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s4');
+})->middleware(['auth', 'verified'])->name('car_rent_s4');
 
 Route::get('/car_rent_s5', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s5', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s5');
+})->middleware(['auth', 'verified'])->name('car_rent_s5');
 
 Route::any('/news', [NewsController::class, 'index'])->name('news');
 Route::any('/news/{id}', [NewsController::class, 'show']);
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
+
+Route::prefix('member_center')->group(function() {
+    Route::middleware(['auth', 'verified'])->group(function() {
+        Route::get('profile', function () {
+            $pageInfo = PageSettingInfo::getBanners('/car_rent');
+            return view('member_center.profile', ['title' => '個人資料', 'pageInfo' => $pageInfo, 'user' => Auth::user()]);
+        })->name('member.profile');
+    });
+});

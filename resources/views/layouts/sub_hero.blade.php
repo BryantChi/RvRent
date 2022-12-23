@@ -1,7 +1,7 @@
 <!-- Hero Start -->
 <section class="bg-half-150 d-table w-100 position-relative"
     style="/*background: url('{{ asset('assets/images/home/pages.jpg') }}') center 36%;*/">
-    <div class="bg-overlay" style="background-image: url('{{ asset('assets/images/bg.png') }}')"></div>
+    {{-- <div class="bg-overlay" style="background-image: url('{{ asset('assets/images/bg.png') }}')"></div> --}}
 
     <div class="h-100 w-100 d-none d-md-block /*mt-md-6 mt-74*/ sub-hero">
         @if ($pageInfo->banner_img != '')

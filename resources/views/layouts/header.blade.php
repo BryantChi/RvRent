@@ -11,14 +11,28 @@
     <!-- Logo container-->
     <div>
         <a class="logo" href="{{ route('index') }}">
-            <img src="{{ asset('assets/img/icon/9O_logo_02.png')}}" height="60" alt="">
+            <img src="{{ asset('assets/img/icon/9O_logo_02.png') }}" height="60" alt="">
         </a>
     </div>
     <div class="buy-button">
-        <a href="#signup" class="text-dark login scroll-down mr-md-2">
-            {{-- <i data-feather="user"class="fea icon-ex-md"></i> --}}
-            <i class="fa-regular fa-user"></i>
-        </a>
+        @guest
+            <a href="{{ route('login') }}" class="text-dark login scroll-down mr-md-2">
+                {{-- <i data-feather="user"class="fea icon-ex-md"></i> --}}
+                <i class="fa-regular fa-user"></i>
+            </a>
+        @endguest
+        @auth
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();"
+                class="text-dark login scroll-down mr-md-2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endauth
+
         {{-- <a href="" class="btn btn-primary book-seat d-none">Reserve Seat</a> --}}
     </div>
     <!--end login button-->
@@ -40,6 +54,7 @@
     <div id="navigation">
         <!-- Navigation Menu-->
         <ul class="navigation-menu">
+            <li class="{{ request()->is('about') ? 'active' : '' }}"><a href="/about">關於我們</a></li>
             <li class="{{ request()->is('car_rent') ? 'active' : '' }}">
                 <a href="{{ route('car_rent') }}">即刻租車</a></span>
                 {{-- <ul class="submenu"><span class="menu-arrow">
@@ -98,7 +113,7 @@
             </li>
 
             <li class="/*has-submenu*/">
-                <a href="javascript:void(0)">聯繫我們</a>
+                <a href="/contact">聯繫我們</a>
                 {{-- <span class="menu-arrow"></span>
                 <ul class="submenu">
                     <li><a href="event-over.html">Overview</a></li>
@@ -106,8 +121,8 @@
                 </ul> --}}
             </li>
 
-            <li><a href="javascript:void(0)">我想買車</a></li>
-            <li><a href="javascript:void(0)">會員中心</a></li>
+            {{-- <li><a href="javascript:void(0)">我想買車</a></li> --}}
+            <li><a href="/member_center/profile">會員中心</a></li>
         </ul>
         <!--end navigation menu-->
         {{-- <div class="buy-menu-btn d-none">

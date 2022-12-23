@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <title>9o旅行家</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="App and Saas Landing Template" />
-    <meta name="keywords" content="Application, Clean, Saas, Dashboard, Bootstrap4" />
-    <meta content="Shreethemes" name="author" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta content="" name="author" />
     <!-- favicon -->
     <link rel="shortcut icon" href="images/favicon.ico.png">
     <!-- Bootstrap css -->

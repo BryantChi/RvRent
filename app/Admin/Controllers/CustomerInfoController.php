@@ -8,6 +8,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 use App\Models\User as Customer;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerInfoController extends AdminController
 {
@@ -109,18 +110,27 @@ class CustomerInfoController extends AdminController
             $form->email('email');
             // $form->text('email_verified_at');
             $form->password('password');
-            $form->password('password_check', __('確認密碼'));
+            // $form->password('password_check', __('確認密碼'));
             $form->text('country')->default('台灣');
             $form->mobile('phone')->options(['mask' => '9999 999 999']);
             $form->text('line_id');
             $form->radio('gender')->options(['m' => '男', 'f'=> '女', 'n' => '不顯示'])->default('m');
-            $form->text('birthday');
+            $form->date('birthday');
             $form->text('driving_licence_number');
             $form->text('driving_licence_type');
             // $form->text('remember_token');
 
             $form->display('created_at');
             $form->display('updated_at');
+
+            $form->saving(function (Form $form) {
+
+                $oldPwd = $form->password;
+                // 修改用户提交的数据
+                $form->password = Hash::make($oldPwd);
+
+            });
+
         });
     }
 }

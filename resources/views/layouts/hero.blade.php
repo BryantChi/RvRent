@@ -48,13 +48,7 @@
                                             <label class="d-block"><span style="letter-spacing: 8px;">租車</span>地 <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-control custom-select">
-                                                <option selected value="us">U.S.A</option>
-                                                <option value="in">India</option>
-                                                <option value="nz">New Zealand</option>
-                                                <option value="ch">China</option>
-                                                <option value="pak">Pakistan</option>
-                                                <option value="kor">Korea</option>
-                                                <option value="rus">Russia</option>
+                                                <option selected value="台中市">台中市</option>
                                             </select>
                                         </div>
                                     </div>
@@ -74,13 +68,7 @@
                                             <label class="d-block"><span style="letter-spacing: 8px;">還車</span>地 <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-control custom-select">
-                                                <option selected value="us">U.S.A</option>
-                                                <option value="in">India</option>
-                                                <option value="nz">New Zealand</option>
-                                                <option value="ch">China</option>
-                                                <option value="pak">Pakistan</option>
-                                                <option value="kor">Korea</option>
-                                                <option value="rus">Russia</option>
+                                                <option selected value="台中市">台中市</option>
                                             </select>
                                         </div>
                                     </div>
