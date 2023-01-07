@@ -13,4 +13,17 @@ class RvAttachmentInfo extends EloquentRepository
      * @var string
      */
     protected $eloquentClass = Model::class;
+
+    public static function getAttachment($arr) {
+        if (is_array($arr)) {
+            $attachmentInfos = new \stdClass();
+            $attachmentInfos->attach = array();
+            foreach ($arr as $key => $value) {
+                $data = Model::find($value);
+                array_push($attachmentInfos->attach, $data);
+            }
+
+            return $attachmentInfos;
+        }
+    }
 }

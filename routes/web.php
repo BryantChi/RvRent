@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\RvRentController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,10 +47,11 @@ Route::get('/contact', function() {
     return view('contact');
 })->name('contact');
 
-Route::get('/car_rent', function () {
-    $pageInfo = PageSettingInfo::getBanners('/car_rent');
-    return view('car_rent', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent');
+// Route::get('/car_rent', function () {
+//     $pageInfo = PageSettingInfo::getBanners('/car_rent');
+//     return view('car_rent', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
+// })->name('car_rent');
+Route::any('car_rent', [RvRentController::class, 'index'])->name('car_rent');
 
 Route::get('/car_rent_s2', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
