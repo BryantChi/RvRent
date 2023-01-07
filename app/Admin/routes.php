@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\RvVehicleInfoController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Dcat\Admin\Admin;
@@ -25,5 +26,6 @@ Route::group([
     $router->resource('/rv_series', 'RvSeriesInfoController');
     $router->resource('/rv_model', 'RvModelInfoController');
     $router->resource('/rv_attachment', 'RvAttachmentInfoController');
+    $router->resource('/rv_vehicle', 'RvVehicleInfoController');
 
 });

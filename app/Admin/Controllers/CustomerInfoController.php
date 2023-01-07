@@ -107,9 +107,9 @@ class CustomerInfoController extends AdminController
             $form->hidden('customer_id')->value($customer_id);
             $form->text('name')->required();
             $form->text('nick_name');
-            $form->email('email');
+            $form->email('email')->required();
             // $form->text('email_verified_at');
-            $form->password('password');
+            $form->password('password')->required();
             // $form->password('password_check', __('確認密碼'));
             $form->text('country')->default('台灣');
             $form->mobile('phone')->options(['mask' => '9999 999 999']);

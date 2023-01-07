@@ -10,6 +10,7 @@ return [
         'rv_series_id' => '露營車系列',
         'rv_rent_setting' => '租金設定',
         'attachment_id' => '車輛配件',
+        'stock' => '車輛庫存',
         'rv_discription' => '露營車介紹',
     ],
     'options' => [

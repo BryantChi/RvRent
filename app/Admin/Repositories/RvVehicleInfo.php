@@ -2,10 +2,10 @@
 
 namespace App\Admin\Repositories;
 
-use App\Models\RvModelInfo as Model;
+use App\Models\RvVehicleInfo as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 
-class RvModelInfo extends EloquentRepository
+class RvVehicleInfo extends EloquentRepository
 {
     /**
      * Model.
@@ -13,8 +13,4 @@ class RvModelInfo extends EloquentRepository
      * @var string
      */
     protected $eloquentClass = Model::class;
-
-    protected $cast = [
-        'rv_rent_setting' => 'json'
-    ];
 }

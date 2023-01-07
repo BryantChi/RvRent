@@ -67,6 +67,10 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection customer_token
      * @property Grid\Column|Collection rv_series_name
      * @property Grid\Column|Collection email
+     * @property Grid\Column|Collection vehicle_num
+     * @property Grid\Column|Collection model_id
+     * @property Grid\Column|Collection vehicle_status
+     * @property Grid\Column|Collection rent_status
      * @property Grid\Column|Collection value
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
@@ -172,6 +176,10 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection customer_token(string $label = null)
      * @method Grid\Column|Collection rv_series_name(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
+     * @method Grid\Column|Collection vehicle_num(string $label = null)
+     * @method Grid\Column|Collection model_id(string $label = null)
+     * @method Grid\Column|Collection vehicle_status(string $label = null)
+     * @method Grid\Column|Collection rent_status(string $label = null)
      * @method Grid\Column|Collection value(string $label = null)
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
@@ -282,6 +290,10 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection customer_token
      * @property Show\Field|Collection rv_series_name
      * @property Show\Field|Collection email
+     * @property Show\Field|Collection vehicle_num
+     * @property Show\Field|Collection model_id
+     * @property Show\Field|Collection vehicle_status
+     * @property Show\Field|Collection rent_status
      * @property Show\Field|Collection value
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
@@ -387,6 +399,10 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection customer_token(string $label = null)
      * @method Show\Field|Collection rv_series_name(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
+     * @method Show\Field|Collection vehicle_num(string $label = null)
+     * @method Show\Field|Collection model_id(string $label = null)
+     * @method Show\Field|Collection vehicle_status(string $label = null)
+     * @method Show\Field|Collection rent_status(string $label = null)
      * @method Show\Field|Collection value(string $label = null)
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
