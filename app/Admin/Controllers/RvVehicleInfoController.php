@@ -79,7 +79,7 @@ class RvVehicleInfoController extends AdminController
             if ($form->isCreating()) {
                 $form->select('model_id')->options(RvModel::pluck('rv_name', 'id'))->required();
             } else {
-                $form->display('model_id');
+                $form->display('model_id')->value($form->model()->model_id);
             }
 
             $form->radio('vehicle_status')->options(['rent_stay' => '可出租', 'rent_stop' => '暫停出租', 'rent_out' => '已出租', 'rent_back' => '已回車', 'rent_fix' => '維護中'])->default('rent_stay');
@@ -89,8 +89,9 @@ class RvVehicleInfoController extends AdminController
             $form->display('updated_at');
 
             $form->saving(function (Form $form) {
+
                 if ($form->isEditing()) {
-                    $rvModel = RvModel::find($form->model_id);
+                    $rvModel = RvModel::find($form->model()->model_id);
                     $rvVehicle = RvVehicle::find($form->getKey());
                     $lastStatus = $rvVehicle->vehicle_status;
                     switch ($form->vehicle_status) {
