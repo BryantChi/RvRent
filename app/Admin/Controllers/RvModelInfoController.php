@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\RvModelInfo;
 use Dcat\Admin\Form;
+use Dcat\Admin\Form\NestedForm;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
@@ -43,6 +44,7 @@ class RvModelInfoController extends AdminController
             })->label('success');
             $grid->column('rv_rent_setting')->hide();
             $grid->column('stock');
+            $grid->column('base_price');
             $grid->column('rv_discription')->display(function ($rvDiscription) {
                 return $rvDiscription;
             })->hide();
@@ -91,6 +93,7 @@ class RvModelInfoController extends AdminController
             })->label('success');
             // $show->field('rv_rent_setting');
             $show->field('stock');
+            $show->field('base_price');
             $show->field('rv_discription')->unescape()->as(function ($content) {
                 return $content;
             });
@@ -120,6 +123,7 @@ class RvModelInfoController extends AdminController
                 $val_status = $form->model()->stock;
             }
             $form->display('stock')->value($val_status);
+            $form->currency('base_price')->symbol('$');
 
             // $form->creating(function (Form $form) {
             //     $form->display('stock')->value(0);
@@ -131,17 +135,26 @@ class RvModelInfoController extends AdminController
                 $form->select('week', __('起始星期'))->options([0 => '星期日', 1 => '星期一', 2 => '星期二', 3 => '星期三', 4 => '星期四', 5 => '星期五', 6 => '星期六']);
                 $form->time('get', __('取車時間'))->format('HH:00');
                 $form->time('back', __('還車時間'))->format('HH:00');
-                $form->number('day', __('可租天數'));
-                $form->currency('rental', __('租金費率/天'))->symbol('$');
-                $form->currency('overtime', __('超租加收/天'))->symbol('$');
+                $form->number('day', __('可租天數(夜)'));
+                $form->currency('rental', __('租金費率/天(夜)'))->symbol('$');
+                $form->currency('overtime', __('超租加收/天(夜)'))->symbol('$');
                 $form->table('other_price', __('其他收費'), function ($table) {
                     $table->text('item', __('項目'));
                     $table->currency('price', __('價格'))->symbol('$');
+                    $table->select('type', __('計算方式'))->options(['night' => '天(夜)', 'times' => '次'])->default('night');
                 })->saving(function ($v) {
                     return json_encode($v);
                 });
+                $form->currency('milage', __('里程數/夜'))->symbol('km');
                 $form->text('note', __('備註'));
-                $form->switch('plan', __('設為方案'));
+                // $form->switch('plan', __(''));
+                $form->radio('plan', __('設為方案'))
+                    ->options([1 => '是', 0 => '否'])
+                    ->default(0)
+                    ->when(1, function (NestedForm $form) {
+                        $form->text('plan_title', __('方案名稱'));
+                    });
+
             })->saveAsJson();
 
 
