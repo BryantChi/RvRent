@@ -125,12 +125,6 @@ class RvModelInfoController extends AdminController
             $form->display('stock')->value($val_status);
             $form->currency('base_price')->symbol('$');
 
-            // $form->creating(function (Form $form) {
-            //     $form->display('stock')->value(0);
-            // });
-            // $form->editing(function (Form $form) {
-            //     $form->number('stock')->value($form->model()->stock);
-            // });
             $form->array('rv_rent_setting', function ($form) {
                 $form->select('week', __('起始星期'))->options([0 => '星期日', 1 => '星期一', 2 => '星期二', 3 => '星期三', 4 => '星期四', 5 => '星期五', 6 => '星期六']);
                 $form->time('get', __('取車時間'))->format('HH:00');
