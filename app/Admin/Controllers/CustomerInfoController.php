@@ -109,7 +109,11 @@ class CustomerInfoController extends AdminController
             $form->text('nick_name');
             $form->email('email')->required();
             // $form->text('email_verified_at');
-            $form->password('password')->required();
+            if ($form->isCreating()) {
+                $form->password('password')->required();
+            } else {
+                $form->password('password')->value($form->model()->password)->disable();
+            }
             // $form->password('password_check', __('確認密碼'));
             $form->text('country')->default('台灣');
             $form->mobile('phone')->options(['mask' => '9999 999 999']);
@@ -125,9 +129,11 @@ class CustomerInfoController extends AdminController
 
             $form->saving(function (Form $form) {
 
-                $oldPwd = $form->password;
-                // 修改用户提交的数据
-                $form->password = Hash::make($oldPwd);
+                if ($form->isCreating()) {
+                    $oldPwd = $form->password;
+                    // 修改用户提交的数据
+                    $form->password = Hash::make($oldPwd);
+                }
 
             });
 
