@@ -30,7 +30,7 @@ class CustomerInfoController extends AdminController
             $grid->column('nick_name');
             $grid->column('email');
             $grid->column('email_verified_at');
-            $grid->column('password');
+            $grid->column('password')->hide();
             $grid->column('country');
             $grid->column('phone');
             $grid->column('line_id');

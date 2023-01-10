@@ -12,7 +12,7 @@ class RvModelInfo extends Model
     protected $table = 'rv_model_infos';
 
     protected $casts = [
-        'attachment_id' => 'json'
+        'attachment_id' => 'json',
+        'rv_rent_setting' => 'json'
     ];
-
 }
