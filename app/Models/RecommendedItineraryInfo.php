@@ -10,5 +10,8 @@ class RecommendedItineraryInfo extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'recommended_itinerary_infos';
-    
+
+    protected $cast = [
+        'itinerary_imgs' => 'json'
+    ];
 }
