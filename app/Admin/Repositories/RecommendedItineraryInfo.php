@@ -13,8 +13,4 @@ class RecommendedItineraryInfo extends EloquentRepository
      * @var string
      */
     protected $eloquentClass = Model::class;
-
-    protected $cast = [
-        'itinerary_imgs' => 'json'
-    ];
 }

@@ -5,7 +5,8 @@
     <div class="h-100 w-100 hero-slick d-none d-md-block mt-md-6 mt-74">
         @foreach ($pageInfo as $item)
             @foreach ($item->page_banner_img as $item_img)
-                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img }}" class="img-fluid hero-img" alt="">
+                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img }}" class="img-fluid hero-img"
+                    alt="">
             @endforeach
         @endforeach
     </div>
@@ -13,7 +14,8 @@
     <div class="h-100 w-100 hero-slick d-block d-md-none mt-md-6 mt-74" style="height: 100vmax">
         @foreach ($pageInfo as $item)
             @foreach ($item->page_banner_img_mob as $item_img_mob)
-                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img_mob }}" class="img-fluid hero-img" alt="">
+                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img_mob }}" class="img-fluid hero-img"
+                    alt="">
             @endforeach
         @endforeach
     </div>
@@ -39,7 +41,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-10 col-12">
                 <div class="card feature-top border-0 shadow-md rounded-md overflow-hidden hero-box2">
-                    <form class="py-md-2 py-3 px-md-0 px-3 shadow rounded">
+                    <form action="{{ Route('IndexModelSearch') }}" method="post" id="modelSearchForm"
+                        class="py-md-2 py-3 px-md-0 px-3 shadow rounded">
                         <div class="row justify-content-center text-left">
                             <div class="/*col-lg-9 col-md-8*/ col-md-10">
                                 <div class="row align-items-center">
@@ -57,7 +60,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group mb-4 mb-md-0">
                                             <label class="d-block"> 日期/時間 : </label>
-                                            <input name="date" type="text"
+                                            <input type="text" name="date_get"
                                                 class="flatpickr flatpickr-input form-control" id="checkin-date">
                                         </div>
                                     </div>
@@ -77,8 +80,8 @@
                                     <div class="col-md-3">
                                         <div class="form-group mb-4 mb-md-0">
                                             <label class="d-block"> 日期/時間 : </label>
-                                            <input name="date" type="text"
-                                                class="flatpickr flatpickr-input form-control" id="checkin-date2">
+                                            <input type="text" name="date_back"
+                                                class="flatpickr flatpickr-input form-control" id="checkout-date">
                                         </div>
                                     </div>
                                     <!--end col-->
@@ -86,10 +89,10 @@
                             </div>
 
                             <div class="col-auto mt-md-4 pt-md">
-                                <!-- <input type="submit" id="search" name="search" class="searchbtn btn btn-primary btn-block" value="Search"> -->
-                                <a href="" class="img-fluid btn-block"><img
-                                        src="{{ asset('assets/img/icon/search.png') }}" class="pb-2" width="50px"
-                                        alt=""></a>
+                                @csrf
+                                {{-- <input type="submit" id="search" name="search" class="searchbtn btn btn-primary btn-block d-none" value="Search"> --}}
+                                <img src="{{ asset('assets/img/icon/search.png') }}"
+                                    class="pb-2 img-fluid submit-models" style="cursor: pointer;" width="50px" alt="">
                             </div>
                         </div>
                     </form>
@@ -103,7 +106,17 @@
     <!--end container-->
 </section>
 <!--end section-->
-
+<script>
+    $(function() {
+        $('.submit-models').click(function() {
+            var get = new Date($('#checkin-date').val());
+            var back = new Date($('#checkout-date').val());
+            // console.log(back <= get);
+            if (back > get) $('#modelSearchForm').submit();
+            else Swal.fire("注意！", "日期選擇錯誤！", "warning");
+        });
+    })
+</script>
 
 {{-- <div class="container">
     <div class="row mt-5 align-items-center">

@@ -10,6 +10,7 @@
     <meta content="" name="author" />
     <!-- favicon -->
     <link rel="shortcut icon" href="images/favicon.ico.png">
+    <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
     <!-- Bootstrap css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Icons -->
@@ -18,7 +19,10 @@
     <!-- Icons -->
     <link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
     <!-- Date picker -->
-    <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/flatpickr.min.css') }}"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.1/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh-tw.js"></script>
     <!-- Slider -->
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}" />
@@ -28,6 +32,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main css File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/news.css') }}" rel="stylesheet" type="text/css" />
@@ -84,7 +90,7 @@
     <!-- Back to top -->
 
     <!-- javascript -->
-    <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
+
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('assets/js/scrollspy.min.js') }}"></script>
@@ -96,7 +102,9 @@
     <!-- Icon -->
     <script src="{{ asset('assets/js/feather.min.js') }}"></script>
     <!-- Datepicker -->
-    <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script> --}}
+
+
     <script src="{{ asset('assets/js/flatpickr.init.js') }}"></script>
     <!-- SLIDER -->
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>

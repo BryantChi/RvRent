@@ -13,8 +13,4 @@ class RvModelInfo extends EloquentRepository
      * @var string
      */
     protected $eloquentClass = Model::class;
-
-    protected $cast = [
-        'rv_rent_setting' => 'json'
-    ];
 }
