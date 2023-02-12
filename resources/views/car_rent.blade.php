@@ -146,13 +146,13 @@
         }
         $("#checkin-date2").flatpickr({
             defaultDate: dayget,
-            minDate: dayget,
+            minDate: "today",
             "locale": "zh_tw",
         });
 
         $("#checkout-date2").flatpickr({
             defaultDate: dayback,
-            minDate: dayback,
+            minDate: "today",
             "locale": "zh_tw",
         });
 
