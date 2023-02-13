@@ -17,8 +17,9 @@ class NewsController extends Controller
     public function index()
     {
         //
-        $newInfo = NewsInfo::orderBy('updated_at', 'desc')->limit(15)->get();
-        return view('news', ['newInfo' => $newInfo, 'title' => $this->title, 'pageInfo' => $this->getBanner()]);
+        $newInfo = NewsInfo::orderBy('updated_at', 'desc')->paginate(9);
+        $popular = NewsInfo::where('popular', '=', 1)->orderBy('updated_at', 'desc')->get();
+        return view('news', ['newInfo' => $newInfo, 'popular' => $popular, 'title' => $this->title, 'pageInfo' => $this->getBanner()]);
     }
 
     /**

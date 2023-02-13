@@ -2,7 +2,7 @@
     <div class="row rv_item_box rounded mb-3 position-relative p-0 m-0 w-100" style="border: 1px solid #e0e0e0;">
         <div class="col-md-4">
             <div class="item-img mt-3">
-                <img src="{{ $model->rv_front_cover != null ? 'http://9o-traveller.com.tw/uploads/' . $model->rv_front_cover : asset('assets/img/icon/rv-icon/1.png') }}"
+                <img src="{{ $model->rv_front_cover != null ? env('APP_URL') . '/uploads/' . $model->rv_front_cover : asset('assets/img/icon/rv-icon/1.png') }}"
                     class="img-fluid" alt="9otravel">
                 <h4 class="text-center mt-3">{{ $model->rv_name }}</h4>
             </div>
@@ -11,7 +11,7 @@
             <div class="row g-0 w-75 mx-auto" style="width: 80% !important;">
                 @foreach ($attachmentInfo->attachments[$model->id]->attach as $item)
                     <div class="col-md-4 col-6 my-2 d-flex align-items-center" style="color: #f7c000">
-                        <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item->attachment_icon }}"
+                        <img src="{{ env('APP_URL') . '/uploads/' . $item->attachment_icon }}"
                             class="img_fluid mr-3" width="36" alt="{{ __('') }}">
                         <span>{{ $item->attachment_name }}</span>
                     </div>

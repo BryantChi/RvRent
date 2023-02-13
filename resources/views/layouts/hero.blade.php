@@ -5,7 +5,7 @@
     <div class="h-100 w-100 hero-slick d-none d-md-block mt-md-6 mt-74">
         @foreach ($pageInfo as $item)
             @foreach ($item->page_banner_img as $item_img)
-                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img }}" class="img-fluid hero-img"
+                <img src="{{ env('APP_URL') . '/uploads/' . $item_img }}" class="img-fluid hero-img"
                     alt="">
             @endforeach
         @endforeach
@@ -14,7 +14,7 @@
     <div class="h-100 w-100 hero-slick d-block d-md-none mt-md-6 mt-74" style="height: 100vmax">
         @foreach ($pageInfo as $item)
             @foreach ($item->page_banner_img_mob as $item_img_mob)
-                <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $item_img_mob }}" class="img-fluid hero-img"
+                <img src="{{ env('APP_URL') . '/uploads/' . $item_img_mob }}" class="img-fluid hero-img"
                     alt="">
             @endforeach
         @endforeach

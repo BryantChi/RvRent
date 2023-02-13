@@ -36,8 +36,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main css File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/news.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/car_rent.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/footer.css') }}" rel="stylesheet" type="text/css" />
 </head>
 

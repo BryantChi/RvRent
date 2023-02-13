@@ -5,7 +5,7 @@
 
     <div class="h-100 w-100 d-none d-md-block /*mt-md-6 mt-74*/ sub-hero">
         @if ($pageInfo->banner_img != '')
-            <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $pageInfo->banner_img }}" class="img-fluid hero-img" alt="">
+            <img src="{{ env('APP_URL') . '/uploads/' . $pageInfo->banner_img }}" class="img-fluid hero-img" alt="">
         @else
             <img src="{{ asset('assets/images/home/pages.jpg') }}" class="img-fluid hero-img" alt="">
         @endif
@@ -13,7 +13,7 @@
 
     <div class="h-100 w-100 d-block d-md-none /*mt-md-6 mt-74*/ sub-hero" style="height: 100vmax">
         @if ($pageInfo->banner_img_mob != '')
-            <img src="{{ 'http://9o-traveller.com.tw/uploads/' . $pageInfo->banner_img_mob }}" class="img-fluid hero-img" alt="">
+            <img src="{{ env('APP_URL') . '/uploads/' . $pageInfo->banner_img_mob }}" class="img-fluid hero-img" alt="">
         @else
             <img src="{{ asset('assets/images/home/pages.jpg') }}" class="img-fluid hero-img" alt="">
         @endif
