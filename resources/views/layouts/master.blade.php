@@ -36,6 +36,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main css File -->
     <link href="{{ asset('assets/css/style.css') }}?v=20230213" rel="stylesheet" type="text/css" />
+    @if (request()->is('car_rent*') || request()->is('indexModelSearch*'))
+        <link href="{{ asset('assets/css/car_rent.css') }}?v=20230213" rel="stylesheet" />
+    @endif
+    @if (request()->is('news'))
+        <link href="{{ asset('assets/css/news.css') }}?v=20230213" rel="stylesheet" />
+    @endif
     <link href="{{ asset('assets/css/footer.css') }}?v=20230213" rel="stylesheet" type="text/css" />
 </head>
 
