@@ -35,8 +35,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main css File -->
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/footer.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/style.css') }}?v=20230213" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/footer.css') }}?v=20230213" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -114,7 +114,7 @@
     {{-- <script src="{{ asset('assets/js/backstretch.init.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js "></script>
     <!-- Main Js -->
-    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}?v=20230213"></script>
     <script>
         $(function() {
             $('.hero-slick').slick({

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-<link href="{{ asset('assets/css/news.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/news.css') }}?v=20230213" rel="stylesheet" type="text/css" />
 
 @section('content_section')
     @include('layouts.sub_hero')
