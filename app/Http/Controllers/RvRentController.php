@@ -74,6 +74,11 @@ class RvRentController extends Controller
     public function show($id)
     {
         //
+        $rvModel = RvModel::find($id);
+        $attachmentInfo = new \stdClass();
+        $attachmentInfo->attachments = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
+        // dd($attachmentInfo);
+        return view('car_rent_details', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'model' => $rvModel, 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default]);
     }
 
     /**

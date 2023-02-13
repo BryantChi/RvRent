@@ -37,7 +37,7 @@
                 <div class="col-12 justify-content-end d-flex p-0">
                     <a href="{{ route('car_rent_s2') }}" class="btn btn-primary3 ml-2"><i
                             class="fa-solid fa-cart-shopping"></i> 選擇</a>
-                    <a href="" class="btn btn-primary3 ml-2 text-uppercase">learn more</a>
+                    <a href="{{ route('Rv_Detail', ['id' => $model->id]) }}" class="btn btn-primary3 ml-2 text-uppercase">learn more</a>
                 </div>
             </div>
         </div>

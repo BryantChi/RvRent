@@ -55,6 +55,8 @@ Route::any('/indexModelSearch', [RvRentController::class, 'filterModelsDefault']
 
 Route::any('car_rent', [RvRentController::class, 'index'])->name('car_rent');
 
+Route::any('/Rv_Detail/{id}', [RvRentController::class, 'show'])->name('Rv_Detail');
+
 Route::get('/car_rent_s2', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s2', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);

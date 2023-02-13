@@ -55,7 +55,7 @@
         <!-- Navigation Menu-->
         <ul class="navigation-menu">
             <li class="{{ request()->is('about') ? 'active' : '' }}"><a href="/about">關於我們</a></li>
-            <li class="{{ request()->is('car_rent') ? 'active' : '' }}">
+            <li class="{{ request()->is('car_rent') || request()->is('indexModelSearch') ? 'active' : '' }}">
                 <a href="{{ route('car_rent') }}">即刻租車</a></span>
                 {{-- <ul class="submenu"><span class="menu-arrow">
                     <li><a href="index.html">Home One</a></li>
