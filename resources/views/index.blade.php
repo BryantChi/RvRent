@@ -11,42 +11,18 @@
                 <h4 class="title mb-4">最新車款</h4>
             </div>
             <div class="row justify-content-center m-0 text-center owl-carousel owl-theme" id="client-testi">
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
-                <div class="col-md-12">
-                    <img src="{{ asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid" alt="">
-                    <h5>Cliff 600TR</h5>
-                </div>
+                @foreach ($rvModelInfo as $model)
+                    <div class="col-md-12">
+                        <a href="{{ route('Rv_Detail', ['id' => $model->id]) }}">
+                            <img src="{{ env('APP_URL') . '/uploads/' . $model->rv_front_cover }}" class="img-fluid" alt="">
+                            <h5 style="color: #ff9c35">{{ $model->rv_name }}</h5>
+                        </a>
+                    </div>
+                @endforeach
             </div>
             <div class="row justify-content-end mt-5">
                 <div class="col-auto d-flex more-car">
-                    <a class="d-flex" href="">
+                    <a class="d-flex" href="{{ route('car_rent') }}">
                         <div class="line mx-3 my-auto"></div>
                         <p class="my-auto">更多車型</p>
                     </a>
@@ -87,6 +63,4 @@
             </div>
         </div>
     </section>
-
-
 @endsection

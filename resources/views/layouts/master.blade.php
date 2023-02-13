@@ -39,7 +39,7 @@
     @if (request()->is('car_rent*') || request()->is('indexModelSearch*'))
         <link href="{{ asset('assets/css/car_rent.css') }}?v=20230213" rel="stylesheet" />
     @endif
-    @if (request()->is('news'))
+    @if (request()->is('news*'))
         <link href="{{ asset('assets/css/news.css') }}?v=20230213" rel="stylesheet" />
     @endif
     <link href="{{ asset('assets/css/footer.css') }}?v=20230213" rel="stylesheet" type="text/css" />

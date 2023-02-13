@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PageSettingInfo as PageSetting;
+use App\Models\RvModelInfo as RvModelInfo;
 
 class IndexController extends Controller
 {
@@ -16,7 +17,8 @@ class IndexController extends Controller
     {
         //
         $pageInfo = PageSetting::where('page_url', '=', '/index')->get();
-        return view('index', ['pageInfo' => $pageInfo]);
+        $rvModelInfo = RvModelInfo::all();
+        return view('index', ['pageInfo' => $pageInfo, 'rvModelInfo' => $rvModelInfo]);
     }
 
     /**
