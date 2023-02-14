@@ -36,8 +36,7 @@ class CustomerInfoController extends AdminController
             $grid->column('line_id');
             $grid->column('gender');
             $grid->column('birthday');
-            $grid->column('driving_licence_number');
-            $grid->column('driving_licence_type');
+            $grid->column('driving_licence')->image();
             // $grid->column('remember_token');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -82,8 +81,7 @@ class CustomerInfoController extends AdminController
             $show->field('line_id');
             $show->field('gender');
             $show->field('birthday');
-            $show->field('driving_licence_number');
-            $show->field('driving_licence_type');
+            $show->field('driving_licence')->image();
             // $show->field('remember_token');
             $show->field('created_at');
             $show->field('updated_at');
@@ -120,8 +118,7 @@ class CustomerInfoController extends AdminController
             $form->text('line_id');
             $form->radio('gender')->options(['m' => '男', 'f'=> '女', 'n' => '不顯示'])->default('m');
             $form->date('birthday');
-            $form->text('driving_licence_number');
-            $form->text('driving_licence_type');
+            $form->image('driving_licence')->move('images/user_driving_licence')->uniqueName()->rules('mimes:jpg,jpeg,png,gif');;
             // $form->text('remember_token');
 
             $form->display('created_at');

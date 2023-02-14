@@ -56,7 +56,7 @@
                     <div class="middle-menu-item item-3 position-relative">
                         <div class="middle-menu-txt text-center">
                             <h3>租車見證</h3>
-                            <a class="btn btn-primary3" href="">Learn More</a>
+                            <a class="btn btn-primary3" href="{{ route('rent_witness') }}">Learn More</a>
                         </div>
                     </div>
                 </div>
