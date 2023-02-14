@@ -126,18 +126,20 @@ class RvRentController extends Controller
 
         $model_filter = array_filter($models->toArray(), function ($v) {
             $rv_rent_setting = json_decode($v["rv_rent_setting"]);
-            return count(array_filter($rv_rent_setting, function ($vi) {
-                $week = date('w', strtotime($this->time_start_default));
-                $data_back = date('Y-m-d', strtotime('+' . $vi->day . ' day', strtotime($this->time_start_default))) . ' ' . $vi->back;
+            if (!is_null($rv_rent_setting) || is_array($rv_rent_setting)) {
+                return count(array_filter($rv_rent_setting, function ($vi) {
+                    $week = date('w', strtotime($this->time_start_default));
+                    $data_back = date('Y-m-d', strtotime('+' . $vi->day . ' day', strtotime($this->time_start_default))) . ' ' . $vi->back;
 
-                $firstDate  = new \DateTime($this->time_start_default);
-                $secondDate = new \DateTime($this->time_end_default);
-                $intvl = $secondDate->diff($firstDate);
-                // var_dump($intvl->d);
+                    $firstDate  = new \DateTime($this->time_start_default);
+                    $secondDate = new \DateTime($this->time_end_default);
+                    $intvl = $secondDate->diff($firstDate);
+                    // var_dump($intvl->d);
 
-                return $vi->week == $week && $intvl->d == $vi->day;
-                // strtotime($this->time_end_default) >= strtotime($data_back)
-            })) > 0  && $v["stock"] >= 0;
+                    return $vi->week == $week && $intvl->d == $vi->day;
+                    // strtotime($this->time_end_default) >= strtotime($data_back)
+                })) > 0  && $v["stock"] > 0;
+            }
         });
         $models = json_decode(json_encode($model_filter));
         $attachmentInfo = new \stdClass();
