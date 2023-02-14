@@ -80,6 +80,11 @@ Route::get('/car_rent_s5', function () {
 Route::any('/news', [NewsController::class, 'index'])->name('news');
 Route::any('/news/{id}', [NewsController::class, 'show']);
 
+Route::any('rent_witness', function () {
+    $pageInfo = PageSettingInfo::getBanners('/rent_witness');
+    return view('rent_witness', ['title' => '租車見證', 'pageInfo' => $pageInfo]);
+})->name('rent_witness');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
