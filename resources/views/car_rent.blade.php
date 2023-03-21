@@ -43,6 +43,16 @@
                                         id="checkout-date2">
                                 </div>
                             </div>
+                            <div class="col-md-12 col-1 d-none d-md-block">
+                                <div class="liner"></div>
+                            </div>
+                            <div class="col-md-12 p-md-1 p-0">
+                                <div class="form-group mb-4 mb-md-0 d-md-block d-flex">
+                                    <label class="d-block"> 床位數 : </label>
+                                    <input name="bed_count" type="text" class="form-control"
+                                        id="bed-count">
+                                </div>
+                            </div>
                             <div class="col-md-12 text-center align-self-center mt-md-3">
                                 {{-- @csrf --}}
                                 <input type="button" id="search" name="search" class="btn btn-primary3 w-100"
@@ -132,8 +142,10 @@
         var today = new Date();
         var bDayGet = '<?php if ($date_get !== null && $date_get != '') { echo (string) $date_get; } ?>';
         var bDayBack = '<?php if ($date_back !== null && $date_back != '') { echo (string) $date_back; } ?>';
+        var bBedCount = '<?php if ($bed_count !== null && $bed_count != '') { echo (string) $bed_count; } ?>';
         var dayget = "";
         var dayback = "";
+        var bednum = 0;
         if (bDayGet != null && bDayGet != '') {
             dayget = bDayGet;
         } else {
@@ -143,6 +155,11 @@
             dayback = bDayBack;
         } else {
             dayback = today;
+        }
+        if (bBedCount != null && bBedCount != '') {
+            bednum = bBedCount;
+        } else {
+            bednum = 0;
         }
         $("#checkin-date2").flatpickr({
             defaultDate: dayget,
@@ -156,17 +173,24 @@
             "locale": "zh_tw",
         });
 
+        $('#bed-count').val(bednum);
+
         var car_date_get = '';
         var car_date_back = '';
 
         function modelsSelect(src) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();
+            car_bed_num = $('#bed-count').val();
 
             var get = new Date($('#checkin-date2').val());
             var back = new Date($('#checkout-date2').val());
             if (back <= get) {
                 Swal.fire("注意！", "日期選擇錯誤！", "warning");
+                return;
+            }
+            if (car_bed_num == 0) {
+                Swal.fire("注意！", "床位數未填寫！", "warning");
                 return;
             }
 
@@ -176,6 +200,7 @@
                 data: {
                     date_get: car_date_get,
                     date_back: car_date_back,
+                    bed_count: car_bed_num,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(res) {

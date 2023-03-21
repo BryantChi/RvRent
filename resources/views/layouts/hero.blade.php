@@ -39,14 +39,14 @@
 <section class="section bg-white pb-0" id="reserve-form2s">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10 col-12">
+            <div class="col-auto">
                 <div class="card feature-top border-0 shadow-md rounded-md overflow-hidden hero-box2">
                     <form action="{{ Route('IndexModelSearch') }}" method="post" id="modelSearchForm"
                         class="py-md-2 py-3 px-md-0 px-3 shadow rounded">
                         <div class="row justify-content-center text-left">
                             <div class="/*col-lg-9 col-md-8*/ col-md-10">
-                                <div class="row align-items-center">
-                                    <div class="col-md-3">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-md-2">
                                         <div class="form-group mb-4 mb-md-0">
                                             <label class="d-block"><span style="letter-spacing: 8px;">租車</span>地 <span
                                                     class="text-danger">*</span></label>
@@ -66,7 +66,7 @@
                                     </div>
                                     <!--end col-->
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group mb-4 mb-md-0">
                                             <label class="d-block"><span style="letter-spacing: 8px;">還車</span>地 <span
                                                     class="text-danger">*</span></label>
@@ -85,6 +85,14 @@
                                         </div>
                                     </div>
                                     <!--end col-->
+
+                                    <div class="col-md-2">
+                                        <div class="form-group mb-4 mb-md-0">
+                                            <label class="d-block"> 床位數 : </label>
+                                            <input type="number" name="bed_count"
+                                                class="form-control" id="bed-count" value="0">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -111,9 +119,13 @@
         $('.submit-models').click(function() {
             var get = new Date($('#checkin-date').val());
             var back = new Date($('#checkout-date').val());
+            var bednum = $('#bed-count').val();
             // console.log(back <= get);
-            if (back > get) $('#modelSearchForm').submit();
-            else Swal.fire("注意！", "日期選擇錯誤！", "warning");
+            if (back > get && bednum > 0) {
+                $('#modelSearchForm').submit();
+            } else if (bednum == 0) {
+                Swal.fire("注意！", "床位數未填寫！", "warning");
+            } else Swal.fire("注意！", "日期選擇錯誤！", "warning");
         });
     })
 </script>

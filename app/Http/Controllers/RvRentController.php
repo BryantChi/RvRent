@@ -16,6 +16,7 @@ class RvRentController extends Controller
 
     private $time_start_default = '';
     private $time_end_default = '';
+    private $bed_count = 0;
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +34,7 @@ class RvRentController extends Controller
         // });
         // dd(json_decode(json_encode($model_filter)));
         $model_filter = array_filter($rvModelInfo->toArray(), function ($v) {
-            return $v["stock"] >= 0;
+            return $v["stock"] >= 0 && $v["bed_count"] >= 0;
         });
         $rvModelInfo = json_decode(json_encode($model_filter));
         $attachmentInfo = new \stdClass();
@@ -41,7 +42,7 @@ class RvRentController extends Controller
         foreach ($rvModelInfo as $rvModel) {
             $attachmentInfo->attachments[$rvModel->id] = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
         }
-        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default]);
+        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
     }
 
     /**
@@ -78,7 +79,7 @@ class RvRentController extends Controller
         $attachmentInfo = new \stdClass();
         $attachmentInfo->attachments = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
         // dd($attachmentInfo);
-        return view('car_rent_details', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'model' => $rvModel, 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default]);
+        return view('car_rent_details', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'model' => $rvModel, 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
     }
 
     /**
@@ -123,6 +124,7 @@ class RvRentController extends Controller
         $models = RvModel::all();
         $this->time_start_default = $input['date_get'];
         $this->time_end_default = $input['date_back'];
+        $this->bed_count = $input['bed_count'];
 
         $model_filter = array_filter($models->toArray(), function ($v) {
             $rv_rent_setting = json_decode($v["rv_rent_setting"]);
@@ -138,7 +140,7 @@ class RvRentController extends Controller
 
                     return $vi->week == $week && $intvl->d == $vi->day;
                     // strtotime($this->time_end_default) >= strtotime($data_back)
-                })) > 0  && $v["stock"] > 0;
+                })) > 0  && $v["stock"] > 0 && $v["bed_count"] <= $this->bed_count;
             }
         });
         $models = json_decode(json_encode($model_filter));
@@ -151,7 +153,7 @@ class RvRentController extends Controller
         if ($request->ajax()) {
             return \Response::json(\View::make('car_rent_items', array('rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo))->render());
         } else {
-            return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default]);
+            return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
         }
 
 
