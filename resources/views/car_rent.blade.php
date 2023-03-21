@@ -46,9 +46,9 @@
                             <div class="col-md-12 col-1 d-none d-md-block">
                                 <div class="liner"></div>
                             </div>
-                            <div class="col-md-12 p-md-1 p-0">
-                                <div class="form-group mb-4 mb-md-0 d-md-block d-flex">
-                                    <label class="d-block"> 床位數 : </label>
+                            <div class="col-md-12 col-auto p-md-1">
+                                <div class="form-group mb-4 mb-md-0 d-flex d-md-block align-items-md-start align-items-center">
+                                    <label class="w-50 mb-0 mb-md-2"> <span style="letter-spacing: 8px;">床位</span>數 : </label>
                                     <input name="bed_count" type="text" class="form-control"
                                         id="bed-count">
                                 </div>

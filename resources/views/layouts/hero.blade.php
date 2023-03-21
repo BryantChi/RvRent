@@ -88,7 +88,7 @@
 
                                     <div class="col-md-2">
                                         <div class="form-group mb-4 mb-md-0">
-                                            <label class="d-block"> 床位數 : </label>
+                                            <label class="d-block"> <span style="letter-spacing: 8px;">床位</span>數 : </label>
                                             <input type="number" name="bed_count"
                                                 class="form-control" id="bed-count" value="0">
                                         </div>
