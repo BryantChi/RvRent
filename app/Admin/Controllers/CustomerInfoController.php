@@ -37,6 +37,7 @@ class CustomerInfoController extends AdminController
             $grid->column('gender');
             $grid->column('birthday');
             $grid->column('driving_licence')->image();
+            $grid->column('driving_licence_certified')->switch();
             // $grid->column('remember_token');
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -103,6 +104,7 @@ class CustomerInfoController extends AdminController
                 $customer_id = 'C' . date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
             }
             $form->hidden('customer_id')->value($customer_id);
+            // $form->image('profile_photo')->move('images/user_profile/'.$customer_id)->uniqueName()->rules('mimes:jpg,jpeg,png,gif');
             $form->text('name')->required();
             $form->text('nick_name');
             $form->email('email')->required();
@@ -118,7 +120,8 @@ class CustomerInfoController extends AdminController
             $form->text('line_id');
             $form->radio('gender')->options(['m' => '男', 'f'=> '女', 'n' => '不顯示'])->default('m');
             $form->date('birthday');
-            $form->image('driving_licence')->move('images/user_driving_licence')->uniqueName()->rules('mimes:jpg,jpeg,png,gif');;
+            $form->image('driving_licence')->move('images/user_driving_licence/'.$customer_id)->uniqueName()->rules('mimes:jpg,jpeg,png,gif');
+            $form->switch('driving_licence_certified');
             // $form->text('remember_token');
 
             $form->display('created_at');

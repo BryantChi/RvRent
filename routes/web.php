@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RvRentController;
 // use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -95,5 +96,6 @@ Route::prefix('member_center')->group(function() {
             $pageInfo = PageSettingInfo::getBanners('/car_rent');
             return view('member_center.profile', ['title' => '個人資料', 'pageInfo' => $pageInfo, 'user' => Auth::user()]);
         })->name('member.profile');
+        Route::any('profile/{user}', [ProfileController::class, 'update'])->name('member.profile.update');
     });
 });

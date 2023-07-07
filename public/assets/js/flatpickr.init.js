@@ -4,16 +4,33 @@ var tomorrow = new Date();
 // tomorrow.setDate(today.getDate() + 1);
 
 $("#checkin-date").flatpickr({
-    defaultDate:today,
+    defaultDate: today,
     minDate: "today",
-    "locale": "zh_tw",
+    locale: "zh_tw",
 });
 
 $("#checkout-date").flatpickr({
-    defaultDate:today,
+    defaultDate: today,
     minDate: "today",
-    "locale": "zh_tw",
+    locale: "zh_tw",
 });
+
+// var lastBirthdayYear = today.getFullYear() - 20;
+// var lastBirthdayMonth = today.getMonth() + 1;
+// var lastBirthdayDate = today.getDate();
+// var lastBirthdayStr =
+//     lastBirthdayYear + "-" + lastBirthdayMonth + "-" + lastBirthdayDate;
+// var lastBirthday = new Date(lastBirthdayStr);
+// var lastBirth = "<?php echo $user->birthday; ?>";
+// if (lastBirth != null || lastBirth != "") {
+//     lastBirthday = new Date(lastBirth);
+// }
+
+// $("#birth-date").flatpickr({
+//     defaultDate: lastBirthday,
+//     maxDate: lastBirthday,
+//     locale: "zh_tw",
+// });
 
 // $("#checkin-date2").flatpickr({
 //     defaultDate:today,

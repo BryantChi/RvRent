@@ -14,7 +14,7 @@
                 @foreach ($rvModelInfo as $model)
                     <div class="col-md-12">
                         <a href="{{ route('Rv_Detail', ['id' => $model->id]) }}">
-                            <img src="{{ env('APP_URL') . '/uploads/' . $model->rv_front_cover }}" class="img-fluid" alt="">
+                            <img src="{{ $model->rv_front_cover != null ? env('APP_URL') . '/uploads/' . $model->rv_front_cover : asset('assets/img/icon/rv-icon/1.png') }}" class="img-fluid img-model-slick" alt="">
                             <h5 style="color: #ff9c35">{{ $model->rv_name }}</h5>
                         </a>
                     </div>

@@ -6,6 +6,7 @@ return [
     ],
     'fields' => [
         'customer_id' => '會員編號',
+        'profile_photo' => '大頭照',
         'name' => '會員姓名',
         'password' => '密碼',
         'email_verified_at' => '信箱驗證',
@@ -17,7 +18,7 @@ return [
         'email' => '信箱',
         'line_id' => 'LineID',
         'country' => '國別',
-        'verify' => '驗證',
+        'driving_licence_certified' => '駕照驗證',
         'remember_token' => 'Token',
     ],
     'options' => [
