@@ -158,7 +158,7 @@
                                     </div>
                                 @enderror
                                 <div id="licence" class="licence d-inline-block float-left position-relative mr-md-2 {{ $user->driving_licence != '' || $user->driving_licence != null ? '' : 'd-none' }}">
-                                    <img class="my-2 img-fluid" src="{{ $user->driving_licence != null || $user->driving_licence != "" ? url('uploads/'.$user->driving_licence) : '' }}" style="width: 350px;"
+                                    <img class="my-2 img-fluid" src="{{ $user->driving_licence != null || $user->driving_licence != "" ? env('APP_URL') . '/uploads/' . $user->driving_licence : '' }}" style="width: 350px;"
                                         alt="">
 
                                     <span class="position-absolute {{ $user->driving_licence != '' || $user->driving_licence != null ? '' : 'd-none' }}" style="position: absolute;top: 15px;left: 15px;background: #ffffffa4; padding: 5px;">
