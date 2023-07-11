@@ -58,25 +58,23 @@ Route::any('car_rent', [RvRentController::class, 'index'])->name('car_rent');
 
 Route::any('/Rv_Detail/{id}', [RvRentController::class, 'show'])->name('Rv_Detail');
 
-Route::get('/car_rent_s2', function () {
-    $pageInfo = PageSettingInfo::getBanners('/car_rent');
-    return view('rv_rent_s2', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->middleware(['auth', 'verified'])->name('car_rent_s2');
-
+Route::any('/remove-carrent-cookie', [RvRentController::class, 'removeCarRentCookie'])->name('remove-carrent-cookie')->middleware(['auth', 'verified']);
+Route::any('/car_rent_s2/{rvm_id}', [RvRentController::class, 'stepOneShow'])->name('car_rent_s2')->middleware(['auth', 'verified']);
+// ->middleware(['auth', 'verified'])
 Route::get('/car_rent_s3', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s3', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->middleware(['auth', 'verified'])->name('car_rent_s3');
+})->name('car_rent_s3')->middleware(['auth', 'verified']);
 
 Route::get('/car_rent_s4', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->middleware(['auth', 'verified'])->name('car_rent_s4');
+})->name('car_rent_s4')->middleware(['auth', 'verified']);
 
 Route::get('/car_rent_s5', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
     return view('rv_rent_s5', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->middleware(['auth', 'verified'])->name('car_rent_s5');
+})->name('car_rent_s5')->middleware(['auth', 'verified']);
 
 Route::any('/news', [NewsController::class, 'index'])->name('news');
 Route::any('/news/{id}', [NewsController::class, 'show']);

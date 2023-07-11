@@ -49,14 +49,14 @@
                             <div class="col-md-12 col-auto p-md-1">
                                 <div class="form-group mb-4 mb-md-0 d-flex d-md-block align-items-md-start align-items-center">
                                     <label class="w-50 mb-0 mb-md-2"> <span style="letter-spacing: 8px;">床位</span>數 : </label>
-                                    <input name="bed_count" type="text" class="form-control"
-                                        id="bed-count">
+                                    <input name="bed_count" type="number" class="form-control"
+                                        id="bed-count" value="0">
                                 </div>
                             </div>
                             <div class="col-md-12 text-center align-self-center mt-md-3">
                                 {{-- @csrf --}}
                                 <input type="button" id="search" name="search" class="btn btn-primary3 w-100"
-                                    onclick="modelsSelect('{{ Route('IndexModelSearch') }}')" value="搜尋" />
+                                    onclick="modelsQuery('{{ Route('IndexModelSearch') }}')" value="搜尋" />
                                 {{-- <a href="" class="btn btn-primary3 w-100"> 搜尋 </a> --}}
                             </div>
                         </div>
@@ -139,6 +139,7 @@
     </section>
 
     <script>
+        destroyCookies();
         var today = new Date();
         var bDayGet = '<?php if ($date_get !== null && $date_get != '') { echo (string) $date_get; } ?>';
         var bDayBack = '<?php if ($date_back !== null && $date_back != '') { echo (string) $date_back; } ?>';
@@ -178,7 +179,8 @@
         var car_date_get = '';
         var car_date_back = '';
 
-        function modelsSelect(src) {
+        $('.models-select').hide();
+        function modelsQuery(src) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();
             car_bed_num = $('#bed-count').val();
@@ -195,6 +197,10 @@
             }
 
             $.ajax({
+                beforeSend: function () {
+                    //將div顯示
+                    $('#loading').css("display", "");
+                },
                 url: src,
                 type: 'POST',
                 data: {
@@ -206,6 +212,7 @@
                 success: function(res) {
                     // var obj = $.parseJSON(res);
                     // console.log(res);
+                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
                     $(".model-item-container").empty();
                     $(".model-item-container").html(res);
                     if (res.indexOf('rv_item_box') == -1) {
@@ -214,7 +221,85 @@
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
                     Swal.fire("錯誤!", "程序失敗", "error");
+                },
+                // complete: function () {
+                //     //再次隱藏
+                //     // $('#loading').css("display", "none");
+
+                //     //測試可利用setTimeout 讓loading效果明顯
+                //     setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+
+                // }
+            });
+        }
+
+        function modelsSelect(src) {
+            car_date_get = $('#checkin-date2').val();
+            car_date_back = $('#checkout-date2').val();
+            car_bed_num = $('#bed-count').val();
+
+            var get = new Date($('#checkin-date2').val());
+            var back = new Date($('#checkout-date2').val());
+            if (back <= get || car_bed_num == 0 ||
+            "{{ Cookie::get('date_get') }}" == null ||
+            "{{ Cookie::get('date_back') }}" == null ||
+            "{{ Cookie::get('bed_count') }}" == null) {
+                Swal.fire("注意！", "請先篩選您的旅程！", "warning");
+                $('.models-select').hide(300);
+                return;
+            }
+
+            $.ajax({
+                beforeSend: function () {
+                    //將div顯示
+                    $('#loading').css("display", "");
+                },
+                url: src,
+                type: 'post',
+                data: {
+                    date_get: car_date_get,
+                    date_back: car_date_back,
+                    bed_count: car_bed_num,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    // var obj = $.parseJSON(res);
+                    // console.log(res);
+                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    if (res.status == 'success') {
+                        window.location.href = src;
+                    } else {
+                        Swal.fire("注意！", "請先確認您的旅程！", "warning");
+                        $('.models-select').hide(300);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    Swal.fire("錯誤!", "程序失敗", "error");
+                },
+                // complete: function () {
+                //     //再次隱藏
+                //     // $('#loading').css("display", "none");
+
+                //     //測試可利用setTimeout 讓loading效果明顯
+                //     setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+
+                // }
+            });
+
+        }
+
+        function destroyCookies() {
+            $.ajax({
+                url:'{{ route("remove-carrent-cookie") }}',
+                method:'post',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(){
+                    console.log("cookie deleted");
                 }
             });
         }

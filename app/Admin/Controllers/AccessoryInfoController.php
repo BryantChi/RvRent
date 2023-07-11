@@ -25,7 +25,15 @@ class AccessoryInfoController extends AdminController
             // $grid->column('id')->sortable();
             $grid->column('accessory_id');
             $grid->column('accessory_name');
-            $grid->column('accessory_specification');
+            $grid->column('accessory_specification')->display(function ($spec) {
+                $spec_infos = json_decode($spec);
+                $str = '';
+                foreach($spec_infos as $info) {
+                    $str .= $info->item . ' X ' . $info->count . '<br>';
+                    // . '..........  $' . $info->price
+                }
+                return $str;
+            });
             $grid->column('accessory_buy_date');
             $grid->column('accessory_quantity');
             $grid->column('accessory_unit_price');
@@ -64,7 +72,15 @@ class AccessoryInfoController extends AdminController
             // $show->field('id');
             $show->field('accessory_id');
             $show->field('accessory_name');
-            $show->field('accessory_specification');
+            $show->field('accessory_specification')->unescape()->as(function ($spec) {
+                $spec_infos = json_decode($spec);
+                $str = '';
+                foreach($spec_infos as $info) {
+                    $str .= $info->item . ' X ' . $info->count . '<br>';
+                    // . '..........  $' . $info->price
+                }
+                return $str;
+            }); // ->explode('<br>')->label()
             $show->field('accessory_buy_date');
             $show->field('accessory_quantity');
             $show->field('accessory_unit_price');
@@ -86,7 +102,15 @@ class AccessoryInfoController extends AdminController
             $form->display('id');
             $form->text('accessory_id');
             $form->text('accessory_name');
-            $form->textarea('accessory_specification')->rows(3);
+            // $form->textarea('accessory_specification')->rows(3);
+            $form->table('accessory_specification', function ($table) {
+                $table->text('item', __('項目'));
+                $table->number('count', __('數量'));
+                $table->currency('price', __('價格'))->symbol('NT$');
+            })->saving(function ($v) {
+                return json_encode($v);
+            });
+
             $form->date('accessory_buy_date');
             $form->number('accessory_quantity');
             $form->currency('accessory_unit_price')->symbol('NT$');

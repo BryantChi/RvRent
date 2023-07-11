@@ -10,5 +10,9 @@ class AccessoryInfo extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'accessory_infos';
-    
+
+    protected $casts = [
+        'accessory_specification' => 'json',
+    ];
+
 }

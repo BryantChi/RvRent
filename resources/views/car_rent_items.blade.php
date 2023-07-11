@@ -33,9 +33,9 @@
 
         <div class="rent-action px-md-0 px-2 py-md-0 py-3">
             <div class="row justify-content-end p-0 m-0">
-                <p>Strating at &nbsp;<span style="color: #f7c000">${{ $model->base_price }}/day</span></p>
+                <p>Strating at &nbsp;<span style="color: #f7c000">${{ $model->base_price }} / day</span></p>
                 <div class="col-12 justify-content-end d-flex p-0">
-                    <a href="{{ route('car_rent_s2') }}" class="btn btn-primary3 ml-2"><i
+                    <a href="javascript:void(0)" class="btn btn-primary3 ml-2 models-select" onclick="modelsSelect('{{ route('car_rent_s2', ['rvm_id' => $model->id]) }}')"><i
                             class="fa-solid fa-cart-shopping"></i> 選擇</a>
                     <a href="{{ route('Rv_Detail', ['id' => $model->id]) }}" class="btn btn-primary3 ml-2 text-uppercase">learn more</a>
                 </div>

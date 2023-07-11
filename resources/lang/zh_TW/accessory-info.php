@@ -9,7 +9,7 @@ return [
         'accessory_name' => '配件名稱',
         'accessory_specification' => '規格',
         'accessory_buy_date' => '購買日期',
-        'accessory_quantity' => '數量',
+        'accessory_quantity' => '庫存數量',
         'accessory_unit_price' => '進價單價',
         'accessory_gross_price' => '總價',
         'accessory_rent_price' => '租金',

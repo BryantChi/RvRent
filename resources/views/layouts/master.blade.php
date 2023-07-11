@@ -11,8 +11,10 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="images/favicon.ico.png">
     <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <!-- Bootstrap css -->
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <!-- Icons -->
     <link href="{{ asset('assets/css/materialdesignicons.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
@@ -89,13 +91,17 @@
         </a>
     </div>
 
+    <div class="loadingdiv" id="loading" style="display: none">
+        <img src="{{ asset('assets/img/icon/9O_logo_03.png') }}" height="100" />
+    </div>
+
     <!-- Back to top -->
     <a href="#" class="btn btn-icon btn-primary3 back-to-top"><i data-feather="arrow-up" class="icons"></i></a>
     <!-- Back to top -->
 
     <!-- javascript -->
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('assets/js/scrollspy.min.js') }}"></script>
     <!-- Magnific popup -->

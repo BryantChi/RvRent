@@ -7,8 +7,11 @@ use App\Models\RvModelInfo as RvModel;
 use App\Models\RvSeriesInfo as RvSeries;
 use App\Models\RvAttachmentInfo as RvAttachment;
 use App\Models\RvVehicleInfo as RvVehicle;
+use App\Models\AccessoryInfo as Accessory;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Admin\Repositories\RvAttachmentInfo as RvAttachmentRepository;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cookie;
 
 class RvRentController extends Controller
 {
@@ -116,7 +119,62 @@ class RvRentController extends Controller
         //
     }
 
+    public function removeCarRentCookie() {
+        Cookie::queue(\Cookie::forget('date_get'));
+        Cookie::queue(\Cookie::forget('date_back'));
+        Cookie::queue(\Cookie::forget('bed_count'));
 
+        return \Response::json(['status' => 'success']);
+    }
+
+    public function stepOneShow(Request $request, $rvm_id)
+    {
+        $input = $request->all();
+        if (count($input) > 0) {
+            $this->time_start_default = $input['date_get'];
+            $this->time_end_default = $input['date_back'];
+            $this->bed_count = $input['bed_count'];
+        }
+
+        if ($request->method() == 'GET') {
+            if ($request->cookie("date_get") != null && $request->cookie("date_back") != null && $request->cookie("bed_count") != null) {
+                $cookies = $request->cookie();
+                $this->time_start_default = $cookies['date_get'];
+                $this->time_end_default = $cookies['date_back'];
+                $this->bed_count = $cookies['bed_count'];
+            } else {
+                return redirect()->route('car_rent');
+            }
+        }
+
+        $accessory = Accessory::all();
+        $models = RvModel::find($rvm_id);
+        $rv_rent_setting = json_decode($models->rv_rent_setting, true);
+        $rent_amount_setting = array_values(array_filter($rv_rent_setting, function($vi) {
+            $week = date('w', strtotime($this->time_start_default));
+            $firstDate  = new \DateTime($this->time_start_default);
+            $secondDate = new \DateTime($this->time_end_default);
+            $intvl = $secondDate->diff($firstDate);
+            return $week == $vi["week"] && $intvl->d == $vi["day"];
+        }));
+
+        if (count($rent_amount_setting) == 0) {
+            Cookie::queue(\Cookie::forget('date_get'));
+            Cookie::queue(\Cookie::forget('date_back'));
+            Cookie::queue(\Cookie::forget('bed_count'));
+            return \Response::json(['status' => 'error']);
+        }
+
+        if($request->ajax()) {
+            Cookie::queue('date_get', $this->time_start_default, 30);
+            Cookie::queue('date_back', $this->time_end_default, 30);
+            Cookie::queue('bed_count', $this->bed_count, 30);
+            return \Response::json(['status' => 'success']);
+        } else {
+            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models]);
+        }
+
+    }
 
     public function filterModelsDefault(Request $request)
     {
