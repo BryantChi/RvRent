@@ -10,6 +10,7 @@ use App\Models\RvVehicleInfo as RvVehicle;
 use App\Models\AccessoryInfo as Accessory;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Admin\Repositories\RvAttachmentInfo as RvAttachmentRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
 
@@ -129,6 +130,10 @@ class RvRentController extends Controller
 
     public function stepOneShow(Request $request, $rvm_id)
     {
+        if (Auth::check() == false) {
+            return \Response::json(['status' => 'authFail']);
+        }
+
         $input = $request->all();
         if (count($input) > 0) {
             $this->time_start_default = $input['date_get'];

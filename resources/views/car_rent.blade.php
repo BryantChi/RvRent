@@ -221,7 +221,7 @@
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    $('#loading').css("display", "none");
                     Swal.fire("錯誤!", "程序失敗", "error");
                 },
                 // complete: function () {
@@ -270,13 +270,15 @@
                     setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
                     if (res.status == 'success') {
                         window.location.href = src;
+                    } else if (res.status == 'authFail') {
+                        window.location.href = "{{ route('login') }}";
                     } else {
                         Swal.fire("注意！", "請先確認您的旅程！", "warning");
                         $('.models-select').hide(300);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    $('#loading').css("display", "none");
                     Swal.fire("錯誤!", "程序失敗", "error");
                 },
                 // complete: function () {
