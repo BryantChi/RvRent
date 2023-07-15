@@ -203,7 +203,7 @@ class RvRentController extends Controller
 
                     return $vi->week == $week && $intvl->d == $vi->day;
                     // strtotime($this->time_end_default) >= strtotime($data_back)
-                })) > 0  && $v["stock"] > 0 && $v["bed_count"] <= $this->bed_count;
+                })) > 0  && $v["stock"] > 0 && $this->bed_count <= $v["bed_count"];
             }
         });
         $models = json_decode(json_encode($model_filter));
