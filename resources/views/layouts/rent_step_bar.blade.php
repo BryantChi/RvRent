@@ -25,7 +25,7 @@
             <div class="col-md-3">
                 <div class="step-box d-flex justify-content-md-center align-items-center
                 {{ request()->is('car_rent_s3*') ? 'step-box-active' : 'step-box-default' }}
-                {{ request()->is('car_rent_s4*') ? 'step-box-pass' : 'step-box-default' }}
+                {{ request()->is('car_rent_s4*') ? 'step-box-active' : 'step-box-default' }}
                 {{ request()->is('car_rent_s5*') ? 'step-box-pass' : 'step-box-default' }}">
                     <span class="step-num mr-3">3</span>
                     <p class="step-txt my-auto">提交付款</p>
@@ -33,8 +33,7 @@
             </div>
             <div class="col-md-3">
                 <div class="step-box d-flex justify-content-md-center align-items-center
-                {{ request()->is('car_rent_s4*') ? 'step-box-active' : 'step-box-default' }}
-                {{ request()->is('car_rent_s5*') ? 'step-box-pass' : 'step-box-default' }} ">
+                {{ request()->is('car_rent_s5*') ? 'step-box-active' : 'step-box-default' }} ">
                     <span class="step-num mr-3">4</span>
                     <p class="step-txt my-auto">預訂成功</p>
                 </div>
