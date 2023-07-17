@@ -125,8 +125,9 @@
                             </div>
                             <div class="d-flex justify-content-end align-items-center ml-auto mt-md-auto mt-3">
                                 <p class="h3 px-3 my-0 other-item-amount" style="color: #ea3c06;"
-                                data-other-item-amount="{{ (Int) $op_item->price }}">
-                                    ${{ (Int) $op_item->price }}
+                                data-other-item-amount="{{ (Int) $op_item->price }}"
+                                data-other-item-type="{{ $op_item->type }}" >
+                                    ${{ (Int) $op_item->price }}{!! $op_item->type == 'night' ? ' / <span class="h4">天</span>' : '' !!}
                                 </p>
                                 {{-- <p class="my-auto other-drop"
                                 data-toggle="popover" data-container="body" data-trigger="hover" data-placement="top" data-content="點擊查看詳細項目">
@@ -156,8 +157,36 @@
 
             <hr style="background-color: #f0a000">
 
+            <div class="row">
+                <div class="col-12 d-flex align-items-center">
+                    <h4 class="mr-2" style="color: #f0a000">4 - 基礎費用</h4>
+                    <span>(必選*)</span>
+                </div>
+                <div class="col-12">
+                    <div class="other-box p-3 mb-3">
+                        <div class="justify-content-evely align-items-center d-md-flex px-3">
+                            <div class="d-flex align-items-center" style="color: #f0a000">
+                                <p class="mr-3 mb-0"><i class="fa-regular fa-circle-check"></i></p>
+                                <h5 class="mb-0">租金</h5>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center ml-auto mt-md-auto mt-3">
+                                <p class="h3 px-3 my-0 d-block" style="color: #ea3c06;" >
+                                    ${{ (Int) $rent_amount_setting["rental"] }} / <span class="h4">晚</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center px-3">
+                            <p class="h5 px-3 mt-3 ml-auto">天數： <span style="color: #ea3c06;">{{ (Int) $rent_amount_setting["day"] }}</span> <span class="h4">晚</span></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr style="background-color: #f0a000">
+
             <div class="row justify-content-end px-3">
-                <p style="color: #f0a000">合計 <span class="h3 order-price" style="color: #ea3c06;" data-order-price="{{ $rent_amount_setting["rental"] != null ? $rent_amount_setting["rental"] : $model->base_price }}" >${{ $rent_amount_setting["rental"] != null ? $rent_amount_setting["rental"] : $model->base_price }}</span></p>
+                <p style="color: #f0a000">合計 <span class="h3 order-price" style="color: #ea3c06;" data-other-item-day="{{ (Int) $rent_amount_setting["day"] }}" data-order-price="{{ $rent_amount_setting["rental"] != null ? $rent_amount_setting["rental"] : $model->base_price }}" >${{ $rent_amount_setting["rental"] != null ? $rent_amount_setting["rental"] : $model->base_price }}</span></p>
             </div>
 
             <div class="row justify-content-center">
@@ -224,9 +253,10 @@
     <script>
         var values = null;
         var values2 = null;
+        var day = parseInt($('.order-price').data('otherItemDay'));
         var tt = 0;
         var ot = 0;
-        var bt = parseInt($('.order-price').data('orderPrice'));
+        var bt = parseInt($('.order-price').data('orderPrice')) * day;
         var at = parseInt($('input[name=label]:checked').val());
 
         getOtherPrice();
@@ -295,7 +325,14 @@
 
         function getOtherPrice() {
             values2 = $('.other-item-amount').map(function() {
-                return $(this).data('otherItemAmount');
+                var amount = $(this).data('otherItemAmount');
+                var type = $(this).data('otherItemType');
+
+                var am = 0;
+                if (type == 'night') {
+                    am = parseInt(amount)*(day + 1);
+                }
+                return am;
             }).get();
             // console.log(values2);
 

@@ -138,7 +138,7 @@ class RvModelInfoController extends AdminController
                 $form->table('other_price', __('其他收費'), function ($table) {
                     $table->text('item', __('項目'));
                     $table->currency('price', __('價格'))->symbol('$');
-                    $table->select('type', __('計算方式'))->options(['night' => '天(夜)', 'times' => '次'])->default('night');
+                    $table->select('type', __('計算方式'))->options(['night' => '天', 'times' => '次'])->default('night');
                 })->saving(function ($v) {
                     return json_encode($v);
                 });
