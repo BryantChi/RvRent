@@ -11,7 +11,9 @@
                 <h2>露營車租賃契約書</h2>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
-                <iframe data="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" width="100%" style="height: 100vh;" seamless scrolling="yes"></iframe>
+                <iframe src="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" width="100%" style="height: 100vh;" seamless scrolling="yes"></iframe>
+
+                <p class="my-3"><a class="h5" target="_blank" href="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}">點此下載租賃條款契約書</a></p>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
                 <div class="form-group form-check form-control-lg d-flex align-items-center">
