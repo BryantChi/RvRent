@@ -180,6 +180,8 @@
         var car_date_back = '';
 
         $('.models-select').hide();
+        var isFromHomeSearch = "{{ request()->is('indexModelSearch') }}";
+        if (isFromHomeSearch) $('.models-select').show();
         function modelsQuery(src) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();

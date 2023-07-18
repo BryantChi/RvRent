@@ -331,6 +331,8 @@
                 var am = 0;
                 if (type == 'night') {
                     am = parseInt(amount)*(day + 1);
+                } else {
+                    am = parseInt(amount);
                 }
                 return am;
             }).get();

@@ -3,7 +3,7 @@
         <div class="row justify-content-center align-content-center px-md-5 px-3 pt-5 pb-md-5 pb-4">
             <div class="col-md-3">
                 <div class="step-box d-flex justify-content-md-center align-items-center
-                {{ request()->is('car_rent') ? 'step-box-active' : 'step-box-default' }}
+                {{ request()->is('car_rent') || request()->is('indexModelSearch') ? 'step-box-active' : 'step-box-default' }}
                 {{ request()->is('car_rent_s2*') ? 'step-box-pass' : 'step-box-default' }}
                 {{ request()->is('car_rent_s3*') ? 'step-box-pass' : 'step-box-default' }}
                 {{ request()->is('car_rent_s4*') ? 'step-box-pass' : 'step-box-default' }}

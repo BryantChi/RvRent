@@ -10,14 +10,34 @@
             <div class="section-title mx-auto text-center">
                 <h2>露營車租賃契約書</h2>
             </div>
-            <div class="row">
+            <div class="row mb-3 mx-md-auto mx-3">
 
-                <iframe src="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" width="100%" height="600px"></iframe>
+                <iframe src="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" width="100%"
+                    style="height: 70vh !important;"></iframe>
+            </div>
+            <div class="row mb-3 mx-md-auto mx-3">
+                <div class="form-group form-check form-control-lg d-flex align-items-center">
+                    <input type="checkbox" class="form-check-input" name="readed" id="readed">
+                    <label class="form-check-label" style="font-size: 1.2rem !important;" for="readed">*請選擇“同意”繼續操作*</label>
+                </div>
             </div>
             <div class="row justify-content-center">
-                <a href="{{ route('car_rent_s4') }}" class="btn btn-primary3">下一步</a>
+                <input type="button" class="btn btn-next" value="下一步">
             </div>
         </div>
     </section>
+    <script>
+        $('.btn-next').prop('disabled', true);
+        $('.btn-next').addClass('btn-secondary');
+        if ($('#readed').is(":checked")) {
+            $('#readed').prop('disabled', true)
+            $('.btn-next').prop('disabled', false);
+            $('.btn-next').removeClass('btn-secondary');
+            $('.btn-next').addClass('btn-primary3');
+        }
 
+        $('.btn-next').click(function() {
+            window.location.href="{{ route('car_rent_s4') }}";
+        });
+    </script>
 @endsection
