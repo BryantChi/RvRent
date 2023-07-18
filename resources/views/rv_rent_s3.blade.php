@@ -11,7 +11,7 @@
                 <h2>露營車租賃契約書</h2>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
-                <object data="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" height="100%" width="100%"></object>
+                <iframe data="{{ asset('assets/file/租賃條款契約書（0111）-Ranger.pdf') }}" height="100%" width="100%"></iframe>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
                 <div class="form-group form-check form-control-lg d-flex align-items-center">
