@@ -148,11 +148,9 @@ class RvModelInfoController extends AdminController
                         $form->currency('rental', __('租金費率/天(夜)'))->symbol('$');
                         $form->currency('overtime', __('超租加收/天(夜)'))->symbol('$');
                         $form->table('other_price', __('其他收費'), function ($table) {
-                            $table->column(12, function (NestedForm $form) {
-                                $form->text('item', __('項目'));
-                                $form->currency('price', __('價格'))->symbol('$');
-                                $form->select('type', __('計算方式'))->options(['night' => '天', 'times' => '次'])->default('night');
-                            });
+                            $table->text('item', __('項目'));
+                            $table->currency('price', __('價格'))->symbol('$');
+                            $table->select('type', __('計算方式'))->options(['night' => '天', 'times' => '次'])->default('night');
                         })->saving(function ($v) {
                             return json_encode($v);
                         });
