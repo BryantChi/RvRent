@@ -16,11 +16,11 @@
                     <canvas id="pdfViewer" style="border: 1px solid black;"></canvas>
                 </div> --}}
 
-                <div id="pdf-container" style="width: 100%; height: 100vh;"></div>
-                <div class="w-100">
+                <div id="pdfContainer" style="width: 100%; height: 100vh;"></div>
+                {{-- <div class="w-100">
                     <button id="prev-page" class="btn btn-primary3 mx-1">Previous Page</button>
                     <button id="next-page" class="btn btn-primary3 mx-1">Next Page</button>
-                </div>
+                </div> --}}
 
 
                 <p class="my-3"><a class="h5" target="_blank"
