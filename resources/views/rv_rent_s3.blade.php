@@ -125,23 +125,23 @@
             });
 
             // 監聽滾動事件
-            $("#pdfContainer").on("scroll", function() {
-                // 計算視窗底部位置
-                var windowHeight = $("#pdfContainer").height();
-                var windowBottom = $("#pdfContainer").scrollTop() + windowHeight;
+            // $("#pdfContainer").on("scroll", function() {
+            //     // 計算視窗底部位置
+            //     var windowHeight = $("#pdfContainer").height();
+            //     var windowBottom = $("#pdfContainer").scrollTop() + windowHeight;
 
-                // 計算PDF容器的底部位置
-                var containerBottom = $("#pdfContainer").prop("scrollHeight");
+            //     // 計算PDF容器的底部位置
+            //     var containerBottom = $("#pdfContainer").prop("scrollHeight");
 
-                // 如果PDF容器出現在最後一頁，載入下一頁
-                if (windowBottom >= containerBottom) {
-                    if (currentPageNum < totalNumPages) {
-                        currentPageNum++;
-                        showPage(currentPageNum);
-                        updatePageInfo();
-                    }
-                }
-            });
+            //     // 如果PDF容器出現在最後一頁，載入下一頁
+            //     if (windowBottom >= containerBottom) {
+            //         if (currentPageNum < totalNumPages) {
+            //             currentPageNum++;
+            //             showPage(currentPageNum);
+            //             updatePageInfo();
+            //         }
+            //     }
+            // });
 
             // 顯示指定頁面
             function showPage(pageNum) {
@@ -192,49 +192,5 @@
                 }
             }
         });
-    </script>
-    <script>
-        // 當文件載入完成時，初始化 PDF.js
-        // window.addEventListener("DOMContentLoaded", function () {
-        //   var pdfFile = "{{ env('APP_URL') . '/uploads/' . $series }}"; // 替換成你的 PDF 檔案路徑
-        //   PDFJS.getDocument(pdfFile).then(function (pdf) {
-        //     pdf.getPage(1).then(function (page) {
-        //       var canvas = document.getElementById("pdfViewer");
-        //       var context = canvas.getContext("2d");
-
-        //       var viewport = page.getViewport({ scale: 1 });
-        //       canvas.height = viewport.height;
-        //       canvas.width = viewport.width;
-
-        //       var renderContext = {
-        //         canvasContext: context,
-        //         viewport: viewport,
-        //       };
-        //       page.render(renderContext);
-        //     });
-        //   });
-        // });
-        // $(document).ready(function() {
-        //     var pdfPath = "{{ env('APP_URL') . '/uploads/' . $series }}"; // 替換成你的 PDF 檔案路徑
-
-        //     PDFJS.getDocument(pdfPath).then(function(pdf) {
-        //         pdf.getPage(1).then(function(page) {
-        //             var canvas = document.getElementById("pdfViewer");
-        //             var context = canvas.getContext("2d");
-
-        //             var viewport = page.getViewport({
-        //                 scale: 1
-        //             });
-        //             canvas.height = viewport.height;
-        //             canvas.width = viewport.width;
-
-        //             var renderContext = {
-        //                 canvasContext: context,
-        //                 viewport: viewport,
-        //             };
-        //             page.render(renderContext);
-        //         });
-        //     });
-        // });
     </script>
 @endsection
