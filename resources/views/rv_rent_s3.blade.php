@@ -174,6 +174,10 @@
             // 更新顯示頁碼及總頁數
             function updatePageInfo() {
                 $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
+                if (currentPageNum == totalNumPages) {
+                    $('#readed').attr('disabled', true);
+                    $('.form-check-label').addClass('text-danger');
+                }
             }
 
             // 更新縮放比例
