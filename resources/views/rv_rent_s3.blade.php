@@ -31,9 +31,9 @@
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
                 <div class="form-group form-check form-control-lg d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input" name="readed" id="readed" value="*請選擇“同意”繼續操作*">
+                    <input type="checkbox" class="form-check-input" name="readed" id="readed" value="*請在完整閱讀後選擇“同意”繼續操作*">
                     <label class="form-check-label" style="font-size: 1.2rem !important;"
-                        for="readed">*請選擇“同意”繼續操作*</label>
+                        for="readed">*請在完整閱讀後選擇“同意”繼續操作*</label>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -95,7 +95,7 @@
             showPage(currentPageNum);
 
             // 顯示頁碼及總頁數
-            $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
+            $("#pageInfo").text(currentPageNum + " / " + totalNumPages + " 頁");
 
             // 監聽手動切換頁的事件
             $("#prevPage").on("click", function() {
@@ -169,7 +169,7 @@
 
             // 更新顯示頁碼及總頁數
             function updatePageInfo() {
-                $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
+                $("#pageInfo").text(currentPageNum + " / " + totalNumPages + " 頁");
 
                 if(currentPageNum == totalNumPages) {
                     $('#readed').attr('disabled', false);
