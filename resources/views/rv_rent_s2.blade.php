@@ -190,7 +190,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <a href="{{ route('car_rent_s3') }}" class="btn btn-primary3">下一步</a>
+                <a href="{{ route('car_rent_s3', ['rvm_id' => $model->id]) }}" class="btn btn-primary3">下一步</a>
             </div>
 
         </div>

@@ -61,10 +61,7 @@ Route::any('/Rv_Detail/{id}', [RvRentController::class, 'show'])->name('Rv_Detai
 Route::any('/remove-carrent-cookie', [RvRentController::class, 'removeCarRentCookie'])->name('remove-carrent-cookie');
 Route::any('/car_rent_s2/{rvm_id}', [RvRentController::class, 'stepOneShow'])->name('car_rent_s2');
 // ->middleware(['auth', 'verified'])
-Route::get('/car_rent_s3', function () {
-    $pageInfo = PageSettingInfo::getBanners('/car_rent');
-    return view('rv_rent_s3', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s3')->middleware(['auth', 'verified']);
+Route::get('/car_rent_s3/{rvm_id}', [RvRentController::class, 'showStepTwo'])->name('car_rent_s3')->middleware(['auth']);
 
 Route::get('/car_rent_s4', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');

@@ -182,6 +182,16 @@ class RvRentController extends Controller
 
     }
 
+    public function showStepTwo(Request $request, $rvm_id)
+    {
+
+        $models = RvModel::find($rvm_id);
+        $series = RvSeries::find($models->rv_series_id);
+
+        return view('rv_rent_s3', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'series' => $series]);
+
+    }
+
     public function filterModelsDefault(Request $request)
     {
         $input = $request->all();

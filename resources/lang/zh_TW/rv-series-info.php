@@ -6,6 +6,7 @@ return [
     ],
     'fields' => [
         'rv_series_name' => '名稱',
+        'rv_series_file' => '契約書'
     ],
     'options' => [
     ],
