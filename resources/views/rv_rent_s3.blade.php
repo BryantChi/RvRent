@@ -88,6 +88,28 @@
             // 顯示第一頁
             showPage(1);
 
+            // 監聽滾動事件
+            $("#pdfContainer").on("scroll", function() {
+                // 計算視窗底部位置
+                var windowHeight = $("#pdfContainer").height();
+                var windowBottom = $("#pdfContainer").scrollTop() + windowHeight;
+
+                // 計算PDF容器的底部位置
+                var containerBottom = $("#pdfContainer").prop("scrollHeight");
+
+                // 如果PDF容器出現在最後一頁，載入下一頁
+                if (windowBottom >= containerBottom) {
+                    // 獲取目前顯示的頁面號碼
+                    var currentPageNum = parseInt($("#pdfContainer").data("pageNum") || 1);
+
+                    // 如果目前顯示的頁面號碼小於總頁數，則載入下一頁
+                    if (currentPageNum < totalNumPages) {
+                        currentPageNum++;
+                        showPage(currentPageNum);
+                    }
+                }
+            });
+
             // 顯示指定頁面
             function showPage(pageNum) {
                 pdf.getPage(pageNum).then(function(page) {
@@ -111,37 +133,7 @@
                         viewport: viewport
                     };
                     page.render(renderContext);
-
-                    // 將頁面添加到pdfContainer中
-                    var pageElement = $('<div class="pdf-page" data-page="' + pageNum + '"></div>');
-                    $("#pdfContainer").append(pageElement);
-
-                    // 更新pdfContainer的內容高度
-                    var containerHeight = pageNum * viewport.height;
-                    $("#pdfContainer").css("height", containerHeight + "px");
                 });
-            }
-        });
-
-        // 在pdfContainer中監聽滾動事件
-        $("#pdfContainer").on("scroll", function() {
-            // 計算PDF容器的底部位置
-            var containerBottom = $("#pdfContainer").scrollTop() + $("#pdfContainer").height();
-
-            // 計算最後一頁的底部位置
-            var lastPageNum = parseInt($("#pdfContainer").data("lastPageNum"));
-            var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").offset().top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
-
-            // 如果PDF容器出現在最後一頁，載入下一頁
-            if (containerBottom >= lastPageBottom) {
-                // 獲取目前顯示的頁面號碼
-                var currentPageNum = parseInt($("#pdfContainer").data("pageNum") || 1);
-
-                // 如果目前顯示的頁面號碼小於總頁數，則載入下一頁
-                if (currentPageNum < lastPageNum) {
-                    currentPageNum++;
-                    showPage(currentPageNum);
-                }
             }
         });
     </script>
