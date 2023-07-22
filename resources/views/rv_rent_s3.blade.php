@@ -70,15 +70,6 @@
         // PDF 文件的 URL
         var pdfUrl = "{{ env('APP_URL') . '/uploads/' . $series }}";
 
-        // 初始化 PDF.js
-        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
-            pdfInstance = pdf;
-            totalPages = pdf.numPages;
-
-            // 顯示第一頁
-            showPage(currentPage);
-        });
-
         // 創建PDF的Canvas元素
         var canvas = document.createElement("canvas");
         var context = canvas.getContext("2d");
