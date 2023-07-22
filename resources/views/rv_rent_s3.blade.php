@@ -46,7 +46,7 @@
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script> --}}
     <style>
         #pdfContainer {
-            max-width: 100%;
+            width: 100%;
             /* 最大寬度設定為100% */
             overflow-x: auto;
             /* 如果PDF寬度超出容器，啟用水平滾動 */
@@ -130,6 +130,9 @@
                         currentPageNum++;
                         showPage(currentPageNum);
                         updatePageInfo();
+                    } else {
+                        $('#readed').attr('disabled', true);
+                        $('.form-check-label').addClass('text-danger');
                     }
                 }
             });
