@@ -53,6 +53,12 @@
             /* 啟用垂直滾動 */
             height: 100vh;
         }
+
+        @media (max-width: 768px) {
+            #pdfContainer {
+                height: 30rem;
+            }
+        }
     </style>
     <script>
         $('#readed').attr('disabled', true);
@@ -142,10 +148,15 @@
 
                     // 計算Canvas的寬高比例以符合容器
                     var containerWidth = $("#pdfContainer").width();
-                    var scale = containerWidth / viewport.width;
+                    if ($(window).width() < 767) {
+                        var scale = 1;
+                    } else {
+                        var scale = containerWidth / viewport.width;
+                    }
                     var scaledViewport = page.getViewport({
-                        scale: scale
+                            scale: scale
                     });
+
 
                     canvas.height = scaledViewport.height;
                     canvas.width = scaledViewport.width;
