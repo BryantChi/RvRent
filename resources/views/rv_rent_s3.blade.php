@@ -17,10 +17,14 @@
                 </div> --}}
 
                 <div id="pdfContainer"></div>
-                {{-- <div class="w-100">
-                    <button id="prev-page" class="btn btn-primary3 mx-1">Previous Page</button>
-                    <button id="next-page" class="btn btn-primary3 mx-1">Next Page</button>
-                </div> --}}
+                <div class="w-100">
+                    <!-- 手動切換頁的按鈕 -->
+                    <button id="prevPage" class="btn btn-primary3">上一頁</button>
+                    <button id="nextPage" class="btn btn-primary3">下一頁</button>
+
+                    <!-- 顯示頁碼及總頁數的文本 -->
+                    <div id="pageInfo"></div>
+                </div>
 
 
                 <p class="my-3"><a class="h5" target="_blank"
@@ -85,8 +89,31 @@
             // 獲取PDF的總頁數
             var totalNumPages = pdf.numPages;
 
+            // 初始頁碼為第一頁
+            var currentPageNum = 1;
+
             // 顯示第一頁
-            showPage(1);
+            showPage(currentPageNum);
+
+            // 顯示頁碼及總頁數
+            $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
+
+            // 監聽手動切換頁的事件
+            $("#prevPage").on("click", function() {
+                if (currentPageNum > 1) {
+                    currentPageNum--;
+                    showPage(currentPageNum);
+                    updatePageInfo();
+                }
+            });
+
+            $("#nextPage").on("click", function() {
+                if (currentPageNum < totalNumPages) {
+                    currentPageNum++;
+                    showPage(currentPageNum);
+                    updatePageInfo();
+                }
+            });
 
             // 監聽滾動事件
             $("#pdfContainer").on("scroll", function() {
@@ -99,13 +126,10 @@
 
                 // 如果PDF容器出現在最後一頁，載入下一頁
                 if (windowBottom >= containerBottom) {
-                    // 獲取目前顯示的頁面號碼
-                    var currentPageNum = parseInt($("#pdfContainer").data("pageNum") || 1);
-
-                    // 如果目前顯示的頁面號碼小於總頁數，則載入下一頁
                     if (currentPageNum < totalNumPages) {
                         currentPageNum++;
                         showPage(currentPageNum);
+                        updatePageInfo();
                     }
                 }
             });
@@ -113,9 +137,13 @@
             // 顯示指定頁面
             function showPage(pageNum) {
                 pdf.getPage(pageNum).then(function(page) {
-                    var viewport = page.getViewport({
-                        scale: 1
-                    });
+                    var viewport = page.getViewport({ scale: 1 });
+
+                    // 計算Canvas的寬高比例以符合容器
+                    var containerWidth = $("#pdfContainer").width();
+                    var scale = containerWidth / viewport.width;
+                    var scaledViewport = page.getViewport({ scale: scale });
+
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
 
@@ -134,6 +162,11 @@
                     };
                     page.render(renderContext);
                 });
+            }
+
+            // 更新顯示頁碼及總頁數
+            function updatePageInfo() {
+                $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
             }
         });
     </script>
