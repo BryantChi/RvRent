@@ -58,6 +58,10 @@
             #pdfContainer {
                 height: 30rem;
             }
+
+            .form-check-label {
+                font-size: 1rem !important;
+            }
         }
     </style>
     <script>
