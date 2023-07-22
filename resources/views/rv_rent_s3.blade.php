@@ -70,7 +70,7 @@
         let totalPages = 0;
 
         // 初始化 PDF.js
-        PDFJS.getDocument(pdfUrl).promise.then(pdf => {
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
             pdfInstance = pdf;
             totalPages = pdf.numPages;
 
