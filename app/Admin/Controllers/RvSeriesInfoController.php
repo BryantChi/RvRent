@@ -31,7 +31,7 @@ class RvSeriesInfoController extends AdminController
                 if ($photo == null || $photo == '') {
                     $iframe = '<h3 class="text-center" >未上傳契約書</h3>';
                 } else {
-                    $iframe = '<iframe src="' . env('APP_URL') . 'uploads/' . $photo .'" width="100%" style="height: 100vh;" seamless scrolling="yes"></iframe>';
+                    $iframe = '<iframe src="http://9o-traveller.com.tw/uploads/' . $photo .'" width="100%" style="height: 100vh;" seamless scrolling="yes"></iframe>';
                 }
 
 
