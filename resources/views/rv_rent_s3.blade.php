@@ -141,9 +141,9 @@
             });
 
             // 監聽容器大小改變的事件
-            $(window).on("resize", function() {
-                updateScale();
-            });
+            // $(window).on("resize", function() {
+            //     updateScale();
+            // });
 
             // 顯示指定頁面
             function showPage(pageNum) {
