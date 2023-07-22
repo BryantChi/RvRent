@@ -40,6 +40,14 @@
     </section>
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script> --}}
+    <style>
+        #pdfContainer {
+            max-width: 100%;
+            /* 最大寬度設定為100% */
+            overflow-x: auto;
+            /* 如果PDF寬度超出容器，啟用水平滾動 */
+        }
+    </style>
     <script>
         $('#readed').attr('disabled', true);
         $('.btn-next').attr('disabled', true);
@@ -60,14 +68,7 @@
 
 
         // PDF 文件的 URL
-        const pdfUrl = "{{ env('APP_URL') . '/uploads/' . $series }}";
-
-        // 用於存儲 PDF.js 的實例
-        let pdfInstance = null;
-
-        // 用於儲存當前頁面和頁面總數
-        let currentPage = 1;
-        let totalPages = 0;
+        var pdfUrl = "{{ env('APP_URL') . '/uploads/' . $series }}";
 
         // 初始化 PDF.js
         pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
@@ -78,50 +79,74 @@
             showPage(currentPage);
         });
 
-        // 顯示特定頁面
-        function showPage(pageNumber) {
-            pdfInstance.getPage(pageNumber).then(page => {
-                const scale = 1;
-                const viewport = page.getViewport({
-                    scale
-                });
+        // 創建PDF的Canvas元素
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
 
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+        // 將Canvas添加到PDF顯示容器中
+        $("#pdfContainer").append(canvas);
 
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
+        // 使用PDF.js Library載入PDF
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+            // 獲取PDF的總頁數
+            var totalNumPages = pdf.numPages;
 
-                page.render(renderContext).promise.then(() => {
-                    // 清空 pdfContainer 並顯示新的頁面
-                    const container = document.getElementById('pdfContainer');
-                    container.innerHTML = '';
-                    container.appendChild(canvas);
-                });
-            });
-        }
+            // 顯示第一頁
+            showPage(1);
 
-        // 當使用者滾動到頁面底部時，檢查是否到達最後一頁並加載下一頁
-        $(window).scroll(function() {
-            const windowHeight = $(window).height();
-            const documentHeight = $(document).height();
-            const scrollTop = $(window).scrollTop();
+            // 在pdfContainer中監聽滾動事件
+            $("#pdfContainer").on("scroll", function() {
+                // 計算PDF容器的底部位置
+                var containerTop = $("#pdfContainer").offset().top;
+                var containerBottom = containerTop + $("#pdfContainer").height();
 
-            // 判斷是否已經滑到最底部
-            if (scrollTop + windowHeight >= documentHeight) {
-                // 判斷是否到達最後一頁
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    showPage(currentPage);
-                } else {
-                    // 已經到達最後一頁，執行相應操作
-                    console.log('已經到達最後一頁');
-                    $('#readed').attr('disabled', false);
+                // 計算最後一頁的底部位置
+                var lastPageNum = parseInt($("#pdfContainer").data("lastPageNum"));
+                var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").offset()
+                    .top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
+
+                // 如果PDF容器出現在最後一頁，載入下一頁
+                if (containerBottom >= lastPageBottom) {
+                    // 獲取目前顯示的頁面號碼
+                    var currentPageNum = parseInt($("#pdfContainer").data("pageNum") || 1);
+
+                    // 如果目前顯示的頁面號碼小於總頁數，則載入下一頁
+                    if (currentPageNum < totalNumPages) {
+                        currentPageNum++;
+                        showPage(currentPageNum);
+                    } else {
+                        $('#readed').attr('disabled', true);
+                    }
                 }
+            });
+
+            // 顯示指定頁面
+            function showPage(pageNum) {
+                pdf.getPage(pageNum).then(function(page) {
+                    var viewport = page.getViewport({
+                        scale: 1
+                    });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    // 將頁面號碼存儲在pdfContainer中
+                    $("#pdfContainer").data("pageNum", pageNum);
+
+                    // 將最後一頁號碼存儲在pdfContainer中
+                    if (pageNum === totalNumPages) {
+                        $("#pdfContainer").data("lastPageNum", pageNum);
+                    }
+
+                    // 將頁面渲染到Canvas中
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+
+                    // 將頁面添加到pdfContainer中，以便判斷是否到達最後一頁
+                    $("#pdfContainer").append('<div class="pdf-page" data-page="' + pageNum + '"></div>');
+                });
             }
         });
     </script>
