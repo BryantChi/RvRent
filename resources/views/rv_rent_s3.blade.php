@@ -46,6 +46,7 @@
             /* 最大寬度設定為100% */
             overflow-x: auto;
             /* 如果PDF寬度超出容器，啟用水平滾動 */
+            overflow-y: auto; /* 啟用垂直滾動 */
             height: 100vh;
         }
     </style>
@@ -94,8 +95,7 @@
 
                 // 計算最後一頁的底部位置
                 var lastPageNum = parseInt($("#pdfContainer").data("lastPageNum"));
-                var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").offset()
-                    .top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
+                var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").offset().top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
 
                 // 如果PDF容器出現在最後一頁，載入下一頁
                 if (containerBottom >= lastPageBottom) {
