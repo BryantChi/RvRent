@@ -81,7 +81,7 @@
         // 顯示特定頁面
         function showPage(pageNumber) {
             pdfInstance.getPage(pageNumber).then(page => {
-                const scale = 1.5;
+                const scale = 1;
                 const viewport = page.getViewport({
                     scale
                 });
