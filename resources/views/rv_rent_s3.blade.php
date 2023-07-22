@@ -16,7 +16,7 @@
                     <canvas id="pdfViewer" style="border: 1px solid black;"></canvas>
                 </div> --}}
 
-                <div id="pdfContainer" style="width: 100%; height: 100vh;"></div>
+                <div id="pdfContainer"></div>
                 {{-- <div class="w-100">
                     <button id="prev-page" class="btn btn-primary3 mx-1">Previous Page</button>
                     <button id="next-page" class="btn btn-primary3 mx-1">Next Page</button>
