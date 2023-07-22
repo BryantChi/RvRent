@@ -63,7 +63,7 @@
 
         $(document).ready(function() {
             // PDF 文件路徑
-            const pdfUrl = '{{ env(\'APP_URL\') . "/uploads/" . $series }}';
+            const pdfUrl = '{{ env("APP_URL") . "/uploads/" . $series }}';
 
             // 初始化 PDF 查看器
             let pdfDoc = null;
