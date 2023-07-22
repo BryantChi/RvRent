@@ -32,7 +32,7 @@
             <div class="row mb-3 mx-md-auto mx-3">
                 <div class="form-group form-check form-control-lg d-flex align-items-center">
                     <input type="checkbox" class="form-check-input" name="readed" id="readed" value="*請在完整閱讀後選擇“同意”繼續操作*">
-                    <label class="form-check-label" style="font-size: 1.2rem !important;"
+                    <label class="form-check-label" style="font-size: 1.2rem;"
                         for="readed">*請在完整閱讀後選擇“同意”繼續操作*</label>
                 </div>
             </div>
