@@ -19,8 +19,7 @@
                 <div id="pdfContainer"></div>
                 <div class="w-100">
                     <!-- 顯示頁碼及總頁數的文本 -->
-                    <div id="pageInfo text-end"></div>
-
+                    <div id="pageInfo" class="text-end"></div>
                     <!-- 手動切換頁的按鈕 -->
                     <button id="prevPage" class="btn btn-primary3">上一頁</button>
                     <button id="nextPage" class="btn btn-primary3">下一頁</button>
@@ -173,7 +172,7 @@
                 $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
 
                 if(currentPageNum == totalNumPages) {
-                    $('#readed').attr('disabled', true);
+                    $('#readed').attr('disabled', false);
                     $('.form-check-label').addClass('text-danger');
                 }
             }
