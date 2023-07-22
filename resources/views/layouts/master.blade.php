@@ -120,6 +120,8 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/owl.init.js') }}"></script>
 
+    <script src="https://www.jsdelivr.com/package/npm/pdfjs-dist"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.1.18/jquery.backstretch.js"
         integrity="sha512-hnO4ypSVsbX/EBMaO/auYhsgRSSWftlgxCsJjqIHWUIGeAQWefevOlG8OrnopZ7eDER+xn/rOtSXqSWHkvxsOA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
