@@ -38,7 +38,7 @@
             </div>
         </div>
     </section>
-    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    {{-- <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script> --}}
     <script>
         $('#readed').attr('disabled', true);
         $('.btn-next').attr('disabled', true);
@@ -59,7 +59,7 @@
 
 
         // 初始化 PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'path/to/pdf.worker.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.js';
 
         $(document).ready(function() {
             // PDF 文件路徑
