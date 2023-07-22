@@ -46,7 +46,8 @@
             /* 最大寬度設定為100% */
             overflow-x: auto;
             /* 如果PDF寬度超出容器，啟用水平滾動 */
-            overflow-y: auto; /* 啟用垂直滾動 */
+            overflow-y: auto;
+            /* 啟用垂直滾動 */
             height: 100vh;
         }
     </style>
@@ -90,15 +91,16 @@
             // 在pdfContainer中監聽滾動事件
             $("#pdfContainer").on("scroll", function() {
                 // 計算PDF容器的底部位置
-                var containerTop = $("#pdfContainer").offset().top;
-                var containerBottom = containerTop + $("#pdfContainer").height();
+                var containerHeight = $("#pdfContainer").height();
+                var scrollTop = $("#pdfContainer").scrollTop();
 
                 // 計算最後一頁的底部位置
                 var lastPageNum = parseInt($("#pdfContainer").data("lastPageNum"));
-                var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").offset().top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
+                var lastPageBottom = $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']")
+                .position().top + $("#pdfContainer .pdf-page[data-page='" + lastPageNum + "']").height();
 
                 // 如果PDF容器出現在最後一頁，載入下一頁
-                if (containerBottom >= lastPageBottom) {
+                if (containerHeight + scrollTop >= lastPageBottom) {
                     // 獲取目前顯示的頁面號碼
                     var currentPageNum = parseInt($("#pdfContainer").data("pageNum") || 1);
 
@@ -106,8 +108,6 @@
                     if (currentPageNum < totalNumPages) {
                         currentPageNum++;
                         showPage(currentPageNum);
-                    } else {
-                        $('#readed').attr('disabled', true);
                     }
                 }
             });
