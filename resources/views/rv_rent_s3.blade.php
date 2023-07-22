@@ -92,9 +92,6 @@
             // 初始頁碼為第一頁
             var currentPageNum = 1;
 
-            // 設置初始縮放比例
-            var scale = 1;
-
             // 顯示第一頁
             showPage(currentPageNum);
 
@@ -133,39 +130,39 @@
                         currentPageNum++;
                         showPage(currentPageNum);
                         updatePageInfo();
-                    } else {
-                        $('#readed').attr('disabled', true);
-                        $('.form-check-label').addClass('text-danger');
                     }
                 }
             });
 
-            // 監聽容器大小改變的事件
-            // $(window).on("resize", function() {
-            //     updateScale();
-            // });
-
             // 顯示指定頁面
             function showPage(pageNum) {
                 pdf.getPage(pageNum).then(function(page) {
-                    var viewport = page.getViewport({ scale: scale });
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
+                    var viewport = page.getViewport({
+                        scale: 1
+                    });
 
-                    updateScale();
+                    // 計算Canvas的寬高比例以符合容器
+                    var containerWidth = $("#pdfContainer").width();
+                    var scale = containerWidth / viewport.width;
+                    var scaledViewport = page.getViewport({
+                        scale: scale
+                    });
+
+                    canvas.height = scaledViewport.height;
+                    canvas.width = scaledViewport.width;
 
                     // 將頁面號碼存儲在pdfContainer中
                     $("#pdfContainer").data("pageNum", pageNum);
 
                     // 將最後一頁號碼存儲在pdfContainer中
                     if (pageNum === totalNumPages) {
-                    $("#pdfContainer").data("lastPageNum", pageNum);
+                        $("#pdfContainer").data("lastPageNum", pageNum);
                     }
 
                     // 將頁面渲染到Canvas中
                     var renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
+                        canvasContext: context,
+                        viewport: scaledViewport
                     };
                     page.render(renderContext);
                 });
@@ -174,26 +171,11 @@
             // 更新顯示頁碼及總頁數
             function updatePageInfo() {
                 $("#pageInfo").text(currentPageNum + " / " + totalNumPages);
-                if (currentPageNum == totalNumPages) {
+
+                if(currentPageNum == totalNumPages) {
                     $('#readed').attr('disabled', true);
                     $('.form-check-label').addClass('text-danger');
                 }
-            }
-
-            // 更新縮放比例
-            function updateScale() {
-                var containerWidth = $("#pdfContainer").width();
-                var pageWidth = canvas.width;
-
-                // 計算容器內容的實際寬度，如果超過容器寬度，進行縮放
-                if (pageWidth > containerWidth) {
-                    scale = containerWidth / pageWidth;
-                } else {
-                    scale = 1;
-                }
-
-                // 重新顯示目前頁面
-                showPage(currentPageNum);
             }
         });
     </script>
