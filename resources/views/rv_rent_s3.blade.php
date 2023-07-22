@@ -46,6 +46,7 @@
             /* 最大寬度設定為100% */
             overflow-x: auto;
             /* 如果PDF寬度超出容器，啟用水平滾動 */
+            height: 100vh;
         }
     </style>
     <script>
