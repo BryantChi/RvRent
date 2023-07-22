@@ -11,7 +11,7 @@
                 <h2>露營車租賃契約書</h2>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
-                <iframe src="pdfjs-dist/web/viewer.html?file={{ env('APP_URL') . '/uploads/' . $series }}" width="100%" style="height: 100vh;" seamless scrolling="yes" ></iframe>
+                <iframe src="{{ env('APP_URL') . '/uploads/' . $series }}" width="100%" style="height: 100vh;" seamless scrolling="yes" type="application/pdf" frameborder="0"></iframe>
 
                 <p class="my-3"><a class="h5" target="_blank" href="{{ env('APP_URL') . '/uploads/' . $series }}">點此下載租賃條款契約書</a></p>
             </div>
