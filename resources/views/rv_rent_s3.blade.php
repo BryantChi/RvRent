@@ -19,7 +19,7 @@
                 <div id="pdfContainer"></div>
                 <div class="w-100">
                     <!-- 顯示頁碼及總頁數的文本 -->
-                    <div id="pageInfo" class="text-right"></div>
+                    <div id="pageInfo" class="text-right mb-5"></div>
                     <!-- 手動切換頁的按鈕 -->
                     <button id="prevPage" class="btn btn-primary3">上一頁</button>
                     <button id="nextPage" class="btn btn-primary3">下一頁</button>
@@ -52,6 +52,7 @@
             overflow-y: auto;
             /* 啟用垂直滾動 */
             height: 100vh;
+            border: 3px solid #747474;
         }
 
         @media (max-width: 768px) {
