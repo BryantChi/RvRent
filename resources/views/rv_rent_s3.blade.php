@@ -188,6 +188,7 @@
                 $("#pageInfo").text(currentPageNum + " / " + totalNumPages + " 頁");
 
                 if(currentPageNum == totalNumPages && $('#readed').data('access') == false) {
+                    $('#readed').data('access', true);
                     $('#readed').attr('disabled', false);
                     $('.form-check-label').addClass('text-danger');
                 }
