@@ -151,7 +151,7 @@ class RvModelInfoController extends AdminController
                             $table->text('item', __('項目'));
                             $table->currency('price', __('價格'))->symbol('$');
                             $table->select('type', __('計算方式'))->options(['night' => '天', 'times' => '次'])->default('night');
-                        })->saving(function ($v) {
+                        })->required()->saving(function ($v) {
                             return json_encode($v);
                         });
                         $form->currency('milage', __('里程數/夜'))->symbol('km');
