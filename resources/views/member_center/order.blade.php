@@ -81,7 +81,7 @@
                                                 {{ $order->order_total_rental }}</span></p>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        @if ($order->order_remit == '')
+                                        @if ($order->order_pay_way == 'remit' && $order->order_remit == '')
                                             <a href="javascript:void(0)" data-toggle="modal"
                                                 data-target="#exampleModalCenter" class="btn btn-primary mr-2 remit"
                                                 data-order="{{ route('member.order.upload-remit', ['id' => $order->id]) }}">上傳匯款明細</a>
@@ -107,7 +107,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">上傳匯款紀錄</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
