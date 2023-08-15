@@ -338,6 +338,14 @@ class RvRentController extends Controller
                         $rvModel->stock -= 1;
                         $rvModel->save();
 
+
+                        foreach(json_decode($this->amount_data->order_accessory_info) as $info) {
+                            $accessory = Accessory::find($info->equipement_id);
+                            $accessory->accessory_quantity -= $info->equipement_count;
+                            $accessory->save();
+                        }
+
+
                         // 訂單狀態處理
 
                     }
