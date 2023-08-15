@@ -27,5 +27,6 @@ Route::group([
     $router->resource('/rv_model', 'RvModelInfoController');
     $router->resource('/rv_attachment', 'RvAttachmentInfoController');
     $router->resource('/rv_vehicle', 'RvVehicleInfoController');
+    $router->resource('/rv_order', 'RentOrderInfoController');
 
 });

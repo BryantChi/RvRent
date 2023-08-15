@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\RentOrderInfo as Order;
 use App\Models\RvModelInfo as RvModel;
 use App\Models\RvSeriesInfo as RvSeries;
 use App\Models\RvAttachmentInfo as RvAttachment;
@@ -10,10 +12,13 @@ use App\Models\RvVehicleInfo as RvVehicle;
 use App\Models\AccessoryInfo as Accessory;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Admin\Repositories\RvAttachmentInfo as RvAttachmentRepository;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
+use stdClass;
+use Illuminate\Support\Facades\File;
 
 class RvRentController extends Controller
 {
@@ -22,6 +27,8 @@ class RvRentController extends Controller
     private $time_start_default = '';
     private $time_end_default = '';
     private $bed_count = 0;
+    private $amount_data = null;
+    private $order_num = null;
     /**
      * Display a listing of the resource.
      *
@@ -125,6 +132,7 @@ class RvRentController extends Controller
         Cookie::queue(\Cookie::forget('date_get'));
         Cookie::queue(\Cookie::forget('date_back'));
         Cookie::queue(\Cookie::forget('bed_count'));
+        Cookie::queue(\Cookie::forget('amount_data'));
 
         return \Response::json(['status' => 'success']);
     }
@@ -184,11 +192,179 @@ class RvRentController extends Controller
 
     public function showStepTwo(Request $request, $rvm_id)
     {
+        // if (Auth::check() == false) {
+        //     return \Response::json(['status' => 'authFail']);
+        // }
+
+        $input = $request->all();
+
+        if ($request->method() == 'GET') {
+            if ($request->cookie("date_get") != null && $request->cookie("date_back") != null &&
+            $request->cookie("bed_count") != null && $request->cookie("amount_data") != null) {
+                $cookies = $request->cookie();
+                $this->time_start_default = $cookies['date_get'];
+                $this->time_end_default = $cookies['date_back'];
+                $this->bed_count = $cookies['bed_count'];
+            } else {
+                return redirect()->route('car_rent');
+            }
+        }
+
+        if ($request->ajax()) {
+            if ($input['amount_data'] != null || count($input['amount_data']) != 0) {
+                Cookie::queue('amount_data', $input['amount_data'], 30);
+                return \Response::json(['status' => 'success']);
+            }
+            return \Response::json(['status' => 'error']);
+        }
 
         $models = RvModel::find($rvm_id);
         $series = RvSeries::find($models->rv_series_id);
 
         return view('rv_rent_s3', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'series' => $series->rv_series_file]);
+
+    }
+
+    public function showStepThree(Request $request)
+    {
+        if ($request->cookie('amount_data') != null) {
+            $user = Auth::user();
+            $data = json_decode($request->cookie('amount_data'));
+            if ($this->order_num == null) {
+                $this->order_num = Order::generateOrderNumber();
+            }
+
+            $this->amount_data = new \stdClass();
+            $this->amount_data->order_num = $this->order_num;
+            $this->amount_data->order_status = Order::getOrderStatus('isCreate');
+            $this->amount_data->order_user = $user->customer_id; // 是否使用id ??
+            $this->amount_data->order_rv_model_id = $data->other->other_model_key;
+            $this->amount_data->order_rv_amount_info = $data->other;
+            $this->amount_data->order_one_night_rental = $data->rent->rent_base_amount;
+            $this->amount_data->order_total_rental = $data->rent->total_rent_amount;
+            $this->amount_data->order_night_count = $data->rent->rent_day;
+            $this->amount_data->order_get_date = $data->search->date_get;
+            $this->amount_data->order_back_date = $data->search->date_back;
+            $this->amount_data->order_bed_count = $data->search->bed_count;
+            $this->amount_data->order_rv_vehicle = RvVehicle::getRandomVehicle($data->other->other_model_key); // 車牌號
+            $this->amount_data->order_rv_vehicle_payment = ''; // 車輛繳費 - 事後
+            $this->amount_data->order_rv_vehicle_payment_status = ''; // 車輛繳費狀態 - 事後
+            $this->amount_data->order_accessory_info = $data->equipment;
+            $this->amount_data->order_mileage_plan_info = $data->plan;
+            $this->amount_data->order_pay_way = ''; // 付款方式
+            $this->amount_data->order_remit = ''; // 客戶上傳用
+            $this->amount_data->order_client_note = ''; // request input
+            $this->amount_data->order_company_note = '';
+            $this->amount_data->order_other_driver_info = ''; // 客戶上傳用
+            $this->amount_data->order_other_driving_licence = ''; // 客戶上傳用
+
+            if ($request->ajax())
+            {
+                $input = $request->all();
+
+                $other_dr_info = [];
+                $other_dr_info['customer_id'] = $user->customer_id;
+                if (isset($input['same_user'])) {
+                    $other_dr_info['dr_name'] = $user->name;
+                    $other_dr_info['dr_email'] = $user->email;
+                    $other_dr_info['dr_phone'] = $user->phone;
+                    $other_dr_info['dr_IDNumber'] = $user->IDNumber;
+                } else {
+                    $other_dr_info['dr_name'] = $input['dr_name'];
+                    $other_dr_info['dr_email'] = $input['dr_email'];
+                    $other_dr_info['dr_phone'] = $input['dr_phone'];
+                    $other_dr_info['dr_IDNumber'] = $input['dr_IDNumber'];
+                }
+
+
+
+                $this->amount_data->order_num = $this->order_num;
+                $this->amount_data->order_status = Order::getOrderStatus('save');
+                $this->amount_data->order_rv_amount_info = json_encode($data->other);
+                $this->amount_data->order_accessory_info = json_encode($data->equipment);
+                $this->amount_data->order_mileage_plan_info = json_encode($data->plan);
+                $this->amount_data->order_pay_way = $input['payway'];
+                $this->amount_data->order_other_driver_info = $other_dr_info;
+                $this->amount_data->order_other_driver_info = json_encode($other_dr_info);
+                $this->amount_data->order_client_note = $input['order_client_note'];
+
+                $image = $request->file('driving_licence');
+
+                if ($image) {
+                    $filename = time() . '_' . $user->id . '_' . $image->getClientOriginalName();
+                    $image->move(public_path('uploads/images/user_driving_licence/' . $user->id . '/photos'), $filename);
+
+                    $user_info = User::find($user->id);
+
+                    if ($user_info->driving_licence != null) {
+                        // 若已存在，則覆蓋原有圖片
+                        if (File::exists(public_path('uploads/' . $user_info->driving_licence))) {
+                            File::delete(public_path('uploads/' . $user_info->driving_licence));
+                        }
+                    }
+                    $user_info->driving_licence = 'images/user_driving_licence/' . $user . '/photos/' . $filename;
+
+                    $user_info->save();
+                    // dd($filename);
+                }
+
+                if (isset($input['same_user']) == false) {
+                    $image_dr = $request->file('dr_driving_licence');
+
+                    if ($image_dr) {
+                        $filename_dr = time() . '_' . $this->amount_data->order_num . '_' . $image_dr->getClientOriginalName();
+                        $image_dr->move(public_path('uploads/images/order_driving_licence/' . $this->amount_data->order_num . '/photos'), $filename_dr);
+
+                        // if ($this->amount_data->order_other_driving_licence != null) {
+                        //     // 若已存在，則覆蓋原有圖片
+                        //     if (File::exists(public_path('uploads/' . $this->amount_data->order_other_driving_licence))) {
+                        //         File::delete(public_path('uploads/' . $this->amount_data->order_other_driving_licence));
+                        //     }
+                        // }
+                        $this->amount_data->order_other_driving_licence = 'images/order_driving_licence/' . $this->amount_data->order_num . '/photos/' . $filename_dr;
+                    }
+                }
+
+                // dd((array) $this->amount_data);
+                try {
+                    $order_save = Order::create((array) $this->amount_data);
+
+                    if ($order_save) {
+                        // 庫存處理
+                        $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
+                        $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle);
+                        $rvVehicle->vehicle_status = 'rent_out';
+                        $rvVehicle->save();
+                        $rvModel->stock -= 1;
+                        $rvModel->save();
+
+                        // 訂單狀態處理
+
+                    }
+                } catch (QueryException $e ) {
+                    //throw $th;
+                    dd($e);
+                }
+
+
+                // dd($order_save);
+
+                return \Response::json(['status' => 'success']);
+            }
+
+
+            if ($request->method() == 'GET')
+            {
+                $rvModel = RvModel::find($data->other->other_model_key);
+                $pageInfo = PageSettingInfo::getBanners('/car_rent');
+                return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo, 'amountData' => $this->amount_data, 'rvModel' => $rvModel, 'user' => $user]);
+            }
+
+
+
+        } else {
+            return redirect()->route('car_rent');
+        }
 
     }
 

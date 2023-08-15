@@ -12,7 +12,7 @@
             </div> --}}
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center p-3 rounded" style="border: 1px dotted rgba(197, 197, 197, 0.704)">
-                    <img src="{{ asset('assets/img/icon/check-pre.gif') }}" class="img-fluid w-50" alt="{{ __('') }}">
+                    <img src="{{ asset('assets/img/s-remit.jpg') }}" class="img-fluid w-50" alt="{{ __('') }}">
                     <h2>預定成功</h2>
                 </div>
             </div>
@@ -22,3 +22,23 @@
     </section>
 
 @endsection
+
+@push('scripts')
+
+    <script>
+        destroyCookies();
+        function destroyCookies() {
+            $.ajax({
+                url:'{{ route("remove-carrent-cookie") }}',
+                method:'post',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(){
+                    console.log("cookie deleted");
+                }
+            });
+        }
+    </script>
+
+@endpush

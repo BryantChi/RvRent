@@ -29,8 +29,11 @@
                             <h6 class="widget-title"></h6>
                             <div class="p-4 mt-4 rounded shadow">
                                 <ul class="list-unstyled mb-0 catagory">
-                                    <li><a href="jvascript:void(0)">個人資料</a> <span class="float-right"></span></li>
-                                    <li><a href="jvascript:void(0)">訂單資料</a> <span class="float-right">09</span></li>
+                                    <li><a href="{{ route('member.profile') }}">個人資料</a> <span class="float-right"></span></li>
+                                    <li>
+                                        <a href="{{ route('member.order') }}">訂單資料</a>
+                                        <span class="float-right order-count">{{ count(DB::table('rent_order_infos')->whereNull('deleted_at')->where('order_user', $user->customer_id)->get()) }}</span>
+                                    </li>
                                     {{-- <li><a href="jvascript:void(0)">Meeting Room</a> <span class="float-right">18</span></li>
                                     <li><a href="jvascript:void(0)">Kitchen</a> <span class="float-right">20</span></li> --}}
                                 </ul>
@@ -65,6 +68,17 @@
                                     class="form-control bg-white @error('name') is-invalid @enderror" required
                                     placeholder="姓名" value="{{ $user->name }}">
                                 @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group position-relative">
+                                <label class="font-weight-bold"> 身分證字號 </label>
+                                <input name="IDNumber" type="text"
+                                    class="form-control bg-white @error('IDNumber') is-invalid @enderror"
+                                    id="IDNumber">
+                                @error('IDNumber')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

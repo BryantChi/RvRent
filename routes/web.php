@@ -6,9 +6,10 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RvRentController;
-// use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -27,15 +28,12 @@ use Illuminate\Support\Facades\Auth;
 // })->name('index');
 
 Route::any('/clear-cache', function () {
-    \Artisan::call('optimize:clear');
-    \Artisan::call('cache:clear');
-    \Artisan::call('route:clear');
-    \Artisan::call('config:clear');
-    \Artisan::call('config:cache');
-    \Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
     // return "All Cache is cleared";
-    // $pageInfo = PageSettingInfo::getHomeBanner('/index');
-    // return view('index', ['pageInfo' => $pageInfo]);
     return redirect()->route('index');
 });
 
@@ -61,12 +59,9 @@ Route::any('/Rv_Detail/{id}', [RvRentController::class, 'show'])->name('Rv_Detai
 Route::any('/remove-carrent-cookie', [RvRentController::class, 'removeCarRentCookie'])->name('remove-carrent-cookie');
 Route::any('/car_rent_s2/{rvm_id}', [RvRentController::class, 'stepOneShow'])->name('car_rent_s2');
 // ->middleware(['auth', 'verified'])
-Route::get('/car_rent_s3/{rvm_id}', [RvRentController::class, 'showStepTwo'])->name('car_rent_s3')->middleware(['auth']);
+Route::any('/car_rent_s3/{rvm_id}', [RvRentController::class, 'showStepTwo'])->name('car_rent_s3')->middleware(['auth']);
 
-Route::get('/car_rent_s4', function () {
-    $pageInfo = PageSettingInfo::getBanners('/car_rent');
-    return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
-})->name('car_rent_s4')->middleware(['auth', 'verified']);
+Route::any('/car_rent_s4', [RvRentController::class, 'showStepThree'])->name('car_rent_s4')->middleware(['auth']);
 
 Route::get('/car_rent_s5', function () {
     $pageInfo = PageSettingInfo::getBanners('/car_rent');
@@ -88,9 +83,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->midd
 Route::prefix('member_center')->group(function() {
     Route::middleware(['auth', 'verified'])->group(function() {
         Route::get('profile', function () {
-            $pageInfo = PageSettingInfo::getBanners('/car_rent');
+            $pageInfo = PageSettingInfo::getBanners('/member_center/profile');
             return view('member_center.profile', ['title' => '個人資料', 'pageInfo' => $pageInfo, 'user' => Auth::user()]);
         })->name('member.profile');
         Route::any('profile/{user}', [ProfileController::class, 'update'])->name('member.profile.update');
+
+        Route::any('order', [OrderController::class, 'index'])->name('member.order');
+        Route::any('order/{id}', [OrderController::class, 'destroy'])->name('member.order.delete');
+        Route::any('order/{id}/upload-remit', [OrderController::class, 'uploadRemit'])->name('member.order.upload-remit');
     });
 });

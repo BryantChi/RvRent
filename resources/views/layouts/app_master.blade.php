@@ -24,7 +24,7 @@
     <div id="preloader">
         <div id="status">
             <div class="logo">
-                <img src="{{ asset('assets/img/icon/9O_logo.png') }}" height="100" class="d-block mx-auto"
+                <img src="{{ asset('assets/img/icon/9O_logo_02.png') }}" height="100" class="d-block mx-auto"
                     alt="">
             </div>
         </div>

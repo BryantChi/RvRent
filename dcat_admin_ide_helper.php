@@ -23,6 +23,28 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection permission_id
      * @property Grid\Column|Collection created_at
      * @property Grid\Column|Collection updated_at
+     * @property Grid\Column|Collection order_num
+     * @property Grid\Column|Collection order_user
+     * @property Grid\Column|Collection order_rv_model_id
+     * @property Grid\Column|Collection order_rv_amount_info
+     * @property Grid\Column|Collection order_one_night_rental
+     * @property Grid\Column|Collection order_total_rental
+     * @property Grid\Column|Collection order_night_count
+     * @property Grid\Column|Collection order_get_date
+     * @property Grid\Column|Collection order_back_date
+     * @property Grid\Column|Collection order_bed_count
+     * @property Grid\Column|Collection order_rv_vehicle
+     * @property Grid\Column|Collection order_rv_vehicle_payment
+     * @property Grid\Column|Collection order_rv_vehicle_payment_status
+     * @property Grid\Column|Collection order_accessory_info
+     * @property Grid\Column|Collection order_mileage_plan_info
+     * @property Grid\Column|Collection order_pay_way
+     * @property Grid\Column|Collection order_remit
+     * @property Grid\Column|Collection order_client_note
+     * @property Grid\Column|Collection order_company_note
+     * @property Grid\Column|Collection order_other_driver_info
+     * @property Grid\Column|Collection order_other_driving_licence
+     * @property Grid\Column|Collection deleted_at
      * @property Grid\Column|Collection username
      * @property Grid\Column|Collection password
      * @property Grid\Column|Collection name
@@ -66,6 +88,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection customer_verify
      * @property Grid\Column|Collection customer_token
      * @property Grid\Column|Collection rv_series_name
+     * @property Grid\Column|Collection rv_series_file
      * @property Grid\Column|Collection email
      * @property Grid\Column|Collection vehicle_num
      * @property Grid\Column|Collection model_id
@@ -75,6 +98,7 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection icon
      * @property Grid\Column|Collection uri
      * @property Grid\Column|Collection extension
+     * @property Grid\Column|Collection profile_photo
      * @property Grid\Column|Collection nick_name
      * @property Grid\Column|Collection email_verified_at
      * @property Grid\Column|Collection country
@@ -82,8 +106,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection line_id
      * @property Grid\Column|Collection gender
      * @property Grid\Column|Collection birthday
-     * @property Grid\Column|Collection driving_licence_number
-     * @property Grid\Column|Collection driving_licence_type
+     * @property Grid\Column|Collection driving_licence
+     * @property Grid\Column|Collection driving_licence_certified
      * @property Grid\Column|Collection witness_front_cover
      * @property Grid\Column|Collection content
      * @property Grid\Column|Collection content_en
@@ -99,12 +123,15 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection attachment_name
      * @property Grid\Column|Collection attachment_icon
      * @property Grid\Column|Collection itinerary_name
+     * @property Grid\Column|Collection itinerary_front_cover
      * @property Grid\Column|Collection itinerary_content
      * @property Grid\Column|Collection itinerary_content_en
      * @property Grid\Column|Collection itinerary_star
+     * @property Grid\Column|Collection itinerary_imgs
      * @property Grid\Column|Collection news_front_cover
      * @property Grid\Column|Collection category
      * @property Grid\Column|Collection show_status
+     * @property Grid\Column|Collection popular
      * @property Grid\Column|Collection user_id
      * @property Grid\Column|Collection method
      * @property Grid\Column|Collection ip
@@ -118,6 +145,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection rv_series_id
      * @property Grid\Column|Collection rv_rent_setting
      * @property Grid\Column|Collection attachment_id
+     * @property Grid\Column|Collection stock
+     * @property Grid\Column|Collection bed_count
+     * @property Grid\Column|Collection base_price
      * @property Grid\Column|Collection rv_discription
      *
      * @method Grid\Column|Collection sortable(string $label = null)
@@ -132,6 +162,28 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection permission_id(string $label = null)
      * @method Grid\Column|Collection created_at(string $label = null)
      * @method Grid\Column|Collection updated_at(string $label = null)
+     * @method Grid\Column|Collection order_num(string $label = null)
+     * @method Grid\Column|Collection order_user(string $label = null)
+     * @method Grid\Column|Collection order_rv_model_id(string $label = null)
+     * @method Grid\Column|Collection order_rv_amount_info(string $label = null)
+     * @method Grid\Column|Collection order_one_night_rental(string $label = null)
+     * @method Grid\Column|Collection order_total_rental(string $label = null)
+     * @method Grid\Column|Collection order_night_count(string $label = null)
+     * @method Grid\Column|Collection order_get_date(string $label = null)
+     * @method Grid\Column|Collection order_back_date(string $label = null)
+     * @method Grid\Column|Collection order_bed_count(string $label = null)
+     * @method Grid\Column|Collection order_rv_vehicle(string $label = null)
+     * @method Grid\Column|Collection order_rv_vehicle_payment(string $label = null)
+     * @method Grid\Column|Collection order_rv_vehicle_payment_status(string $label = null)
+     * @method Grid\Column|Collection order_accessory_info(string $label = null)
+     * @method Grid\Column|Collection order_mileage_plan_info(string $label = null)
+     * @method Grid\Column|Collection order_pay_way(string $label = null)
+     * @method Grid\Column|Collection order_remit(string $label = null)
+     * @method Grid\Column|Collection order_client_note(string $label = null)
+     * @method Grid\Column|Collection order_company_note(string $label = null)
+     * @method Grid\Column|Collection order_other_driver_info(string $label = null)
+     * @method Grid\Column|Collection order_other_driving_licence(string $label = null)
+     * @method Grid\Column|Collection deleted_at(string $label = null)
      * @method Grid\Column|Collection username(string $label = null)
      * @method Grid\Column|Collection password(string $label = null)
      * @method Grid\Column|Collection name(string $label = null)
@@ -175,6 +227,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection customer_verify(string $label = null)
      * @method Grid\Column|Collection customer_token(string $label = null)
      * @method Grid\Column|Collection rv_series_name(string $label = null)
+     * @method Grid\Column|Collection rv_series_file(string $label = null)
      * @method Grid\Column|Collection email(string $label = null)
      * @method Grid\Column|Collection vehicle_num(string $label = null)
      * @method Grid\Column|Collection model_id(string $label = null)
@@ -184,6 +237,7 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection icon(string $label = null)
      * @method Grid\Column|Collection uri(string $label = null)
      * @method Grid\Column|Collection extension(string $label = null)
+     * @method Grid\Column|Collection profile_photo(string $label = null)
      * @method Grid\Column|Collection nick_name(string $label = null)
      * @method Grid\Column|Collection email_verified_at(string $label = null)
      * @method Grid\Column|Collection country(string $label = null)
@@ -191,8 +245,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection line_id(string $label = null)
      * @method Grid\Column|Collection gender(string $label = null)
      * @method Grid\Column|Collection birthday(string $label = null)
-     * @method Grid\Column|Collection driving_licence_number(string $label = null)
-     * @method Grid\Column|Collection driving_licence_type(string $label = null)
+     * @method Grid\Column|Collection driving_licence(string $label = null)
+     * @method Grid\Column|Collection driving_licence_certified(string $label = null)
      * @method Grid\Column|Collection witness_front_cover(string $label = null)
      * @method Grid\Column|Collection content(string $label = null)
      * @method Grid\Column|Collection content_en(string $label = null)
@@ -208,12 +262,15 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection attachment_name(string $label = null)
      * @method Grid\Column|Collection attachment_icon(string $label = null)
      * @method Grid\Column|Collection itinerary_name(string $label = null)
+     * @method Grid\Column|Collection itinerary_front_cover(string $label = null)
      * @method Grid\Column|Collection itinerary_content(string $label = null)
      * @method Grid\Column|Collection itinerary_content_en(string $label = null)
      * @method Grid\Column|Collection itinerary_star(string $label = null)
+     * @method Grid\Column|Collection itinerary_imgs(string $label = null)
      * @method Grid\Column|Collection news_front_cover(string $label = null)
      * @method Grid\Column|Collection category(string $label = null)
      * @method Grid\Column|Collection show_status(string $label = null)
+     * @method Grid\Column|Collection popular(string $label = null)
      * @method Grid\Column|Collection user_id(string $label = null)
      * @method Grid\Column|Collection method(string $label = null)
      * @method Grid\Column|Collection ip(string $label = null)
@@ -227,6 +284,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection rv_series_id(string $label = null)
      * @method Grid\Column|Collection rv_rent_setting(string $label = null)
      * @method Grid\Column|Collection attachment_id(string $label = null)
+     * @method Grid\Column|Collection stock(string $label = null)
+     * @method Grid\Column|Collection bed_count(string $label = null)
+     * @method Grid\Column|Collection base_price(string $label = null)
      * @method Grid\Column|Collection rv_discription(string $label = null)
      */
     class Grid {}
@@ -246,6 +306,28 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection permission_id
      * @property Show\Field|Collection created_at
      * @property Show\Field|Collection updated_at
+     * @property Show\Field|Collection order_num
+     * @property Show\Field|Collection order_user
+     * @property Show\Field|Collection order_rv_model_id
+     * @property Show\Field|Collection order_rv_amount_info
+     * @property Show\Field|Collection order_one_night_rental
+     * @property Show\Field|Collection order_total_rental
+     * @property Show\Field|Collection order_night_count
+     * @property Show\Field|Collection order_get_date
+     * @property Show\Field|Collection order_back_date
+     * @property Show\Field|Collection order_bed_count
+     * @property Show\Field|Collection order_rv_vehicle
+     * @property Show\Field|Collection order_rv_vehicle_payment
+     * @property Show\Field|Collection order_rv_vehicle_payment_status
+     * @property Show\Field|Collection order_accessory_info
+     * @property Show\Field|Collection order_mileage_plan_info
+     * @property Show\Field|Collection order_pay_way
+     * @property Show\Field|Collection order_remit
+     * @property Show\Field|Collection order_client_note
+     * @property Show\Field|Collection order_company_note
+     * @property Show\Field|Collection order_other_driver_info
+     * @property Show\Field|Collection order_other_driving_licence
+     * @property Show\Field|Collection deleted_at
      * @property Show\Field|Collection username
      * @property Show\Field|Collection password
      * @property Show\Field|Collection name
@@ -289,6 +371,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection customer_verify
      * @property Show\Field|Collection customer_token
      * @property Show\Field|Collection rv_series_name
+     * @property Show\Field|Collection rv_series_file
      * @property Show\Field|Collection email
      * @property Show\Field|Collection vehicle_num
      * @property Show\Field|Collection model_id
@@ -298,6 +381,7 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection icon
      * @property Show\Field|Collection uri
      * @property Show\Field|Collection extension
+     * @property Show\Field|Collection profile_photo
      * @property Show\Field|Collection nick_name
      * @property Show\Field|Collection email_verified_at
      * @property Show\Field|Collection country
@@ -305,8 +389,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection line_id
      * @property Show\Field|Collection gender
      * @property Show\Field|Collection birthday
-     * @property Show\Field|Collection driving_licence_number
-     * @property Show\Field|Collection driving_licence_type
+     * @property Show\Field|Collection driving_licence
+     * @property Show\Field|Collection driving_licence_certified
      * @property Show\Field|Collection witness_front_cover
      * @property Show\Field|Collection content
      * @property Show\Field|Collection content_en
@@ -322,12 +406,15 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection attachment_name
      * @property Show\Field|Collection attachment_icon
      * @property Show\Field|Collection itinerary_name
+     * @property Show\Field|Collection itinerary_front_cover
      * @property Show\Field|Collection itinerary_content
      * @property Show\Field|Collection itinerary_content_en
      * @property Show\Field|Collection itinerary_star
+     * @property Show\Field|Collection itinerary_imgs
      * @property Show\Field|Collection news_front_cover
      * @property Show\Field|Collection category
      * @property Show\Field|Collection show_status
+     * @property Show\Field|Collection popular
      * @property Show\Field|Collection user_id
      * @property Show\Field|Collection method
      * @property Show\Field|Collection ip
@@ -341,6 +428,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection rv_series_id
      * @property Show\Field|Collection rv_rent_setting
      * @property Show\Field|Collection attachment_id
+     * @property Show\Field|Collection stock
+     * @property Show\Field|Collection bed_count
+     * @property Show\Field|Collection base_price
      * @property Show\Field|Collection rv_discription
      *
      * @method Show\Field|Collection sortable(string $label = null)
@@ -355,6 +445,28 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection permission_id(string $label = null)
      * @method Show\Field|Collection created_at(string $label = null)
      * @method Show\Field|Collection updated_at(string $label = null)
+     * @method Show\Field|Collection order_num(string $label = null)
+     * @method Show\Field|Collection order_user(string $label = null)
+     * @method Show\Field|Collection order_rv_model_id(string $label = null)
+     * @method Show\Field|Collection order_rv_amount_info(string $label = null)
+     * @method Show\Field|Collection order_one_night_rental(string $label = null)
+     * @method Show\Field|Collection order_total_rental(string $label = null)
+     * @method Show\Field|Collection order_night_count(string $label = null)
+     * @method Show\Field|Collection order_get_date(string $label = null)
+     * @method Show\Field|Collection order_back_date(string $label = null)
+     * @method Show\Field|Collection order_bed_count(string $label = null)
+     * @method Show\Field|Collection order_rv_vehicle(string $label = null)
+     * @method Show\Field|Collection order_rv_vehicle_payment(string $label = null)
+     * @method Show\Field|Collection order_rv_vehicle_payment_status(string $label = null)
+     * @method Show\Field|Collection order_accessory_info(string $label = null)
+     * @method Show\Field|Collection order_mileage_plan_info(string $label = null)
+     * @method Show\Field|Collection order_pay_way(string $label = null)
+     * @method Show\Field|Collection order_remit(string $label = null)
+     * @method Show\Field|Collection order_client_note(string $label = null)
+     * @method Show\Field|Collection order_company_note(string $label = null)
+     * @method Show\Field|Collection order_other_driver_info(string $label = null)
+     * @method Show\Field|Collection order_other_driving_licence(string $label = null)
+     * @method Show\Field|Collection deleted_at(string $label = null)
      * @method Show\Field|Collection username(string $label = null)
      * @method Show\Field|Collection password(string $label = null)
      * @method Show\Field|Collection name(string $label = null)
@@ -398,6 +510,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection customer_verify(string $label = null)
      * @method Show\Field|Collection customer_token(string $label = null)
      * @method Show\Field|Collection rv_series_name(string $label = null)
+     * @method Show\Field|Collection rv_series_file(string $label = null)
      * @method Show\Field|Collection email(string $label = null)
      * @method Show\Field|Collection vehicle_num(string $label = null)
      * @method Show\Field|Collection model_id(string $label = null)
@@ -407,6 +520,7 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection icon(string $label = null)
      * @method Show\Field|Collection uri(string $label = null)
      * @method Show\Field|Collection extension(string $label = null)
+     * @method Show\Field|Collection profile_photo(string $label = null)
      * @method Show\Field|Collection nick_name(string $label = null)
      * @method Show\Field|Collection email_verified_at(string $label = null)
      * @method Show\Field|Collection country(string $label = null)
@@ -414,8 +528,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection line_id(string $label = null)
      * @method Show\Field|Collection gender(string $label = null)
      * @method Show\Field|Collection birthday(string $label = null)
-     * @method Show\Field|Collection driving_licence_number(string $label = null)
-     * @method Show\Field|Collection driving_licence_type(string $label = null)
+     * @method Show\Field|Collection driving_licence(string $label = null)
+     * @method Show\Field|Collection driving_licence_certified(string $label = null)
      * @method Show\Field|Collection witness_front_cover(string $label = null)
      * @method Show\Field|Collection content(string $label = null)
      * @method Show\Field|Collection content_en(string $label = null)
@@ -431,12 +545,15 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection attachment_name(string $label = null)
      * @method Show\Field|Collection attachment_icon(string $label = null)
      * @method Show\Field|Collection itinerary_name(string $label = null)
+     * @method Show\Field|Collection itinerary_front_cover(string $label = null)
      * @method Show\Field|Collection itinerary_content(string $label = null)
      * @method Show\Field|Collection itinerary_content_en(string $label = null)
      * @method Show\Field|Collection itinerary_star(string $label = null)
+     * @method Show\Field|Collection itinerary_imgs(string $label = null)
      * @method Show\Field|Collection news_front_cover(string $label = null)
      * @method Show\Field|Collection category(string $label = null)
      * @method Show\Field|Collection show_status(string $label = null)
+     * @method Show\Field|Collection popular(string $label = null)
      * @method Show\Field|Collection user_id(string $label = null)
      * @method Show\Field|Collection method(string $label = null)
      * @method Show\Field|Collection ip(string $label = null)
@@ -450,6 +567,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection rv_series_id(string $label = null)
      * @method Show\Field|Collection rv_rent_setting(string $label = null)
      * @method Show\Field|Collection attachment_id(string $label = null)
+     * @method Show\Field|Collection stock(string $label = null)
+     * @method Show\Field|Collection bed_count(string $label = null)
+     * @method Show\Field|Collection base_price(string $label = null)
      * @method Show\Field|Collection rv_discription(string $label = null)
      */
     class Show {}

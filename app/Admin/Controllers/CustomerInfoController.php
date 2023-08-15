@@ -28,6 +28,7 @@ class CustomerInfoController extends AdminController
             $grid->column('customer_id')->sortable();
             $grid->column('name');
             $grid->column('nick_name');
+            $grid->column('IDNumber');
             $grid->column('email');
             $grid->column('email_verified_at');
             $grid->column('password')->hide();
@@ -74,6 +75,7 @@ class CustomerInfoController extends AdminController
             $show->field('customer_id');
             $show->field('name');
             $show->field('nick_name');
+            $show->field('IDNumber');
             $show->field('email');
             $show->field('email_verified_at');
             $show->field('password');
@@ -107,6 +109,7 @@ class CustomerInfoController extends AdminController
             // $form->image('profile_photo')->move('images/user_profile/'.$customer_id)->uniqueName()->rules('mimes:jpg,jpeg,png,gif');
             $form->text('name')->required();
             $form->text('nick_name');
+            $form->text('IDNumber')->required()->rules('regex:/^[A-Za-z][12]\d{8}$/');
             $form->email('email')->required();
             // $form->text('email_verified_at');
             if ($form->isCreating()) {

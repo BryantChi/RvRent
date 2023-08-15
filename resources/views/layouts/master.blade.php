@@ -46,6 +46,7 @@
         <link href="{{ asset('assets/css/news.css') }}?v=20230213" rel="stylesheet" />
     @endif
     <link href="{{ asset('assets/css/footer.css') }}?v=20230213" rel="stylesheet" type="text/css" />
+    @stack('css')
 </head>
 
 <body>
@@ -74,11 +75,13 @@
     <!-- Footer End -->
 
     <div class="social-link d-grid text-center pb-2">
+        @auth
         <a href="">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_line icon.png') }}" width="35px" alt="">
             </div>
         </a>
+        @endauth
         <a href="">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_messanger.png') }}" width="35px" alt="">
@@ -202,6 +205,8 @@
             //     });
         });
     </script>
+
+    @stack('scripts')
 </body>
 
 </html>

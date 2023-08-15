@@ -92,7 +92,7 @@
                             <a href="javascript:void(0)">
                                 <img src="{{ url('assets/img/icon/9O_logo_02.png') }}" height="42" alt="">
                             </a>
-                            <h5 class="my-4">Login</h5>
+                            <h5 class="my-4">登入</h5>
                         </div>
                         <form class="login-form" method="POST" action="{{ route('login') }}">
                             @csrf
@@ -100,7 +100,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group position-relative">
-                                        <label for="email">{{ __('Email Address') }} <span
+                                        <label for="email">{{ __('信箱') }} <span
                                                 class="text-danger">*</span></label>
                                         <input id="email" type="email"
                                             class="form-control @error('email') is-invalid @enderror" name="email"
@@ -117,7 +117,7 @@
 
                                 <div class="col-12">
                                     <div class="form-group position-relative">
-                                        <label>{{ __('Password') }} <span class="text-danger">*</span></label>
+                                        <label>{{ __('密碼') }} <span class="text-danger">*</span></label>
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password" placeholder="Password :">
@@ -137,12 +137,12 @@
                                                 <input type="checkbox" class="custom-control-input" name="remember"
                                                     id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label class="custom-control-label"
-                                                    for="remember">{{ __('Remember Me') }}</label>
+                                                    for="remember">{{ __('記住我') }}</label>
                                             </div>
                                         </div>
                                         @if (Route::has('password.request'))
                                             <p class="forgot-pass mb-0"><a href="{{ route('password.request') }}"
-                                                    class="text-dark font-weight-bold">{{ __('Forgot Your Password?') }}</a>
+                                                    class="text-dark font-weight-bold">{{ __('忘記密碼?') }}</a>
                                             </p>
                                         @endif
                                     </div>
@@ -150,14 +150,13 @@
                                 <!--end col-->
 
                                 <div class="col-12 mb-0">
-                                    <button type="submit" class="btn btn-primary3 w-100">{{ __('Login') }}</button>
+                                    <button type="submit" class="btn btn-primary3 w-100">{{ __('登入') }}</button>
                                 </div>
                                 <!--end col-->
 
                                 <div class="col-12 text-center">
-                                    <p class="mb-0 mt-3"><small class="text-dark mr-2">Don't have an account ?</small>
-                                        <a href="{{ route('register') }}" class="text-dark font-weight-bold">Sign
-                                            Up</a></p>
+                                    <p class="mb-0 mt-3"><small class="text-dark mr-2">還沒加入會員 ?</small>
+                                        <a href="{{ route('register') }}" class="text-dark font-weight-bold">註冊</a></p>
                                 </div>
                                 <!--end col-->
                             </div>

@@ -10,6 +10,7 @@ return [
         'name' => '會員姓名',
         'password' => '密碼',
         'email_verified_at' => '信箱驗證',
+        'IDNumber' => '身分證字號',
         'nick_name' => '暱稱',
         'phone' => '電話',
         'gender' => '性別',
