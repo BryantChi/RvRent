@@ -348,9 +348,9 @@
                         $('#loading').css("display", "none");
                     }, 3000);
                     if (res.status === 'success') {
-                        console.log(res.status);
+                        window.location.href = src;
                     } else {
-
+                        Swal.fire("錯誤!", "連線失敗", "error");
                     }
                 },
                 error: function(error) {

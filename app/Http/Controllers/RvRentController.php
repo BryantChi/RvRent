@@ -332,18 +332,24 @@ class RvRentController extends Controller
                     if ($order_save) {
                         // 庫存處理
                         $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
-                        $rvVehicles = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle)->first();
-                        $rvVehicle = RvVehicle::find($rvVehicles->id);
-                        $rvVehicle->vehicle_status = 'rent_out';
-                        $rvVehicle->save();
-                        $rvModel->stock -= 1;
-                        $rvModel->save();
+                        if ($rvModel->stock > 0) {
+                            $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle)->first();
+                            // $rvVehicle = RvVehicle::find($rvVehicles->id);
+                            $rvVehicle->vehicle_status = 'rent_out';
+                            $rvVehicleSave = $rvVehicle->save();
 
+                            if ($rvVehicleSave) {
+                                $rvModel->stock -= 1;
+                                $rvModelSave = $rvModel->save();
 
-                        foreach(json_decode($this->amount_data->order_accessory_info) as $info) {
-                            $accessory = Accessory::find($info->equipement_id);
-                            $accessory->accessory_quantity -= $info->equipement_count;
-                            $accessory->save();
+                                if ($rvModelSave) {
+                                    foreach(json_decode($this->amount_data->order_accessory_info) as $info) {
+                                        $accessory = Accessory::find($info->equipment_id);
+                                        $accessory->accessory_quantity -= $info->equipment_count;
+                                        $accessory->save();
+                                    }
+                                }
+                            }
                         }
 
 

@@ -11,10 +11,10 @@
                 <h2>露營車租賃契約書</h2>
             </div> --}}
             <div class="row justify-content-center">
-                <div class="col-md-6 text-center p-3 rounded" style="border: 1px dotted rgba(197, 197, 197, 0.704)">
+                <div class="col-md-8 text-center p-3 rounded" style="border: 1px dotted rgba(197, 197, 197, 0.704)">
                     <img src="{{ asset('assets/img/icon/check-pre.gif') }}" class="img-fluid w-50" alt="{{ __('') }}">
-                    <img src="{{ asset('assets/img/s-remit.jpg') }}" class="img-fluid w-50" alt="{{ __('') }}">
-                    <h2>預定成功</h2>
+                    <img src="{{ asset('assets/img/s-remit.jpg') }}" class="img-fluid" alt="{{ __('') }}">
+                    {{-- <h2>預定成功</h2> --}}
                 </div>
             </div>
 
