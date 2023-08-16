@@ -332,7 +332,7 @@ class RvRentController extends Controller
                     if ($order_save) {
                         // 庫存處理
                         $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
-                        $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle);
+                        $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle)->get();
                         $rvVehicle->vehicle_status = 'rent_out';
                         $rvVehicle->save();
                         $rvModel->stock -= 1;
