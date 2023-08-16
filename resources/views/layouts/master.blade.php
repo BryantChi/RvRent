@@ -76,20 +76,20 @@
 
     <div class="social-link d-grid text-center pb-2">
         @auth
-        <a href="">
+        <a href="https://lin.ee/pSapwg7">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_line icon.png') }}" width="35px" alt="">
             </div>
         </a>
         @endauth
-        <a href="">
+        <a href="https://www.facebook.com/profile.php?id=100086047151408">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_messanger.png') }}" width="35px" alt="">
             </div>
         </a>
-        <a href="">
+        <a href="{{ route('car_rent') }}">
             <div class="position-relative">
-                <span class="cart-num">2</span>
+                <span class="cart-num"></span>
                 <img src="{{ asset('assets/img/icon/icon_buy.png') }}" width="35px" alt="">
             </div>
         </a>

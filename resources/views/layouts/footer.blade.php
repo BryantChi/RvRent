@@ -16,10 +16,10 @@
             <div class="col-md-4 text-md-center mt-md-0 mt-4">
                 <a href="javascript:void(0)"><img src="{{ asset('assets/img/icon/9O_logo_03.png') }}" width="250px" alt="{{ __('') }}"></a>
                 <ul class="list-unstyled social-icon social mb-0 mt-4">
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-facebook-f"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-line"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded-circle"><i class="fa-brands fa-youtube"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.facebook.com/profile.php?id=100086047151408" class="rounded-circle"><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.instagram.com/9o_traveller/" class="rounded-circle"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="https://lin.ee/pSapwg7" class="rounded-circle"><i class="fa-brands fa-line"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.youtube.com/@9o-traveller/playlists" class="rounded-circle"><i class="fa-brands fa-youtube"></i></a></li>
                 </ul>
             </div>
             <div class="col-md-4 align-self-end">

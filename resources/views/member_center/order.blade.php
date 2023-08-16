@@ -73,7 +73,7 @@
                                         <p>分配車輛：{{ $order->order_rv_vehicle }}</p>
                                     </div>
                                     <div class="d-md-flex d-block justify-content-between">
-                                        <p>付款方式：{{ $order->order_pay_way == 'remit' ? '匯款' : '' }}</p>
+                                        <p>付款方式：{{ $order->order_pay_way == 'remit' ? '匯款' : '信用卡' }}</p>
                                         <p>訂單狀態：<span class="text-info">{{ $order->order_status }}</span></p>
                                     </div>
                                     <div class="d-flex">
