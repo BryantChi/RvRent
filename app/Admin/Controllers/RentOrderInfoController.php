@@ -154,7 +154,8 @@ class RentOrderInfoController extends AdminController
             $grid->disableActions();
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('id');
+                $filter->equal('order_num', '訂單編號');
+                $filter->equal('order_user', '會員編號');
                 $filter->scope('trashed', '回收站')->onlyTrashed();
             });
 
