@@ -77,7 +77,7 @@
                                 <label class="font-weight-bold"> 身分證字號 </label>
                                 <input name="IDNumber" type="text"
                                     class="form-control bg-white @error('IDNumber') is-invalid @enderror"
-                                    id="IDNumber" value="{{ $user->IDNumber }}">
+                                    id="IDNumber" name="IDNumber" value="{{ $user->IDNumber }}">
                                 @error('IDNumber')
                                     <div class="invalid-feedback">
                                         {{ $message }}

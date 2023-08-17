@@ -74,6 +74,10 @@ class ProfileController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:80',
+            'IDNumber' => [
+                'required',
+                'regex:/^[A-Za-z][12]\d{8}$/'
+            ],
             'nick_name' => 'max:80',
             'country' => 'required|max:80',
             'phone' => [
@@ -87,6 +91,8 @@ class ProfileController extends Controller
         ], [
             'name.required' => '請填寫名稱',
             'name.max' => '最大長度80字',
+            'IDNumber.required' => '請填寫身分證字號',
+            'IDNumber.regex' => '身分證格式錯誤',
             'nick_name.max' => '最大長度80字',
             'country.required' => '請填寫國家',
             'country.max' => '最大長度80字',
@@ -110,6 +116,7 @@ class ProfileController extends Controller
         $input = $request->all();
         $user_info = User::find($user);
         $user_info->name = $input['name'];
+        $user_info->IDNumber = $input['IDNumber'];
         $user_info->nick_name = $input['nick_name'];
         $user_info->country = $input['country'];
         $user_info->phone = $input['phone'];
