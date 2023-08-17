@@ -249,7 +249,7 @@ class RentOrderInfoController extends AdminController
 
             $form->display('created_at');
             $form->display('updated_at');
-            $form->saving(function (Form $form) {
+            $form->saved(function (Form $form) {
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
@@ -259,7 +259,7 @@ class RentOrderInfoController extends AdminController
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email);
                             if (empty($order_success_email)) {
-                                $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
                             } else {
                                 return $form->response()->error('服务器出错了~')->refresh();
                             }
@@ -267,7 +267,7 @@ class RentOrderInfoController extends AdminController
                         case Order::ORDER_STATUS['os6']:
                             $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
                             if (empty($cancel_email)) {
-                                $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
                             } else {
                                 return $form->response()->error('服务器出错了~')->refresh();
                             }
@@ -276,7 +276,7 @@ class RentOrderInfoController extends AdminController
                             $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
 
                             if (empty($verify_fail)) {
-                                $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
                             } else {
                                 return $form->response()->error('服务器出错了~')->refresh();
                             }
