@@ -313,15 +313,23 @@
 
 
         function comfirmOrder(src) {
+            var userCheck = Boolean(parseInt('{{ (Boolean) $user->driving_licence_certified }}')) == true;
 
-            if ($('#phone').val() == null || $('#IDNumber').val() == null || $('#driving-licence')[0].files[0] == null) {
+            if (!userCheck) {
+                if ($('#driving-licence')[0].files[0] == null) {
+                    Swal.fire("注意!", "承租人駕照照片欄位不可空白", "warning");
+                    return
+                }
+            }
+
+            if ($('#phone').val() == null || $('#IDNumber').val() == null) {
                 Swal.fire("注意!", "承租人資料相關欄位不可空白", "warning");
                 return
             }
 
             if (!$('#same_user').is(':checked')) {
                 if ($('#dr_name').val() == null || $('#dr_email').val() == null || $('#dr_phone').val() == null ||
-                $('#dr_IDNumber').val() == null || $('#dr_driving-licence')[0].files[0] == null ) {
+                    $('#dr_IDNumber').val() == null || $('#dr_driving-licence')[0].files[0] == null) {
                     Swal.fire("注意!", "司機資料相關欄位不可空白", "warning");
                     return
                 }

@@ -229,6 +229,7 @@
             color: #333;
             /* color: #fff; */
             cursor: default;
+            background: rgb(255, 225, 202);
         }
 
         #radio .button {

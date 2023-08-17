@@ -53,6 +53,7 @@ class RvRentController extends Controller
         $attachmentInfo->attachments = array();
         foreach ($rvModelInfo as $rvModel) {
             $attachmentInfo->attachments[$rvModel->id] = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
+            $attachmentInfo->attachments[$rvModel->id]->ordercount = count(Order::where('order_rv_model_id', $rvModel->id)->get());
         }
         return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
     }
@@ -302,7 +303,7 @@ class RvRentController extends Controller
                             File::delete(public_path('uploads/' . $user_info->driving_licence));
                         }
                     }
-                    $user_info->driving_licence = 'images/user_driving_licence/' . $user . '/photos/' . $filename;
+                    $user_info->driving_licence = 'images/user_driving_licence/' . $user->id . '/photos/' . $filename;
 
                     $user_info->save();
                     // dd($filename);
@@ -413,6 +414,7 @@ class RvRentController extends Controller
         $attachmentInfo->attachments = array();
         foreach ($models as $rvModel) {
             $attachmentInfo->attachments[$rvModel->id] = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
+            $attachmentInfo->attachments[$rvModel->id]->ordercount = count(Order::where('order_rv_model_id', $rvModel->id)->get());
         }
 
         if ($request->ajax()) {

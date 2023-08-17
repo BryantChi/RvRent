@@ -22,7 +22,25 @@ class RentOrderInfo extends Model
         "os5" => "未成立，未付款",
         "os6" => "未成立，取消",
         "os7" => "未成立，進行中",
-        "os8" => "未成立，待確認"
+        "os8" => "未成立，待確認",
+
+        "os9" => "已成立，結束訂單",
+        "os10" => "已成立，驗證失敗"
+    ];
+
+    const ORDER_STATUS_SELECT = [
+        "已成立" => "已成立",
+        "已成立，待付款" => "已成立，待付款",
+        "已成立，待確認" => "已成立，待確認",
+        "已成立，付款失敗" => "已成立，付款失敗",
+
+        "未成立，未付款" => "未成立，未付款",
+        "未成立，取消" => "未成立，取消",
+        "未成立，進行中" => "未成立，進行中",
+        "未成立，待確認" => "未成立，待確認",
+
+        "已成立，結束訂單" => "已成立，結束訂單",
+        "已成立，驗證失敗" => "已成立，驗證失敗"
     ];
 
     protected $table = 'rent_order_infos';
@@ -98,6 +116,7 @@ class RentOrderInfo extends Model
             case 'ordering': // 訂單進行中(保存至購物車)
             case 'cart': // 訂單進行中(保存至購物車)
                 return self::ORDER_STATUS['os8'];
+                break;
             default:
                 return self::ORDER_STATUS;
                 break;

@@ -26,21 +26,21 @@ class CustomerInfoController extends AdminController
             $grid->showQuickEditButton();
             // $grid->column('id')->sortable();
             $grid->column('customer_id')->sortable();
-            $grid->column('name');
-            $grid->column('nick_name');
-            $grid->column('IDNumber');
-            $grid->column('email');
-            $grid->column('email_verified_at');
+            $grid->column('name')->sortable();
+            $grid->column('nick_name')->sortable();
+            $grid->column('IDNumber')->sortable();
+            $grid->column('email')->sortable();
+            $grid->column('email_verified_at')->sortable();
             $grid->column('password')->hide();
-            $grid->column('country');
-            $grid->column('phone');
-            $grid->column('line_id');
-            $grid->column('gender');
-            $grid->column('birthday');
+            $grid->column('country')->sortable();
+            $grid->column('phone')->sortable();
+            $grid->column('line_id')->sortable();
+            $grid->column('gender')->sortable();
+            $grid->column('birthday')->sortable();
             $grid->column('driving_licence')->image();
-            $grid->column('driving_licence_certified')->switch();
+            $grid->column('driving_licence_certified')->switch()->sortable();
             // $grid->column('remember_token');
-            $grid->column('created_at');
+            $grid->column('created_at')->sortable();
             $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
@@ -49,6 +49,15 @@ class CustomerInfoController extends AdminController
             });
             $grid->disableDeleteButton();
             // $grid->disableCreateButton();
+            // $grid->quickSearch();
+
+            // // 设置表单提示值
+            // $grid->quickSearch()->placeholder('搜索...');
+            $grid->quickSearch(function ($model, $query) {
+                $model->where('customer_id', $query);
+                // ->orWhere('desc', 'like', "%{$query}%")
+            });
+
         });
     }
 

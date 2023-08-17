@@ -51,7 +51,13 @@
                             <?php
                             $model = App\Models\RvModelInfo::find($order->order_rv_model_id);
                             $order_rv_amount_info = json_decode($order->order_rv_amount_info);
-
+                            $get_datetime = $order->order_get_date . ' ' . $order_rv_amount_info->other_value_get_time;
+                            $back_datetime = $order->order_back_date . ' ' . $order_rv_amount_info->other_value_back_time;
+                            if (\Carbon\Carbon::parse($get_datetime)->diffInDays(\Carbon\Carbon::now()) < 10) {
+                                $order_cancel_check = false;
+                            } else {
+                                $order_cancel_check = true;
+                            }
                             ?>
                             <div class="row">
                                 {{-- {{ dd($model->rv_front_cover) }} --}}
@@ -62,9 +68,9 @@
                                 <div class="col-md-9">
                                     <h5>車型：{{ $model->rv_name }}</h5>
                                     <div class="d-md-flex d-block justify-content-between">
-                                        <p>取車日：{{ $order->order_get_date . ' ' . $order_rv_amount_info->other_value_get_time }}
+                                        <p>取車日：{{ $get_datetime }}
                                         </p>
-                                        <p>還車日：{{ $order->order_back_date . ' ' . $order_rv_amount_info->other_value_back_time }}
+                                        <p>還車日：{{ $back_datetime }}
                                         </p>
                                     </div>
                                     <div class="d-md-flex d-block justify-content-between">
@@ -88,7 +94,7 @@
                                         @endif
                                         @if (App\Models\RentOrderInfo::checkCancelOrderByStatus($order->order_status))
                                             <a href="javascript:void(0)"
-                                                onclick="cancelOrder('{{ route('member.order.delete', ['id' => $order->id]) }}')"
+                                                onclick="cancelOrder('{{ route('member.order.delete', ['id' => $order->id]) }}', {{$order_cancel_check}})"
                                                 class="btn btn-outline-danger">取消訂單</a>
                                         @endif
                                     </div>
@@ -147,15 +153,23 @@
 
 @push('scripts')
     <script>
-        function cancelOrder(src) {
+        function cancelOrder(src, cancel_check) {
+            var cancel_txt = '';
+            if(!Boolean(cancel_check)) {
+                cancel_txt = '您的取消動作已在我們的合約協議10日內 會有取消訂單手續費詳見之前的協議合約書 若您確定要取消請按確認鍵 或者洽詢客服人員改日期避免損失!'
+            } else {
+                cancel_txt = '您將無法復原此筆訂單!'
+            }
+
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: '是否確認刪除?',
+                text: cancel_txt,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonText: '是, 刪除!',
+                cancelButtonText: '取消',
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },

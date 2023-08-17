@@ -11,7 +11,7 @@
             <div class="row g-0 w-75 mx-auto" style="width: 80% !important;">
                 @foreach ($attachmentInfo->attachments[$model->id]->attach as $item)
                     <div class="col-md-4 col-6 my-2 d-flex align-items-center" style="color: #f7c000">
-                        <img src="{{ env('APP_URL') . '/uploads/' . $item->attachment_icon }}"
+                        <img src="{{ env('APP_URL') . 'uploads/' . $item->attachment_icon }}"
                             class="img_fluid mr-3" width="36" alt="{{ __('') }}">
                         <span>{{ $item->attachment_name }}</span>
                     </div>
@@ -27,7 +27,7 @@
             <i class="rent-count-container"></i>
             <p class="text-center">
                 <span class="d-block">租車次數</span>
-                <span class="d-block"><i class="fa-solid fa-caravan"></i> {{ $model->stock }}</span>
+                <span class="d-block"><i class="fa-solid fa-caravan"></i> {{ (Int) $attachmentInfo->attachments[$model->id]->ordercount > 999 ? '999+' : $attachmentInfo->attachments[$model->id]->ordercount }}</span>
             </p>
         </div>
 
