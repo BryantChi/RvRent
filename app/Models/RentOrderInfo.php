@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\RvModelInfo as RvModel;
+use App\Models\RvVehicleInfo as RvVehicle;
+use App\Models\AccessoryInfo as Accessory;
 
 class RentOrderInfo extends Model
 {
@@ -151,5 +154,100 @@ class RentOrderInfo extends Model
                 return true;
                 break;
         }
+    }
+
+    public static function setStockBacklog($order_id)
+    {
+        $order = static::find($order_id);
+
+        // 回歸車輛
+
+        $rvModel = RvModel::find($order->order_rv_model_id);
+        $rvModel->stock += 1;
+
+
+        $rvVehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
+        if ($rvVehicle->vehicle_status == 'rent_out') {
+            $rvVehicle->vehicle_status = 'rent_stay';
+            $rvVehicle->save();
+        }
+
+        $rvModel->save();
+
+        // 回歸配備
+
+        foreach (json_decode($order->order_accessory_info) as $value) {
+            $accessory = Accessory::find($value->equipment_id);
+            $accessory->accessory_quantity += $value->equipment_count;
+            $accessory->save();
+        }
+
+        return true;
+    }
+
+    public static function setStockRestore($order_id)
+    {
+        $order = static::withTrashed()->findOrFail($order_id);
+
+        // 復原訂單車輛
+
+        $rvModel = RvModel::find($order->order_rv_model_id);
+        $rvModel->stock -= 1;
+
+
+        $rvVehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
+        if ($rvVehicle->vehicle_status == 'rent_stay') {
+            $rvVehicle->vehicle_status = 'rent_out';
+            $rvVehicle->save();
+        } else {
+            return false;
+        }
+
+        $rvModel->save();
+
+        // 復原訂單配備
+
+        foreach (json_decode($order->order_accessory_info) as $value) {
+            $accessory = Accessory::find($value->equipment_id);
+            $accessory->accessory_quantity -= $value->equipment_count;
+            $accessory->save();
+        }
+
+        return true;
+    }
+
+    // 統整庫存&訂單
+    public static function setDataReconciliation()
+    {
+
+        $orders = static::whereIn('order_status', [self::ORDER_STATUS['os1'], self::ORDER_STATUS['os2'], self::ORDER_STATUS['os3'], self::ORDER_STATUS['os4'], self::ORDER_STATUS['os10']])->get();
+
+        foreach ($orders as $order) {
+            // 訂單與車輛比對
+            $vehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
+            if ($vehicle->vehicle_status == 'rent_stay') {
+                $vehicle->vehicle_status = 'rent_out';
+                $vehicle->save();
+            }
+        }
+
+        // $ordersTrashed = static::onlyTrashed()->get();
+
+        // foreach ($ordersTrashed as $order_t) {
+
+        // }
+
+
+        // 車型庫存與最後正確的
+        $rvModels = RvModel::all();
+        foreach ($rvModels as $model) {
+            // $checkOutVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_out')->get();
+            $checkStayVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_stay')->get();
+            $rvm = RvModel::find($model->id);
+            $rvm->stock = count($checkStayVehicle);
+            $rvm->save();
+        }
+
+        return true;
     }
 }

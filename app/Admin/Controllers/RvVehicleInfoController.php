@@ -82,7 +82,7 @@ class RvVehicleInfoController extends AdminController
                 $form->display('model_id')->value($form->model()->model_id);
             }
 
-            $form->radio('vehicle_status')->options(['rent_stay' => '可出租', 'rent_stop' => '暫停出租', 'rent_out' => '已出租', 'rent_back' => '已回車', 'rent_fix' => '維護中'])->default('rent_stay');
+            $form->radio('vehicle_status')->options(['rent_stay' => '可出租', 'rent_stop' => '暫停出租', 'rent_out' => '已出租', 'rent_fix' => '維護中'])->default('rent_stay'); // , 'rent_back' => '已回車'
             // $form->switch('rent_status'); // 租賃狀態為該車租出次數 暫定
 
             $form->display('created_at');

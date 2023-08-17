@@ -27,6 +27,8 @@ class RentOrderInfoController extends AdminController
     protected function grid()
     {
         return Grid::make(new RentOrderInfo(), function (Grid $grid) {
+            Order::setDataReconciliation();
+
             // $grid->disableFilterButton();
             $grid->showColumnSelector();
             // 显示快捷编辑按钮
@@ -264,9 +266,28 @@ class RentOrderInfoController extends AdminController
                                 return $form->response()->error('服务器出错了~')->refresh();
                             }
                             break;
+                        case Order::ORDER_STATUS['os5']: // 回歸 + 刪除回收
+                            break;
                         case Order::ORDER_STATUS['os6']:
-                            $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
-                            if (empty($cancel_email)) {
+
+                            $backlog = Order::setStockBacklog($id );
+
+                            if($backlog) {
+                                $order = Order::find($id);
+                                $order->delete();
+
+                                $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
+                                if (empty($cancel_email)) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->refresh();
+                                }
+                            }
+                            break;
+                        case Order::ORDER_STATUS['os9']:
+                            $backlog = Order::setStockBacklog($id );
+
+                            if($backlog) {
                                 return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
                             } else {
                                 return $form->response()->error('服务器出错了~')->refresh();
@@ -283,6 +304,8 @@ class RentOrderInfoController extends AdminController
                             break;
                     }
                 }
+
+                return;
 
                 // 中断后续逻辑
                 // return $form->response()->error('服务器出错了~');

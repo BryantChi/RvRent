@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Admin\Repositories\PageSettingInfo;
 use Illuminate\Http\Request;
 use App\Models\RentOrderInfo as Order;
+use App\Models\RvModelInfo as RvModel;
+use App\Models\RvVehicleInfo as RvVehicle;
+use App\Models\AccessoryInfo as Accessory;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -88,9 +91,15 @@ class OrderController extends Controller
     {
         //
         $order = Order::find($id);
-        $order->delete();
 
-        return \Response::json(['status' => 'success']);
+        $backlog = Order::setStockBacklog($id);
+
+        if ($backlog) {
+            $order->delete();
+
+            return \Response::json(['status' => 'success']);
+        }
+
     }
 
     public function uploadRemit(Request $request, $id)
