@@ -41,9 +41,9 @@ class RentOrderInfoController extends AdminController
                 $check = '';
                 $user = User::where('customer_id', $user_num)->first();
                 if ((bool)$user->driving_licence_certified) {
-                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . env('APP_URL') . 'customer?_search_=' . $user_num . '">' . $user_num . '</a>';
+                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . env('APP_URL') . 'admin/customer?_search_=' . $user_num . '">' . $user_num . '</a>';
                 } else {
-                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . env('APP_URL') . 'customer?_search_=' . $user_num . '">' . $user_num . '</a>';
+                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . env('APP_URL') . 'admin/customer?_search_=' . $user_num . '">' . $user_num . '</a>';
                 }
                 return $check;
             })->sortable();
@@ -297,7 +297,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單驗證失敗，請於48小時內與客服聯絡';
 
-        $verify_fail = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $verify_fail = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $verify_fail;
     }
@@ -307,7 +307,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單已由系統取消，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
@@ -317,7 +317,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
