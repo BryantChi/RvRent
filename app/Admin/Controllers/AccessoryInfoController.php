@@ -133,7 +133,7 @@ class AccessoryInfoController extends AdminController
 
             $form->saving(function (Form $form) {
                 // 判断是否是新增操作
-                if ($form->isEditing()) {
+                if ($form->isCreating()) {
                     $accessory = Accessory::find($form->getKey());
                     $accessory->accessory_instock = $accessory->accessory_quantity;
                     $accessory->save();

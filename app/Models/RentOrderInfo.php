@@ -245,6 +245,9 @@ class RentOrderInfo extends Model
                 // }
 
                 $vehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
+                if($vehicle->vehicle_status != 'rent_stop' || $vehicle->vehicle_status != 'rent_fix') {
+                    $vehicle->vehicle_status = 'rent_stay';
+                }
                 $get = Carbon::parse($order->order_get_date);
                 $back = Carbon::parse($order->order_back_date);
 
@@ -267,8 +270,8 @@ class RentOrderInfo extends Model
 
                     foreach (json_decode($order->order_accessory_info) as $ac) {
                         $accessory = Accessory::find($ac->equipment_id);
+                        $accessory->accessory_instock = $accessory->accessory_quantity;
                         if ($accessory->accessory_quantity > 0) {
-                            $accessory->accessory_quantity -= $ac->equipment_count;
                             $accessory->accessory_instock -= $ac->equipment_count;
                             $accessory->save();
                         }
