@@ -86,7 +86,7 @@
                         <a href="javascript:void(0)">
                             <img src="{{ url('assets/img/icon/9O_logo_02.png') }}" height="42" alt="">
                         </a>
-                        <h5 class="my-4">{{ __('Register') }}</h5>
+                        <h5 class="my-4">{{ __('註冊會員') }}</h5>
                     </div>
                     <form class="login-form" method="POST" action="{{ route('register') }}">
                         @csrf
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="name">{{ __('Name') }} <span class="text-danger">*</span></label>
+                                    <label for="name">{{ __('姓名') }} <span class="text-danger">*</span></label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name :">
 
                                     @error('name')
@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="email">{{ __('Email Address') }} <span class="text-danger">*</span></label>
+                                    <label for="email">{{ __('信箱') }} <span class="text-danger">*</span></label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"  name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Your Email :">
 
                                     @error('email')
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="password">{{ __('Password') }} <span class="text-danger">*</span></label>
+                                    <label for="password">{{ __('密碼') }} <span class="text-danger">*</span></label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password :">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -129,7 +129,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="password-confirm">{{ __('Confirm Password') }} <span class="text-danger">*</span></label>
+                                    <label for="password-confirm">{{ __('確認密碼') }} <span class="text-danger">*</span></label>
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password :">
                                 </div>
                             </div>
@@ -145,12 +145,12 @@
                             <div class="col-12">
                                 {{-- <button class="btn btn-primary btn-block">Register</button> --}}
                                 <button type="submit" class="btn btn-primary3">
-                                    {{ __('Register') }}
+                                    {{ __('註冊') }}
                                 </button>
                             </div>
 
                             <div class="mx-auto">
-                                <p class="mb-0 mt-3"><small class="text-dark mr-2">Already have an account ?</small> <a href="{{ route('login') }}" class="text-dark font-weight-bold">Sign in</a></p>
+                                <p class="mb-0 mt-3"><small class="text-dark mr-2">已經有帳號 ?</small> <a href="{{ route('login') }}" class="text-dark font-weight-bold">登入</a></p>
                             </div>
                         </div>
                     </form>
