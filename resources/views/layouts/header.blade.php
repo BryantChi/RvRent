@@ -2,7 +2,7 @@
     <div class="row justify-content-center text-center position-relative">
         <div class="col-auto d-flex py-2 align-items-center sale-content">
             <p class="px-3 my-auto">70% off Relocation Special!</p>
-            <a href="http://" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a>
+            <a href="{{ route('car_rent') }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book Now</a>
         </div>
         <span class="btnClose"><i class="fa-solid fa-xmark"></i></span>
     </div>
