@@ -163,6 +163,7 @@ class RentOrderInfo extends Model
         // 回歸車輛
 
         $rvModel = RvModel::find($order->order_rv_model_id);
+        $rvModel->in_stock += 1;
         $rvModel->stock += 1;
 
 
@@ -179,6 +180,7 @@ class RentOrderInfo extends Model
         foreach (json_decode($order->order_accessory_info) as $value) {
             $accessory = Accessory::find($value->equipment_id);
             $accessory->accessory_quantity += $value->equipment_count;
+            $accessory->accessory_instock += $value->equipment_count;
             $accessory->save();
         }
 
@@ -219,15 +221,59 @@ class RentOrderInfo extends Model
     // 統整庫存&訂單
     public static function setDataReconciliation()
     {
-
+        $today = Carbon::today();
+        $rvModels = RvModel::all();
         $orders = static::whereIn('order_status', [self::ORDER_STATUS['os1'], self::ORDER_STATUS['os2'], self::ORDER_STATUS['os3'], self::ORDER_STATUS['os4'], self::ORDER_STATUS['os10']])->get();
 
-        foreach ($orders as $order) {
-            // 訂單與車輛比對
-            $vehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
-            if ($vehicle->vehicle_status == 'rent_stay') {
-                $vehicle->vehicle_status = 'rent_out';
-                $vehicle->save();
+        // 車型庫存與最後正確的
+        foreach ($rvModels as $model) {
+            $checkOutVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_out')->get();
+            $checkVehicle = RvVehicle::where('model_id', $model->id)->whereIn('vehicle_status', ['rent_stay', 'rent_out'])->get();
+            $rvm = RvModel::find($model->id);
+            $rvm->stock = count($checkVehicle);
+            $rvm->in_stock = count($checkVehicle) - count($checkOutVehicle);
+            $rvm->save();
+        }
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+
+                foreach (json_decode($order->order_accessory_info) as $aci) {
+                    $accessory = Accessory::find($aci->equipment_id);
+                    $accessory->accessory_instock = (int)$accessory->accessory_quantity - (int)$aci->equipment_count;
+                    $accessory->save();
+                }
+
+                $vehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
+                $get = Carbon::parse($order->order_get_date);
+                $back = Carbon::parse($order->order_back_date);
+
+                $check = $today->between($get, $back);
+
+                // 今日庫存運算
+                if ($check) {
+                    $rvms = RvModel::find($order->order_rv_model_id);
+                    if ($rvms->in_stock > 0 && $rvms->stock > 0) {
+                        $rvms->in_stock -= 1;
+                        $rvms->stock -= 1;
+                        $rvms->save();
+                    }
+
+                    if ($vehicle->vehicle_status == 'rent_stay') {
+                        $vehicle->vehicle_status = 'rent_out';
+                        $vehicle->save();
+                    }
+
+
+                    foreach (json_decode($order->order_accessory_info) as $ac) {
+                        $accessory = Accessory::find($ac->equipment_id);
+                        if ($accessory->accessory_quantity > 0) {
+                            $accessory->accessory_quantity -= $ac->equipment_count;
+                            $accessory->accessory_instock -= $ac->equipment_count;
+                            $accessory->save();
+                        }
+                    }
+                }
             }
         }
 
@@ -238,16 +284,32 @@ class RentOrderInfo extends Model
         // }
 
 
-        // 車型庫存與最後正確的
-        $rvModels = RvModel::all();
-        foreach ($rvModels as $model) {
-            // $checkOutVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_out')->get();
-            $checkStayVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_stay')->get();
-            $rvm = RvModel::find($model->id);
-            $rvm->stock = count($checkStayVehicle);
-            $rvm->save();
-        }
 
         return true;
+    }
+
+    public static function isBetweenDays($startDate, $endDate, $model_id)
+    {
+        $orders = static::where('order_rv_model_id', $model_id)->whereIn('order_status', [self::ORDER_STATUS['os1'], self::ORDER_STATUS['os2'], self::ORDER_STATUS['os3'], self::ORDER_STATUS['os4'], self::ORDER_STATUS['os10']])->get();
+        // $orders = static::all();
+
+        $get = Carbon::parse($startDate);
+        $back = Carbon::parse($endDate);
+        $count = 0;
+        //
+        foreach ($orders as $order) {
+            $order_get = Carbon::parse($order->order_get_date);
+            $order_back = Carbon::parse($order->order_back_date);
+
+            $isBetween = $get->between($order_get, $order_back);
+
+            if ($isBetween) {
+                $count++;
+            }
+        }
+
+        $vehicle = RvVehicle::where('model_id', $model_id)->get();
+
+        return (count($vehicle) - $count) > 0;
     }
 }

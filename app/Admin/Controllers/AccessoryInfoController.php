@@ -7,6 +7,7 @@ use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use App\Models\AccessoryInfo as Accessory;
 
 class AccessoryInfoController extends AdminController
 {
@@ -36,6 +37,7 @@ class AccessoryInfoController extends AdminController
             });
             $grid->column('accessory_buy_date');
             $grid->column('accessory_quantity');
+            $grid->column('accessory_instock');
             $grid->column('accessory_unit_price');
             $grid->column('accessory_gross_price');
             $grid->column('accessory_rent_price');
@@ -83,6 +85,7 @@ class AccessoryInfoController extends AdminController
             }); // ->explode('<br>')->label()
             $show->field('accessory_buy_date');
             $show->field('accessory_quantity');
+            $show->field('accessory_instock');
             $show->field('accessory_unit_price');
             $show->field('accessory_gross_price');
             $show->field('accessory_rent_price');
@@ -112,13 +115,30 @@ class AccessoryInfoController extends AdminController
             });
 
             $form->date('accessory_buy_date');
-            $form->number('accessory_quantity');
+            if ($form->isCreating()) {
+                $form->number('accessory_quantity');
+                $val_status = 0;
+            } else {
+                $form->display('accessory_quantity')->value($form->model()->accessory_quantity);
+                $val_status = $form->model()->accessory_instock;
+            }
+            $form->display('accessory_instock')->value($val_status);
             $form->currency('accessory_unit_price')->symbol('NT$');
             $form->currency('accessory_gross_price')->symbol('NT$');
             $form->currency('accessory_rent_price')->symbol('NT$');
 
             $form->display('created_at');
             $form->display('updated_at');
+
+
+            $form->saving(function (Form $form) {
+                // 判断是否是新增操作
+                if ($form->isEditing()) {
+                    $accessory = Accessory::find($form->getKey());
+                    $accessory->accessory_instock = $accessory->accessory_quantity;
+                    $accessory->save();
+                }
+            });
         });
     }
 }

@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-12">
                     @foreach ($accessory as $equipment)
-                        @if ($equipment->accessory_quantity > 0)
+                        @if ($equipment->accessory_instock > 0)
                             <div class="equipment-box p-3 mb-3">
                                 <div class="justify-content-evely align-items-center d-md-flex equipment-title-box">
                                     <div class="form-check align-self-center">
@@ -72,7 +72,7 @@
                                         <p class="d-flex align-items-center justify-content-end my-0">
                                             租借數量
                                             <input type="number" min="1" value="1"
-                                                max="{{ $equipment->accessory_quantity }}" id="equipment-item-count"
+                                                max="{{ $equipment->accessory_instock }}" id="equipment-item-count"
                                                 class="form-control mx-1" style="width: auto !important;">
                                             組
                                         </p>

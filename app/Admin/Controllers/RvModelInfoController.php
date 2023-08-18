@@ -44,6 +44,7 @@ class RvModelInfoController extends AdminController
             })->label('success');
             $grid->column('rv_rent_setting')->hide();
             $grid->column('stock');
+            $grid->column('in_stock');
             $grid->column('bed_count');
             $grid->column('base_price');
             $grid->column('rv_discription')->display(function ($rvDiscription) {
@@ -94,6 +95,7 @@ class RvModelInfoController extends AdminController
             })->label('success');
             // $show->field('rv_rent_setting');
             $show->field('stock');
+            $show->field('in_stock');
             $show->field('bed_count');
             $show->field('base_price');
             $show->field('rv_discription')->unescape()->as(function ($content) {
@@ -124,10 +126,13 @@ class RvModelInfoController extends AdminController
 
                 if ($form->isCreating()) {
                     $val_status = 0;
+                    $in_val_status = 0;
                 } else {
                     $val_status = $form->model()->stock;
+                    $in_val_status = $form->model()->in_stock;
                 }
                 $form->display('stock')->value($val_status);
+                $form->display('in_stock')->value($in_val_status);
                 $form->number('bed_count');
                 $form->currency('base_price')->symbol('$');
 

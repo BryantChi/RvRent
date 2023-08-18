@@ -11,6 +11,7 @@ return [
         'rv_rent_setting' => '租金設定',
         'attachment_id' => '車輛配件',
         'stock' => '車輛庫存',
+        'in_stock' => '即時庫存(當日)',
         'bed_count' => '床位數',
         'base_price' => '基本價',
         'rv_discription' => '露營車介紹',

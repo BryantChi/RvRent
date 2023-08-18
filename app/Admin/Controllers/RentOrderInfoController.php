@@ -164,6 +164,17 @@ class RentOrderInfoController extends AdminController
             //         $batch->add(new BatchRestore(Order::class));
             //     }
             // });
+
+            $titles = ['id' => 'ID', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_amount_001' => '保險費'];
+            // $grid->export();
+            $grid->export($titles)->rows(function ($rows) {
+                foreach ($rows as $index => &$row) {
+                    $row['order_amount_001'] = (json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->item.' '.(json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->price;
+                }
+
+                return $rows;
+            });
+
         });
     }
 
@@ -321,7 +332,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單驗證失敗，請於48小時內與客服聯絡';
 
-        $verify_fail = Mail::to('9o-traveller@o-ma.com.tw')->send(new OrderServicesMail($title, $details));
+        $verify_fail = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $verify_fail;
     }
@@ -331,7 +342,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單已由系統取消，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to('9o-traveller@o-ma.com.tw')->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
@@ -341,7 +352,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to('9o-traveller@o-ma.com.tw')->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }

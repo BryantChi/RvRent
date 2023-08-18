@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
 use stdClass;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 class RvRentController extends Controller
 {
@@ -129,7 +130,8 @@ class RvRentController extends Controller
         //
     }
 
-    public function removeCarRentCookie() {
+    public function removeCarRentCookie()
+    {
         Cookie::queue(\Cookie::forget('date_get'));
         Cookie::queue(\Cookie::forget('date_back'));
         Cookie::queue(\Cookie::forget('bed_count'));
@@ -165,7 +167,7 @@ class RvRentController extends Controller
         $accessory = Accessory::all();
         $models = RvModel::find($rvm_id);
         $rv_rent_setting = json_decode($models->rv_rent_setting, true);
-        $rent_amount_setting = array_values(array_filter($rv_rent_setting, function($vi) {
+        $rent_amount_setting = array_values(array_filter($rv_rent_setting, function ($vi) {
             $week = date('w', strtotime($this->time_start_default));
             $firstDate  = new \DateTime($this->time_start_default);
             $secondDate = new \DateTime($this->time_end_default);
@@ -180,7 +182,7 @@ class RvRentController extends Controller
             return \Response::json(['status' => 'error']);
         }
 
-        if($request->ajax()) {
+        if ($request->ajax()) {
             Cookie::queue('date_get', $this->time_start_default, 30);
             Cookie::queue('date_back', $this->time_end_default, 30);
             Cookie::queue('bed_count', $this->bed_count, 30);
@@ -188,7 +190,6 @@ class RvRentController extends Controller
         } else {
             return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models]);
         }
-
     }
 
     public function showStepTwo(Request $request, $rvm_id)
@@ -200,8 +201,10 @@ class RvRentController extends Controller
         $input = $request->all();
 
         if ($request->method() == 'GET') {
-            if ($request->cookie("date_get") != null && $request->cookie("date_back") != null &&
-            $request->cookie("bed_count") != null && $request->cookie("amount_data") != null) {
+            if (
+                $request->cookie("date_get") != null && $request->cookie("date_back") != null &&
+                $request->cookie("bed_count") != null && $request->cookie("amount_data") != null
+            ) {
                 $cookies = $request->cookie();
                 $this->time_start_default = $cookies['date_get'];
                 $this->time_end_default = $cookies['date_back'];
@@ -223,7 +226,6 @@ class RvRentController extends Controller
         $series = RvSeries::find($models->rv_series_id);
 
         return view('rv_rent_s3', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'series' => $series->rv_series_file]);
-
     }
 
     public function showStepThree(Request $request)
@@ -259,8 +261,7 @@ class RvRentController extends Controller
             $this->amount_data->order_other_driver_info = ''; // 客戶上傳用
             $this->amount_data->order_other_driving_licence = ''; // 客戶上傳用
 
-            if ($request->ajax())
-            {
+            if ($request->ajax()) {
                 $input = $request->all();
 
                 $other_dr_info = [];
@@ -328,36 +329,36 @@ class RvRentController extends Controller
 
                 // dd((array) $this->amount_data);
                 try {
-                    $order_save = Order::create((array) $this->amount_data);
+                    Order::create((array) $this->amount_data);
 
-                    if ($order_save) {
-                        // 庫存處理
-                        $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
-                        if ($rvModel->stock > 0) {
-                            $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle)->first();
-                            // $rvVehicle = RvVehicle::find($rvVehicles->id);
-                            $rvVehicle->vehicle_status = 'rent_out';
-                            $rvVehicleSave = $rvVehicle->save();
+                    // if ($order_save) {
+                    //     // 庫存處理
+                    //     $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
+                    //     if ($rvModel->stock > 0) {
+                    //         $rvVehicle = RvVehicle::where('vehicle_num', $this->amount_data->order_rv_vehicle)->first();
+                    //         // $rvVehicle = RvVehicle::find($rvVehicles->id);
+                    //         $rvVehicle->vehicle_status = 'rent_out';
+                    //         $rvVehicleSave = $rvVehicle->save();
 
-                            if ($rvVehicleSave) {
-                                $rvModel->stock -= 1;
-                                $rvModelSave = $rvModel->save();
+                    //         if ($rvVehicleSave) {
+                    //         }
+                    //     }
+                    //     $rvModel->stock -= 1;
+                    //     $rvModelSave = $rvModel->save();
 
-                                if ($rvModelSave) {
-                                    foreach(json_decode($this->amount_data->order_accessory_info) as $info) {
-                                        $accessory = Accessory::find($info->equipment_id);
-                                        $accessory->accessory_quantity -= $info->equipment_count;
-                                        $accessory->save();
-                                    }
-                                }
-                            }
-                        }
+                    //     if ($rvModelSave) {
+                    //         foreach (json_decode($this->amount_data->order_accessory_info) as $info) {
+                    //             $accessory = Accessory::find($info->equipment_id);
+                    //             $accessory->accessory_quantity -= $info->equipment_count;
+                    //             $accessory->save();
+                    //         }
+                    //     }
 
 
-                        // 訂單狀態處理
+                    //     // 訂單狀態處理
 
-                    }
-                } catch (QueryException $e ) {
+                    // }
+                } catch (QueryException $e) {
                     //throw $th;
                     dd($e);
                 }
@@ -369,19 +370,14 @@ class RvRentController extends Controller
             }
 
 
-            if ($request->method() == 'GET')
-            {
+            if ($request->method() == 'GET') {
                 $rvModel = RvModel::find($data->other->other_model_key);
                 $pageInfo = PageSettingInfo::getBanners('/car_rent');
                 return view('rv_rent_s4', ['title' => '即刻租車', 'pageInfo' => $pageInfo, 'amountData' => $this->amount_data, 'rvModel' => $rvModel, 'user' => $user]);
             }
-
-
-
         } else {
             return redirect()->route('car_rent');
         }
-
     }
 
     public function filterModelsDefault(Request $request)
@@ -395,6 +391,7 @@ class RvRentController extends Controller
         $model_filter = array_filter($models->toArray(), function ($v) {
             $rv_rent_setting = json_decode($v["rv_rent_setting"]);
             if (!is_null($rv_rent_setting) || is_array($rv_rent_setting)) {
+                $checkStock = Order::isBetweenDays($this->time_start_default, $this->time_end_default, $v['id']);
                 return count(array_filter($rv_rent_setting, function ($vi) {
                     $week = date('w', strtotime($this->time_start_default));
                     $data_back = date('Y-m-d', strtotime('+' . $vi->day . ' day', strtotime($this->time_start_default))) . ' ' . $vi->back;
@@ -406,7 +403,7 @@ class RvRentController extends Controller
 
                     return $vi->week == $week && $intvl->d == $vi->day;
                     // strtotime($this->time_end_default) >= strtotime($data_back)
-                })) > 0  && $v["stock"] > 0 && $this->bed_count <= $v["bed_count"];
+                })) > 0  && $checkStock && $this->bed_count <= $v["bed_count"];
             }
         });
         $models = json_decode(json_encode($model_filter));
@@ -422,7 +419,5 @@ class RvRentController extends Controller
         } else {
             return View::make('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
         }
-
-
     }
 }

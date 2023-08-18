@@ -10,6 +10,7 @@ return [
         'accessory_specification' => '規格',
         'accessory_buy_date' => '購買日期',
         'accessory_quantity' => '庫存數量',
+        'accessory_instock' => '即時庫存',
         'accessory_unit_price' => '進價單價',
         'accessory_gross_price' => '總價',
         'accessory_rent_price' => '租金',
