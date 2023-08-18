@@ -75,13 +75,11 @@
     <!-- Footer End -->
 
     <div class="social-link d-grid text-center pb-2">
-        @auth
         <a href="https://lin.ee/pSapwg7" target="_blank">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_line icon.png') }}" width="35px" alt="">
             </div>
         </a>
-        @endauth
         <a href="https://www.facebook.com/profile.php?id=100086047151408" target="_blank">
             <div>
                 <img src="{{ asset('assets/img/icon/icon_messanger.png') }}" width="35px" alt="">
