@@ -39,7 +39,12 @@ class DataReconciliationCommand extends Command
     public function handle()
     {
         // return 0;
-        Order::setDataReconciliation();
-        \Log::info('Cron Job has been executed.');
+        $checkDataReconciliation = Order::setDataReconciliation();
+        if ($checkDataReconciliation) {
+            \Log::info('Cron Job has been executed.');
+        } else {
+            \Log::info('Cron Job has fail.');
+        }
+        // \Log::info('Cron Job has been executed.');
     }
 }
