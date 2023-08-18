@@ -37,7 +37,7 @@ class AccessoryInfoController extends AdminController
             });
             $grid->column('accessory_buy_date');
             $grid->column('accessory_quantity');
-            $grid->column('accessory_instock');
+            // $grid->column('accessory_instock');
             $grid->column('accessory_unit_price');
             $grid->column('accessory_gross_price');
             $grid->column('accessory_rent_price');
@@ -85,7 +85,7 @@ class AccessoryInfoController extends AdminController
             }); // ->explode('<br>')->label()
             $show->field('accessory_buy_date');
             $show->field('accessory_quantity');
-            $show->field('accessory_instock');
+            // $show->field('accessory_instock');
             $show->field('accessory_unit_price');
             $show->field('accessory_gross_price');
             $show->field('accessory_rent_price');
@@ -117,12 +117,12 @@ class AccessoryInfoController extends AdminController
             $form->date('accessory_buy_date');
             if ($form->isCreating()) {
                 $form->number('accessory_quantity');
-                $val_status = 0;
+                // $val_status = 0;
             } else {
                 $form->display('accessory_quantity')->value($form->model()->accessory_quantity);
-                $val_status = $form->model()->accessory_instock;
+                // $val_status = $form->model()->accessory_instock;
             }
-            $form->display('accessory_instock')->value($val_status);
+            // $form->display('accessory_instock')->value($val_status);
             $form->currency('accessory_unit_price')->symbol('NT$');
             $form->currency('accessory_gross_price')->symbol('NT$');
             $form->currency('accessory_rent_price')->symbol('NT$');

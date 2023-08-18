@@ -238,11 +238,11 @@ class RentOrderInfo extends Model
         if (count($orders) > 0) {
             foreach ($orders as $order) {
 
-                foreach (json_decode($order->order_accessory_info) as $aci) {
-                    $accessory = Accessory::find($aci->equipment_id);
-                    $accessory->accessory_instock = (int)$accessory->accessory_quantity - (int)$aci->equipment_count;
-                    $accessory->save();
-                }
+                // foreach (json_decode($order->order_accessory_info) as $aci) {
+                //     $accessory = Accessory::find($aci->equipment_id);
+                //     $accessory->accessory_instock = (int)$accessory->accessory_quantity - (int)$aci->equipment_count;
+                //     $accessory->save();
+                // }
 
                 $vehicle = RvVehicle::where('vehicle_num', $order->order_rv_vehicle)->first();
                 $get = Carbon::parse($order->order_get_date);

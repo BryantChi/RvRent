@@ -332,7 +332,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單驗證失敗，請於48小時內與客服聯絡';
 
-        $verify_fail = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
+        $verify_fail = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
         return $verify_fail;
     }
@@ -342,7 +342,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單已由系統取消，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
@@ -352,7 +352,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to('bryantchi.work@gmail.com')->send(new OrderServicesMail($title, $details));
+        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
