@@ -15,7 +15,6 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "nesbot/carbon": "^2.69",
-        "opcodesio/log-viewer": "^3.0",
         "pstldz/dcat-admin-grid-sotrable": "^1.0"
     },
     "require-dev": {
