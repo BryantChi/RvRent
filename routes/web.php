@@ -76,6 +76,8 @@ Route::any('rent_witness', function () {
     return view('rent_witness', ['title' => '租車見證', 'pageInfo' => $pageInfo]);
 })->name('rent_witness');
 
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
