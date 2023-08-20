@@ -27,14 +27,16 @@ class AccessoryInfo extends Model
 
             $checkDate = $inputDate->between($order->order_get_date, $order->order_back_date);
 
-            if ($checkDate) {
 
-                foreach (json_decode($order->order_accessory_info) as $aci) {
-                    if ($id == $aci->equipment_id) {
-                        $accessory = static::find($aci->equipment_id);
+            foreach (json_decode($order->order_accessory_info) as $aci) {
+                if ($id == $aci->equipment_id) {
+                    $accessory = static::find($aci->equipment_id);
+                    if ($checkDate) {
                         $count = (int)$accessory->accessory_quantity - (int)$aci->equipment_count;
-                        return $count;
+                    } else {
+                        $count = (int)$accessory->accessory_quantity;
                     }
+                    return $count;
                 }
             }
         }
