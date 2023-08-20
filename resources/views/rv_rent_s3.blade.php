@@ -85,7 +85,7 @@
 
 
         // pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ asset("assets/js/pdfjs-3.9.179-dist/build/pdf.js") }}';
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.js';
+        // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.js';
         // PDF 文件的 URL
         var pdfUrl = "{{ 'http://9o-traveller.com.tw/uploads/' . $series }}";
 
