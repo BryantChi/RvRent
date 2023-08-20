@@ -201,3 +201,8 @@
         <!--end row-->
     </div>
 @endsection
+@push('scripts')
+    <script>
+        localStorage.removeItem('savedInput');
+    </script>
+@endpush

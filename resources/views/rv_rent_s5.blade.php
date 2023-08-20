@@ -36,6 +36,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(){
+                    localStorage.removeItem('savedInput');
                     console.log("cookie deleted");
                 }
             });

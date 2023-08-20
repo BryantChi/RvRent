@@ -136,3 +136,8 @@
     </section>
     <!--end section-->
 @endsection
+@push('scripts')
+    <script>
+        localStorage.removeItem('savedInput');
+    </script>
+@endpush

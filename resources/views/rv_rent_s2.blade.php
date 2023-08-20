@@ -53,8 +53,8 @@
                 </div>
                 <div class="col-12">
                     @foreach ($accessory as $equipment)
-                        @if (((Int) App\Models\AccessoryInfo::getAccessoryInfoByDate($equipment->id, Cookie::get('date_get'))) > 0)
-                            <div class="equipment-box p-3 mb-3">
+                        @if (((int) App\Models\AccessoryInfo::getAccessoryInfoByDate($equipment->id, Cookie::get('date_get'))) > 0)
+                            <div class="equipment-box equipment-box-{{ $equipment->id }} p-3 mb-3">
                                 <div class="justify-content-evely align-items-center d-md-flex equipment-title-box">
                                     <div class="form-check align-self-center">
                                         <input class="form-check-input h5 mt-2 equipment-item" type="checkbox"
@@ -72,8 +72,9 @@
                                         <p class="d-flex align-items-center justify-content-end my-0">
                                             租借數量
                                             <input type="number" min="1" value="1"
-                                                max="{{ App\Models\AccessoryInfo::getAccessoryInfoByDate($equipment->id, Cookie::get('date_get')) }}" id="equipment-item-count"
-                                                class="form-control mx-1" style="width: auto !important;">
+                                                max="{{ App\Models\AccessoryInfo::getAccessoryInfoByDate($equipment->id, Cookie::get('date_get')) }}"
+                                                id="equipment-item-count" class="form-control mx-1 equipment-item-count"
+                                                style="width: auto !important;">
                                             組
                                         </p>
                                         <p class="h3 px-3 my-0 equipment-item-amount" style="color: #ea3c06;">
@@ -289,6 +290,7 @@
         var bt = parseInt($('.order-price').data('orderPrice')) * day;
         var at = parseInt($('input[name=label]:checked').val());
 
+        getCheckboxPrice();
         getOtherPrice();
         setOrderPrice();
 
@@ -384,6 +386,7 @@
     </script>
 
     <script>
+        saveInput();
         var amountData = {};
         var planData = [];
         var equipmentData = [];
@@ -398,6 +401,33 @@
             document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
         }
 
+        // localStorage.removeItem('savedInput');
+        function saveInput() {
+            var savedData = localStorage.getItem('savedInput');
+            if (savedData) {
+                var parsedData = JSON.parse(savedData);
+                console.log(parsedData);
+                setTimeout(() => {
+                    $('.order-price').data('orderPrice', parsedData.rent.total_rent_amount);
+                    $('.order-price').html('$' + parsedData.rent.total_rent_amount);
+                    $("input[name='label'][value='" + parsedData.plan.plan_value + "']").attr("checked", true);
+                    $("input[name='label'][value='" + parsedData.plan.plan_value + "']").prop("checked", true);
+                    $("input[name='label'][value='" + parsedData.plan.plan_value + "']").change();
+                    $.each(parsedData.equipment,function(index, data){
+                        $('.equipment-box-'+data.equipment_id).find('.equipment-item').attr("checked", true);
+                        $('.equipment-box-'+data.equipment_id).find('.equipment-item').prop("checked", true);
+                        $('.equipment-box-'+data.equipment_id).find('.equipment-item[type=checkbox]').change();
+                        $('.equipment-box-'+data.equipment_id).find('.equipment-item-count').val(data.equipment_count);
+                        $('.equipment-box-'+data.equipment_id).find('.equipment-item-count').change();
+                    });
+                    // getCheckboxPrice();
+                    // getOtherPrice();
+                    // setOrderPrice();
+                }, 600);
+
+            }
+        }
+
         function cachePriceData(src) {
             getPlanData()
                 .then(getEquipmentData)
@@ -405,8 +435,9 @@
                 .then(getRentAmount)
                 .then(getSearchData)
                 .then(function() {
-                    // console.log(amountData);
+                    console.log(amountData);
                     var jsonStr = JSON.stringify(amountData);
+                    localStorage.setItem('savedInput', jsonStr);
                     // setCookie("amount_data", jsonStr, 30);
                     $.ajax({
                         beforeSend: function() {
@@ -497,12 +528,12 @@
                 var other_value_week = "{{ $rent_amount_setting['week'] }}";
                 var other_value_get_time = "{{ $rent_amount_setting['get'] }}";
                 var other_value_back_time = "{{ $rent_amount_setting['back'] }}";
-                var other_value_over_time = "{{ (Int) $rent_amount_setting['overtime'] }}";
+                var other_value_over_time = "{{ (int) $rent_amount_setting['overtime'] }}";
                 var other_value_milage = "{{ $rent_amount_setting['note'] }}";
                 var other_value_plan = "{{ $rent_amount_setting['plan'] }}";
                 var other_value_plan_title = "{{ $rent_amount_setting['plan_title'] }}";
                 <?php
-                    echo "var other_value_other_price = ". $rent_amount_setting['other_price'] .";\n"
+                echo 'var other_value_other_price = ' . $rent_amount_setting['other_price'] . ";\n";
                 ?>
 
 
