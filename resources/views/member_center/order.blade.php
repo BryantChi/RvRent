@@ -266,8 +266,6 @@
             });
         });
     </script>
-@endpush
-@push('scripts')
     <script>
         localStorage.removeItem('savedInput');
     </script>
