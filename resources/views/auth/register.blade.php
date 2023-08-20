@@ -162,3 +162,13 @@
 <!-- Hero End -->
 
 @endsection
+@push('header')
+
+    <!-- Event snippet for 會員註冊 conversion page -->
+    <script>
+        gtag('event', 'conversion', {
+            'send_to': 'AW-11036097170/CxDlCLOq1dMYEJL1tY4p'
+        });
+    </script>
+
+@endpush
