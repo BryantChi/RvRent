@@ -165,15 +165,16 @@ class RentOrderInfoController extends AdminController
             //     }
             // });
 
-            $titles = ['id' => 'ID', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_amount_001' => '保險費'];
-            // $grid->export();
-            $grid->export($titles)->rows(function ($rows) {
-                foreach ($rows as $index => &$row) {
-                    $row['order_amount_001'] = (json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->item.' '.(json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->price;
-                }
+            $grid->export();
 
-                return $rows;
-            });
+            // $titles = ['id' => 'ID', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_amount_001' => '保險費'];
+            // $grid->export($titles)->rows(function ($rows) {
+            //     foreach ($rows as $index => &$row) {
+            //         $row['order_amount_001'] = (json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->item.' '.(json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->price;
+            //     }
+
+            //     return $rows;
+            // });
 
         });
     }
