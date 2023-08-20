@@ -136,6 +136,13 @@
     </section>
     <!--end section-->
 @endsection
+@push('header')
+    <!-- Event snippet for 電話聯絡 conversion page -->
+    <script> gtag('event', 'conversion', {'send_to': 'AW-11036097170/0EKaCNKr1dMYEJL1tY4p'}); </script>
+    <!-- Event snippet for LINE 聯絡 conversion page -->
+    <script> gtag('event', 'conversion', {'send_to': 'AW-11036097170/TPerCM-r1dMYEJL1tY4p'}); </script>
+
+@endpush
 @push('scripts')
     <script>
         localStorage.removeItem('savedInput');

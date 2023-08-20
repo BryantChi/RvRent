@@ -44,3 +44,7 @@
     </script>
 
 @endpush
+@push('header')
+    <!-- Event snippet for 預訂成功 conversion page -->
+    <script> gtag('event', 'conversion', {'send_to': 'AW-11036097170/2fnnCLaq1dMYEJL1tY4p'}); </script>
+@endpush
