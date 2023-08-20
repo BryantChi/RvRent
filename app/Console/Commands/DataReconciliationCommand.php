@@ -41,9 +41,11 @@ class DataReconciliationCommand extends Command
         // return 0;
         $checkDataReconciliation = Order::setDataReconciliation();
         if ($checkDataReconciliation) {
+            \Log::debug($checkDataReconciliation);
             \Log::info('Cron Job has been sucessed.');
         } else {
-            \Log::info('Cron Job has fail.');
+            \Log::debug($checkDataReconciliation);
+            \Log::error('Cron Job has fail.');
         }
         // \Log::info('Cron Job has been executed.');
     }
