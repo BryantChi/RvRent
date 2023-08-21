@@ -2,7 +2,7 @@
 <p style="font-size: 14px;">Dear 會員</p>
 
 <br /><br />
-<p style="font-size: 14px;">{{ $details }}</p>
+<p style="font-size: 14px;">{!! $details !!}</p>
 <br /><br /><br /><br />
 
 <p style="font-size: 14px;">此為系統發信，請勿直接回覆。</p>
