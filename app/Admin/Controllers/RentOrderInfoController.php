@@ -15,7 +15,7 @@ use App\Models\User;
 use App\Models\RentOrderInfo as Order;
 use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Expr\BinaryOp\BooleanOr;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class RentOrderInfoController extends AdminController
 {
@@ -272,7 +272,7 @@ class RentOrderInfoController extends AdminController
                     $form->confirm('注意！', '您確定要提交吗？');
                     switch ($form->order_status) {
                         case Order::ORDER_STATUS['os1']:
-                            $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email);
+                            $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
                             if (empty($order_success_email)) {
                                 return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
                             } else {
@@ -331,7 +331,7 @@ class RentOrderInfoController extends AdminController
 
         $title = '訂單驗證失敗';
 
-        $details = '您好，您的訂單驗證失敗，請於48小時內與客服聯絡';
+        $details = '您好，您的訂單驗證失敗，請於48小時內與客服人員聯絡';
 
         $verify_fail = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
@@ -348,10 +348,49 @@ class RentOrderInfoController extends AdminController
         return $cancel_email;
     }
 
-    public static function sendOrderSuccessEmail($mail) {
+    public static function sendOrderSuccessEmail($mail, $id) {
+
+        $order = Order::find($id);
+
+        $get = Carbon::parse($order->order_get_date.' '.$order->order_rv_amount_info->other_value_get_time);
+        $get_year = $get->year;
+        $get_month = $get->month;
+        $get_day = $get->day;
+        $get_hour = $get->hour;
+        $get_minute = $get->minute;
+
+        $back = Carbon::parse($order->order_get_date.' '.$order->order_rv_amount_info->other_value_get_time);
+        $back_year = $back->year;
+        $back_month = $back->month;
+        $back_day = $back->day;
+        $back_hour = $back->hour;
+        $back_minute = $back->minute;
+
         $title = '訂單驗證通過，已成立';
 
-        $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
+        // $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
+        // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
+        $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
+
+        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+
+        return $cancel_email;
+    }
+
+    public static function sendOrderPendingPaymentEmail($mail) {
+        $title = '訂單已成功送出';
+
+        $details = '貼心小提醒!<br>您好，您的露營車預定就差最後一個付款動作喔，有任何問題請洽客服人員。';
+
+        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+
+        return $cancel_email;
+    }
+
+    public static function sendOrderCreditCardPayFailEmail($mail) {
+        $title = '訂單已成立，付款失敗';
+
+        $details = '您好，您的露營車預定信用卡付款失敗，有任何問題請洽客服人員。';
 
         $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\Controllers\RentOrderInfoController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\RentOrderInfo as Order;
@@ -329,9 +330,10 @@ class RvRentController extends Controller
 
                 // dd((array) $this->amount_data);
                 try {
-                    Order::create((array) $this->amount_data);
+                    $order_save = Order::create((array) $this->amount_data);
 
-                    // if ($order_save) {
+                    if ($order_save && $this->amount_data->order_status == Order::ORDER_STATUS['os2']) {
+                        RentOrderInfoController::sendOrderPendingPaymentEmail($user->email);
                     //     // 庫存處理
                     //     $rvModel = RvModel::find($this->amount_data->order_rv_model_id);
                     //     if ($rvModel->stock > 0) {
@@ -357,7 +359,7 @@ class RvRentController extends Controller
 
                     //     // 訂單狀態處理
 
-                    // }
+                    }
                 } catch (QueryException $e) {
                     //throw $th;
                     dd($e);
