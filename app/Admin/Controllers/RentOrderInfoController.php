@@ -274,9 +274,9 @@ class RentOrderInfoController extends AdminController
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
                             if (empty($order_success_email)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->refresh();
+                                return $form->response()->error('服务器出错了~')->location('rv_order');
                             }
                             break;
                         case Order::ORDER_STATUS['os5']: // 回歸 + 刪除回收
@@ -318,7 +318,7 @@ class RentOrderInfoController extends AdminController
                     }
                 }
 
-                return;
+                // return;
 
                 // 中断后续逻辑
                 // return $form->response()->error('服务器出错了~');
@@ -333,7 +333,7 @@ class RentOrderInfoController extends AdminController
                     return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->location('rv_order');
                 }
 
-                return;
+                // return;
 
             });
         });
