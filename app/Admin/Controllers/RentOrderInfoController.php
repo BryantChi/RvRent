@@ -38,7 +38,7 @@ class RentOrderInfoController extends AdminController
             // $grid->setActionClass(Grid\Displayers\Actions::class);
             $grid->column('id')->sortable();
             $grid->column('order_num')->sortable();
-            $grid->column('order_status')->select(Order::ORDER_STATUS_SELECT, true)->sortable();
+            $grid->column('order_status')->sortable();// ->select(Order::ORDER_STATUS_SELECT, true)
             $grid->column('order_user')->display(function ($user_num) {
                 $check = '';
                 $user = User::where('customer_id', $user_num)->first();
@@ -151,7 +151,7 @@ class RentOrderInfoController extends AdminController
             $grid->column('created_at')->sortable();
             $grid->column('updated_at')->sortable();
 
-            $grid->disableActions();
+            // $grid->disableActions();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('order_num', '訂單編號');
@@ -239,37 +239,37 @@ class RentOrderInfoController extends AdminController
                 // $tools->disableList();
             });
             $form->display('id');
-            $form->text('order_num');
+            $form->display('order_num');
             $form->select('order_status')->options(Order::ORDER_STATUS_SELECT);
-            $form->text('order_user');
-            $form->text('order_rv_model_id');
+            $form->display('order_user');
+            $form->display('order_rv_model_id');
             $form->display('order_rv_amount_info');
             $form->text('order_one_night_rental');
             $form->text('order_total_rental');
-            $form->text('order_night_count');
-            $form->text('order_get_date');
-            $form->text('order_back_date');
-            $form->text('order_bed_count');
+            $form->number('order_night_count');
+            $form->date('order_get_date')->format('YYYY-MM-DD');
+            $form->date('order_back_date')->format('YYYY-MM-DD');
+            $form->number('order_bed_count');
             $form->text('order_rv_vehicle');
             $form->text('order_rv_vehicle_payment');
             $form->text('order_rv_vehicle_payment_status');
             $form->display('order_accessory_info');
             $form->display('order_mileage_plan_info');
             $form->text('order_pay_way');
-            $form->text('order_remit');
-            $form->text('order_client_note');
-            $form->text('order_company_note');
+            $form->display('order_remit');
+            $form->textarea('order_client_note');
+            $form->textarea('order_company_note');
             $form->display('order_other_driver_info');
-            $form->text('order_other_driving_licence');
+            $form->display('order_other_driving_licence');
 
             $form->display('created_at');
             $form->display('updated_at');
-            $form->saved(function (Form $form) {
+            $form->confirm('注意！', '您確定要提交吗？');
+            $form->saving(function (Form $form) {
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
                     $user = User::find($id);
-                    $form->confirm('注意！', '您確定要提交吗？');
                     switch ($form->order_status) {
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
@@ -291,9 +291,9 @@ class RentOrderInfoController extends AdminController
 
                                 $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
                                 if (empty($cancel_email)) {
-                                    return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
                                 } else {
-                                    return $form->response()->error('服务器出错了~')->refresh();
+                                    return $form->response()->error('服务器出错了~')->location('rv_order');
                                 }
                             }
                             break;
@@ -301,18 +301,18 @@ class RentOrderInfoController extends AdminController
                             $backlog = Order::setStockBacklog($id );
 
                             if($backlog) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->refresh();
+                                return $form->response()->error('服务器出错了~')->location('rv_order');
                             }
                             break;
                         case Order::ORDER_STATUS['os10']:
                             $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
 
                             if (empty($verify_fail)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->refresh();
+                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->refresh();
+                                return $form->response()->error('服务器出错了~')->location('rv_order');
                             }
                             break;
                     }
@@ -322,6 +322,19 @@ class RentOrderInfoController extends AdminController
 
                 // 中断后续逻辑
                 // return $form->response()->error('服务器出错了~');
+            });
+
+            $form->deleting(function (Form $form) {
+                $id = $form->getKey();
+
+                $backlog = Order::setStockBacklog($id);
+
+                if (!$backlog) {
+                    return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->location('rv_order');
+                }
+
+                return;
+
             });
         });
     }
