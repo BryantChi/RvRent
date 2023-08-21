@@ -364,15 +364,16 @@ class RentOrderInfoController extends AdminController
     public static function sendOrderSuccessEmail($mail, $id) {
 
         $order = Order::find($id);
+        $order_rv_amount_info = json_decode($order->order_rv_amount_info);
 
-        $get = Carbon::parse($order->order_get_date.' '.$order->order_rv_amount_info->other_value_get_time);
+        $get = Carbon::parse($order->order_get_date.' '.$order_rv_amount_info->other_value_get_time);
         $get_year = $get->year;
         $get_month = $get->month;
         $get_day = $get->day;
         $get_hour = $get->hour;
         $get_minute = $get->minute;
 
-        $back = Carbon::parse($order->order_get_date.' '.$order->order_rv_amount_info->other_value_get_time);
+        $back = Carbon::parse($order->order_back_date.' '.$order_rv_amount_info->other_value_back_time);
         $back_year = $back->year;
         $back_month = $back->month;
         $back_day = $back->day;
@@ -383,7 +384,7 @@ class RentOrderInfoController extends AdminController
 
         // $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
         // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
-        $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
+        $details = '親愛的客戶您好，<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
 
         $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
