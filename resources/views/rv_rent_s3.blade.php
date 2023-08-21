@@ -27,7 +27,7 @@
 
 
                 <p class="mt-3"><a class="h5" target="_blank"
-                        href="{{ 'http://9o-traveller.com.tw/uploads/' . $series }}">點此下載租賃條款契約書</a></p>
+                        href="{{ url('uploads/' . $series) }}">點此下載租賃條款契約書</a></p>
             </div>
             <div class="row mb-3 mx-md-auto mx-3">
                 <div class="form-group form-check form-control-lg d-flex align-items-center">
@@ -87,7 +87,7 @@
         // pdfjsLib.GlobalWorkerOptions.workerSrc = '{{ asset("assets/js/pdfjs-3.9.179-dist/build/pdf.js") }}';
         // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.js';
         // PDF 文件的 URL
-        var pdfUrl = "{{ 'http://9o-traveller.com.tw/uploads/' . $series }}";
+        var pdfUrl = "{{ url('uploads/' . $series) }}";
 
         // 創建PDF的Canvas元素
         var canvas = document.createElement("canvas");
