@@ -265,7 +265,7 @@ class RentOrderInfoController extends AdminController
             $form->display('created_at');
             $form->display('updated_at');
             $form->confirm('注意！', '您確定要提交吗？');
-            $form->saving(function (Form $form) {
+            $form->saved(function (Form $form) {
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
@@ -274,9 +274,9 @@ class RentOrderInfoController extends AdminController
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
                             if (empty($order_success_email)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
+                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->location('rv_order');
+                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
                             }
                             break;
                         case Order::ORDER_STATUS['os5']: // 回歸 + 刪除回收
@@ -291,9 +291,9 @@ class RentOrderInfoController extends AdminController
 
                                 $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
                                 if (empty($cancel_email)) {
-                                    return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                                 } else {
-                                    return $form->response()->error('服务器出错了~')->location('rv_order');
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
                                 }
                             }
                             break;
@@ -301,24 +301,24 @@ class RentOrderInfoController extends AdminController
                             $backlog = Order::setStockBacklog($id );
 
                             if($backlog) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
+                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->location('rv_order');
+                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
                             }
                             break;
                         case Order::ORDER_STATUS['os10']:
                             $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
 
                             if (empty($verify_fail)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->location('rv_order');
+                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                             } else {
-                                return $form->response()->error('服务器出错了~')->location('rv_order');
+                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
                             }
                             break;
                     }
                 }
 
-                // return;
+                return;
 
                 // 中断后续逻辑
                 // return $form->response()->error('服务器出错了~');
@@ -330,10 +330,10 @@ class RentOrderInfoController extends AdminController
                 $backlog = Order::setStockBacklog($id);
 
                 if (!$backlog) {
-                    return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->location('rv_order');
+                    return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->redirect('rv_order');
                 }
 
-                // return;
+                return;
 
             });
         });
@@ -384,7 +384,7 @@ class RentOrderInfoController extends AdminController
 
         // $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
         // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
-        $details = '親愛的客戶您好，<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
+        $details = '親愛的客戶您好，<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車<br>並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
 
         $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
