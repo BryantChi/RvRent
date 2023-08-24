@@ -17,9 +17,25 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
     <!-- Main css File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11036097170"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'AW-11036097170');
+    </script>
+    @stack('header')
 </head>
 
 <body>
+    <!-- Google tag (gtag.js) -->
+    <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json"> { "vars": { "gtag_id": "AW-11036097170", "config": { "AW-11036097170": { "groups": "default" } } }, "triggers": { "C_UJUeThrNmJo": { "on": "visible", "vars": { "event_name": "conversion", "send_to": ["AW-11036097170/CxDlCLOq1dMYEJL1tY4p"] } } } } </script>
+    </amp-analytics>
     <!-- Loader Start -->
     <div id="preloader">
         <div id="status">
