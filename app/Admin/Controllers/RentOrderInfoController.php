@@ -43,9 +43,9 @@ class RentOrderInfoController extends AdminController
                 $check = '';
                 $user = User::where('customer_id', $user_num)->first();
                 if ((bool)$user->driving_licence_certified) {
-                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_='" . $user_num . "'").'" >' . $user_num . '</a>';
+                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "").'" >' . $user_num . '</a>';
                 } else {
-                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_='" . $user_num . "'").'" >' . $user_num . '</a>';
+                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "").'" >' . $user_num . '</a>';
                 }
                 return $check;
             })->sortable();
