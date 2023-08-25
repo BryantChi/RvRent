@@ -23,26 +23,33 @@ class AccessoryInfo extends Model
 
         $inputDate = Carbon::parse($date);
 
+        $accessory_info = static::find($id);
+
+        $total_count = $accessory_info->accessory_quantity;
+
+        $count = 0;
+
         foreach ($orders as $order) {
 
             $checkDate = $inputDate->between($order->order_get_date, $order->order_back_date);
 
             if (count(json_decode($order->order_accessory_info)) == 0) {
-                $accessory = static::find($id);
-                return (int)$accessory->accessory_quantity;
+                // $accessory = static::find($id);
+                $count += 0;
             }
 
             foreach (json_decode($order->order_accessory_info) as $aci) {
                 if ($id == $aci->equipment_id) {
-                    $accessory = static::find($aci->equipment_id);
+                    // $accessory = static::find($aci->equipment_id);
                     if ($checkDate) {
-                        $count = (int)$accessory->accessory_quantity - (int)$aci->equipment_count;
+                        $count += (int)$aci->equipment_count;
                     } else {
-                        $count = (int)$accessory->accessory_quantity;
+                        $count += 0;
                     }
-                    return $count;
                 }
             }
         }
+
+        return (Int)$total_count - (Int)$count;
     }
 }
