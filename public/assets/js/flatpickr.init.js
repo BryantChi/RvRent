@@ -96,7 +96,7 @@ $.ajax({
 });
 
 function disableDate(arr) {
-    console.log(continuousHolidays);
+    // console.log(continuousHolidays);
     var today = new Date();
     $("#checkin-date").flatpickr({
         defaultDate: today,

@@ -356,23 +356,7 @@
 
                 // 顯示結果
                 // console.log(continuousHolidays);
-                $("#checkin-date2").flatpickr({
-                    defaultDate: dayget,
-                    minDate: "today",
-                    maxDate: new Date().getFullYear() + "-12-30",
-                    "locale": "zh_tw",
-                    disable: continuousHolidays,
-                    dateFormat: "Y-m-d",
-                });
-
-                $("#checkout-date2").flatpickr({
-                    defaultDate: dayback,
-                    minDate: "today",
-                    maxDate: new Date().getFullYear() + "-12-30",
-                    "locale": "zh_tw",
-                    disable: continuousHolidays,
-                    dateFormat: "Y-m-d",
-                });
+                disableDate(continuousHolidays);
             },
             error: function(err) {
                 console.error("Error fetching data:", err);
@@ -410,23 +394,7 @@
 
                 // 顯示結果
                 // console.log(continuousHolidays);
-                $("#checkin-date2").flatpickr({
-                    defaultDate: dayget,
-                    minDate: "today",
-                    maxDate: new Date().getFullYear() + "-12-30",
-                    "locale": "zh_tw",
-                    disable: continuousHolidays,
-                    dateFormat: "Y-m-d",
-                });
-
-                $("#checkout-date2").flatpickr({
-                    defaultDate: dayback,
-                    minDate: "today",
-                    maxDate: new Date().getFullYear() + "-12-30",
-                    "locale": "zh_tw",
-                    disable: continuousHolidays,
-                    dateFormat: "Y-m-d",
-                });
+                disableDate(continuousHolidays);
             },
             error: function(err) {
                 console.error("Error fetching data:", err);
