@@ -47,10 +47,12 @@
                                 <div class="liner"></div>
                             </div>
                             <div class="col-md-12 col-auto p-md-1">
-                                <div class="form-group mb-4 mb-md-0 d-flex d-md-block align-items-md-start align-items-center">
-                                    <label class="w-50 mb-0 mb-md-2"> <span style="letter-spacing: 8px;">床位</span>數 : </label>
-                                    <input name="bed_count" type="number" class="form-control"
-                                        id="bed-count" value="0">
+                                <div
+                                    class="form-group mb-4 mb-md-0 d-flex d-md-block align-items-md-start align-items-center">
+                                    <label class="w-50 mb-0 mb-md-2"> <span style="letter-spacing: 8px;">床位</span>數 :
+                                    </label>
+                                    <input name="bed_count" type="number" class="form-control" id="bed-count"
+                                        value="0">
                                 </div>
                             </div>
                             <div class="col-md-12 text-center align-self-center mt-md-3">
@@ -141,9 +143,15 @@
     <script>
         destroyCookies();
         var today = new Date();
-        var bDayGet = '<?php if ($date_get !== null && $date_get != '') { echo (string) $date_get; } ?>';
-        var bDayBack = '<?php if ($date_back !== null && $date_back != '') { echo (string) $date_back; } ?>';
-        var bBedCount = '<?php if ($bed_count !== null && $bed_count != '') { echo (string) $bed_count; } ?>';
+        var bDayGet = '<?php if ($date_get !== null && $date_get != '') {
+            echo (string) $date_get;
+        } ?>';
+        var bDayBack = '<?php if ($date_back !== null && $date_back != '') {
+            echo (string) $date_back;
+        } ?>';
+        var bBedCount = '<?php if ($bed_count !== null && $bed_count != '') {
+            echo (string) $bed_count;
+        } ?>';
         var dayget = "";
         var dayback = "";
         var bednum = 0;
@@ -182,6 +190,7 @@
         $('.models-select').hide();
         var isFromHomeSearch = "{{ request()->is('indexModelSearch') }}";
         if (isFromHomeSearch) $('.models-select').show();
+
         function modelsQuery(src) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();
@@ -199,7 +208,7 @@
             }
 
             $.ajax({
-                beforeSend: function () {
+                beforeSend: function() {
                     //將div顯示
                     $('#loading').css("display", "");
                 },
@@ -214,7 +223,9 @@
                 success: function(res) {
                     // var obj = $.parseJSON(res);
                     // console.log(res);
-                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    setTimeout(function() {
+                        $('#loading').css("display", "none");
+                    }, 3000);
                     $(".model-item-container").empty();
                     $(".model-item-container").html(res);
                     if (res.indexOf('rv_item_box') == -1) {
@@ -245,16 +256,16 @@
             var get = new Date($('#checkin-date2').val());
             var back = new Date($('#checkout-date2').val());
             if (back <= get || car_bed_num == 0 ||
-            "{{ Cookie::get('date_get') }}" == null ||
-            "{{ Cookie::get('date_back') }}" == null ||
-            "{{ Cookie::get('bed_count') }}" == null) {
+                "{{ Cookie::get('date_get') }}" == null ||
+                "{{ Cookie::get('date_back') }}" == null ||
+                "{{ Cookie::get('bed_count') }}" == null) {
                 Swal.fire("注意！", "請先篩選您的旅程！", "warning");
                 $('.models-select').hide(300);
                 return;
             }
 
             $.ajax({
-                beforeSend: function () {
+                beforeSend: function() {
                     //將div顯示
                     $('#loading').css("display", "");
                 },
@@ -269,7 +280,9 @@
                 success: function(res) {
                     // var obj = $.parseJSON(res);
                     // console.log(res);
-                    setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+                    setTimeout(function() {
+                        $('#loading').css("display", "none");
+                    }, 3000);
                     if (res.status == 'success') {
                         window.location.href = src;
                     } else if (res.status == 'authFail') {
@@ -297,12 +310,12 @@
 
         function destroyCookies() {
             $.ajax({
-                url:'{{ route("remove-carrent-cookie") }}',
-                method:'post',
+                url: '{{ route('remove-carrent-cookie') }}',
+                method: 'post',
                 data: {
                     _token: '{{ csrf_token() }}'
                 },
-                success: function(){
+                success: function() {
                     localStorage.removeItem('savedInput');
                     console.log("cookie deleted");
                 }
@@ -311,12 +324,12 @@
 
 
         // 使用jQuery ajax來取得JSON資料
+        var continuousHolidays = []; // 用於存儲連續假期的結果
         $.ajax({
             url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + new Date().getFullYear() + ".json",
             method: 'GET',
             dataType: 'json',
             success: function(data) {
-                let continuousHolidays = []; // 用於存儲連續假期的結果
                 let currentHolidays = []; // 暫時存儲當前連續的假期
 
                 // 迭代資料
@@ -346,6 +359,7 @@
                 $("#checkin-date2").flatpickr({
                     defaultDate: dayget,
                     minDate: "today",
+                    maxDate: new Date().getFullYear() + "-12-30",
                     "locale": "zh_tw",
                     disable: continuousHolidays,
                     dateFormat: "Y-m-d",
@@ -354,6 +368,7 @@
                 $("#checkout-date2").flatpickr({
                     defaultDate: dayback,
                     minDate: "today",
+                    maxDate: new Date().getFullYear() + "-12-30",
                     "locale": "zh_tw",
                     disable: continuousHolidays,
                     dateFormat: "Y-m-d",
@@ -364,13 +379,86 @@
             }
         });
 
+        $.ajax({
+            url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + (new Date().getFullYear()+1) + ".json",
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                let currentHolidays = []; // 暫時存儲當前連續的假期
+
+                // 迭代資料
+                for (let i = 0; i < data.length; i++) {
+                    // 如果當天是假期
+                    if (data[i].isHoliday) {
+                        currentHolidays.push(formatDateToYMD(data[i].date)); // 加入暫時陣列
+
+                        // 如果是資料的最後一天且當前連續假期的長度大於等於3，則加入結果陣列
+                        if (i == data.length - 1 && currentHolidays.length >= 3) {
+                            continuousHolidays.push(currentHolidays);
+                        }
+                    } else {
+                        // 如果當天不是假期，但之前有連續的假期
+                        if (currentHolidays.length >= 3) {
+                            $.each(currentHolidays, function(index, value) {
+                                continuousHolidays.push(value);
+                            })
+                        }
+                        // 清空暫時陣列
+                        currentHolidays = [];
+                    }
+                }
+
+                // 顯示結果
+                // console.log(continuousHolidays);
+                $("#checkin-date2").flatpickr({
+                    defaultDate: dayget,
+                    minDate: "today",
+                    maxDate: new Date().getFullYear() + "-12-30",
+                    "locale": "zh_tw",
+                    disable: continuousHolidays,
+                    dateFormat: "Y-m-d",
+                });
+
+                $("#checkout-date2").flatpickr({
+                    defaultDate: dayback,
+                    minDate: "today",
+                    maxDate: new Date().getFullYear() + "-12-30",
+                    "locale": "zh_tw",
+                    disable: continuousHolidays,
+                    dateFormat: "Y-m-d",
+                });
+            },
+            error: function(err) {
+                console.error("Error fetching data:", err);
+            }
+        });
+
+        function disableDate(arr) {
+            // console.log(continuousHolidays);
+            var today = new Date();
+            $("#checkin-date2").flatpickr({
+                defaultDate: dayget,
+                minDate: "today",
+                "locale": "zh_tw",
+                disable: continuousHolidays,
+                dateFormat: "Y-m-d",
+            });
+
+            $("#checkout-date2").flatpickr({
+                defaultDate: dayback,
+                minDate: "today",
+                "locale": "zh_tw",
+                disable: continuousHolidays,
+                dateFormat: "Y-m-d",
+            });
+        }
+
         function formatDateToYMD(dateStr) {
             let year = dateStr.substring(0, 4);
             let month = dateStr.substring(4, 6);
             let day = dateStr.substring(6, 8);
             return `${year}-${month}-${day}`;
         }
-
     </script>
 
 
