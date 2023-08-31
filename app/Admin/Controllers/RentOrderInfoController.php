@@ -153,9 +153,13 @@ class RentOrderInfoController extends AdminController
 
             // $grid->disableActions();
 
+            $grid->quickSearch(['order_num', 'order_user', 'order_get_date', 'order_back_date', 'created_at']);
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('order_num', '訂單編號');
                 $filter->equal('order_user', '會員編號');
+                // $filter->equal('order_rv_model_id', '車型');
+                $filter->equal('created_at', '訂單建立日');
                 $filter->scope('trashed', '回收站')->onlyTrashed();
             });
 
@@ -167,14 +171,57 @@ class RentOrderInfoController extends AdminController
 
             $grid->export();
 
-            // $titles = ['id' => 'ID', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_amount_001' => '保險費'];
-            // $grid->export($titles)->rows(function ($rows) {
-            //     foreach ($rows as $index => &$row) {
-            //         $row['order_amount_001'] = (json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->item.' '.(json_decode($row['order_rv_amount_info']))->other_value_other_price[0]->price;
-            //     }
+            $titles = ['id' => 'ID', 'order_num' => '訂單編號', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_rv_model_id' => '車型', 'order_amount_001' => '保險費', 'order_amount_002' => '清潔費及電瓶維護費', 'order_rv_amount_info' => '其他費用細項', 'order_one_night_rental' => '租金單價',
+                    'order_total_rental' => '總租金', 'order_night_count' => '天數(晚)', 'order_get_date' => '取車日', 'order_back_date' => '還車日', 'order_bed_count' => '床數', 'order_rv_vehicle' => '分配車輛', 'order_accessory_info' => '額外配備租借資訊',
+                    'order_mileage_plan' => '里程加購方案', 'order_mileage_plan_amount' => '里程加購方案價格', 'order_pay_way' => '付款方式', 'order_client_note' => '客戶備註', 'order_company_note' => '備註', 'order_other_driver_info' => '駕駛人資訊', 'created_at' => '訂單建立日'];
+            $grid->export($titles)->rows(function ($rows) {
+                foreach ($rows as $index => $row) {
+                    $row['id'] = $index;
+                    $row['order_rv_model_id'] = (RvModelInfo::find($row['order_rv_model_id']))->rv_name;
+                    $ami3 = "";
+                    foreach ((json_decode($row['order_rv_amount_info']))->other_value_other_price as $v) {
+                        if (preg_match("/保險/i", $v->item)) {
+                            $ami1 = (int)$v->price;
+                        } else if (preg_match("/清潔/i", $v->item)) {
+                            $ami2 = (int)$v->price;
+                        }
 
-            //     return $rows;
-            // });
+                        $ami3 .= $v->item . " : " . (int)$v->price . "\r\n";
+                    }
+                    $row['order_amount_001'] = $ami1;
+                    $row['order_amount_002'] = $ami2;
+                    $row['order_rv_amount_info'] = $ami3;
+
+                    if ($row['order_accessory_info'] != null) {
+                        $acci = "";
+                        foreach(json_decode($row['order_accessory_info']) as $key => $value) {
+                            $acci .= $value->equipment_name . " : " . (int)$value->equipment_total_amount . " / " . $value->equipment_count . "組\t\n";
+                        }
+                        $row['order_accessory_info'] = $acci;
+                    } else {
+                        $row['order_accessory_info'] = '無額外配備租賃資訊';
+                    }
+
+                    $plan_info = json_decode($row['order_mileage_plan_info']);
+                    $row['order_mileage_plan'] = $plan_info->plan_key;
+                    $row['order_mileage_plan_amount'] = $plan_info->plan_value;
+
+                    if ($row['order_pay_way'] == 'remit') {
+                        $row['order_pay_way'] = '匯款';
+                    } else {
+                        $row['order_pay_way'] = '信用卡';
+                    }
+
+                    $info = json_decode($row['order_other_driver_info']);
+                    $row['order_other_driver_info'] = "駕駛人：" . $info->dr_name . "\t\n".
+                                                "駕駛人信箱：" . $info->dr_email . "\t\n".
+                                                "駕駛人聯絡電話：" . $info->dr_phone . "\t\n".
+                                                "駕駛人身分證字號：" . $info->dr_IDNumber . "\t\n";
+
+                }
+
+                return $rows;
+            });
 
         });
     }
