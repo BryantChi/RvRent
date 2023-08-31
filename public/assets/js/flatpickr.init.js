@@ -112,6 +112,16 @@ function disableDate(arr) {
         "locale": "zh_tw",
         disable: arr,
         dateFormat: "Y-m-d",
+        // onDayCreate: function(dObj, dStr, fp, dayElem){
+        //     // Utilize dayElem.dateObj, which is the corresponding Date
+
+        //     // dummy logic
+        //     if (Math.random() < 0.15)
+        //         dayElem.innerHTML += "<span class='event d-flex' style='font-size:9px;position: absolute;bottom:0;line-height:0;'>待預約</span>";
+
+        //     else if (Math.random() > 0.85)
+        //         dayElem.innerHTML += "<span class='text-danger d-flex' style='font-size:9px;position: absolute;bottom:0;line-height:0;'>已預約</span>";
+        // }
     });
 }
 
