@@ -153,7 +153,7 @@ class RentOrderInfoController extends AdminController
 
             // $grid->disableActions();
 
-            $grid->quickSearch(['order_num', 'order_user', 'order_get_date', 'order_back_date', 'created_at']);
+            $grid->quickSearch(['order_num', 'order_user', 'order_get_date', 'order_back_date']);
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('order_num', '訂單編號');
