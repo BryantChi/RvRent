@@ -153,13 +153,14 @@ class RentOrderInfoController extends AdminController
 
             // $grid->disableActions();
 
-            $grid->quickSearch(['order_num', 'order_user', 'order_get_date', 'order_back_date']);
+            $grid->quickSearch(['order_num', 'order_user', 'order_get_date', 'order_back_date', 'order_rv_vehicle']);
 
             $grid->filter(function (Grid\Filter $filter) {
-                $filter->equal('order_num', '訂單編號');
-                $filter->equal('order_user', '會員編號');
+                $filter->like('order_num', '訂單編號');
+                $filter->like('order_user', '會員編號');
                 // $filter->equal('order_rv_model_id', '車型');
-                $filter->equal('created_at', '訂單建立日');
+                $filter->date('created_at', '訂單建立日');
+                $filter->like('order_rv_vehicle', '車牌號碼');
                 $filter->scope('trashed', '回收站')->onlyTrashed();
             });
 
