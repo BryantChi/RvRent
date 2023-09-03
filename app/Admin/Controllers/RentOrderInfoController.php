@@ -288,7 +288,7 @@ class RentOrderInfoController extends AdminController
             });
             $form->display('id');
             $form->display('order_num');
-            $form->select('order_status')->options(Order::ORDER_STATUS_SELECT)->required();
+            $form->select('order_status')->options(Order::ORDER_STATUS_SELECT);
             $form->display('order_user');
             $form->display('order_rv_model_id');
             $form->display('order_rv_amount_info');
@@ -313,57 +313,75 @@ class RentOrderInfoController extends AdminController
             $form->display('created_at');
             $form->display('updated_at');
             $form->confirm('注意！', '您確定要提交吗？');
-            $form->saved(function (Form $form) {
+
+            $form->saving(function (Form $form) {
+                if ($form->isEditing()) {
+                    if ($form->order_status == "") {
+                        $id = $form->getKey();
+                        $or = Order::find($id);
+                        $form->order_status = $or->order_status;
+                    }
+                }
+
+                return;
+            });
+            $id = $form->getKey();
+            $ors = Order::find($id);
+            $lastOrderStatus = $ors->order_status;
+            $form->saved(function (Form $form) use($lastOrderStatus) {
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
-                    $user = User::where('customer_id', $form->order_user)->first();
-                    switch ($form->order_status) {
-                        case Order::ORDER_STATUS['os1']:
-                            $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
-                            if (empty($order_success_email)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                            } else {
-                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                            }
-                            break;
-                        case Order::ORDER_STATUS['os5']:
-                            $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user->email);
-                            if (empty($expired_email)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                            } else {
-                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                            }
-                            break;
-                        case Order::ORDER_STATUS['os6']:
-                            $order = Order::find($id);
-                            $order->delete();
+                    $odr = Order::find($id);
+                    $user = User::where('customer_id', $odr->order_user)->first();
+                    if ($form->order_status != $lastOrderStatus) {
+                        switch ($form->order_status) {
+                            case Order::ORDER_STATUS['os1']:
+                                $order_success_email = RentOrderInfoController::sendOrderSuccessEmail('bryantchi.work@gmail.com', $id);
+                                if (empty($order_success_email)) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                }
+                                break;
+                            case Order::ORDER_STATUS['os5']:
+                                $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user->email);
+                                if (empty($expired_email)) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                }
+                                break;
+                            case Order::ORDER_STATUS['os6']:
+                                $order = Order::find($id);
+                                $order->delete();
 
-                            $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
-                            if (empty($cancel_email)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                            } else {
-                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                            }
-                            break;
-                        case Order::ORDER_STATUS['os9']:
-                            $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
+                                $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
+                                if (empty($cancel_email)) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                }
+                                break;
+                            case Order::ORDER_STATUS['os9']:
+                                $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
 
-                            if ($finish_mail) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                            } else {
-                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                            }
-                            break;
-                        case Order::ORDER_STATUS['os10']:
-                            $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
+                                if ($finish_mail) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                }
+                                break;
+                            case Order::ORDER_STATUS['os10']:
+                                $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
 
-                            if (empty($verify_fail)) {
-                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                            } else {
-                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                            }
-                            break;
+                                if (empty($verify_fail)) {
+                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                } else {
+                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                }
+                                break;
+                        }
                     }
                 }
 
