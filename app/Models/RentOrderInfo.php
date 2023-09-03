@@ -288,6 +288,15 @@ class RentOrderInfo extends Model
         foreach ($orders_info as $i => $order_info) {
             $create_at = Carbon::parse($order_info->created_at);
             $update_at = Carbon::parse($order_info->updated_at);
+            $get = Carbon::parse($order_info->order_get_date);
+            $back = Carbon::parse($order_info->order_back_date);
+
+            if ($today >= $get && $today >= $back) {
+                $or = static::find($order_info->id);
+                // $or->order_status = self::ORDER_STATUS['os6'];
+                $or->delete();
+            }
+
             $user_info = User::where('customer_id', $order_info->order_user)->first();
             switch ($order_info->order_status) {
                 case self::ORDER_STATUS['os2']: // 已成立，待付款
