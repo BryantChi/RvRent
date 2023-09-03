@@ -337,7 +337,7 @@ class RentOrderInfoController extends AdminController
                     if ($form->order_status != $lastOrderStatus) {
                         switch ($form->order_status) {
                             case Order::ORDER_STATUS['os1']:
-                                $order_success_email = RentOrderInfoController::sendOrderSuccessEmail('bryantchi.work@gmail.com', $id);
+                                $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
                                 if (empty($order_success_email)) {
                                     return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                                 } else {
