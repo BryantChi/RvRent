@@ -288,7 +288,7 @@ class RentOrderInfo extends Model
         foreach ($orders_info as $i => $order_info) {
             $create_at = Carbon::parse($order_info->create_at);
             $update_at = Carbon::parse($order_info->update_at);
-            $user_info = User::where('order_user', $order_info->order_user)->first();
+            $user_info = User::where('customer_id', $order_info->order_user)->first();
             switch ($order_info->order_status) {
                 case self::ORDER_STATUS['os2']: // 已成立，待付款
                     $create_at_af_2d = $create_at->addDays(2);

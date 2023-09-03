@@ -317,7 +317,7 @@ class RentOrderInfoController extends AdminController
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
-                    $user = User::where('order_user', $form->order_user)->first();
+                    $user = User::where('customer_id', $form->order_user)->first();
                     switch ($form->order_status) {
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
