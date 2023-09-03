@@ -38,14 +38,14 @@ class RentOrderInfoController extends AdminController
             // $grid->setActionClass(Grid\Displayers\Actions::class);
             $grid->column('id')->sortable();
             $grid->column('order_num')->sortable();
-            $grid->column('order_status')->sortable();// ->select(Order::ORDER_STATUS_SELECT, true)
+            $grid->column('order_status')->sortable(); // ->select(Order::ORDER_STATUS_SELECT, true)
             $grid->column('order_user')->display(function ($user_num) {
                 $check = '';
                 $user = User::where('customer_id', $user_num)->first();
                 if ((bool)$user->driving_licence_certified) {
-                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "").'" >' . $user_num . '</a>';
+                    $check = '<span class="text-success"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "") . '" >' . $user_num . '</a>';
                 } else {
-                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "").'" >' . $user_num . '</a>';
+                    $check = '<span class="text-danger"><i class="fa fa-circle"></i></span> ' . '<a href="' . url("admin/customer?_search_=" . $user_num . "") . '" >' . $user_num . '</a>';
                 }
                 return $check;
             })->sortable();
@@ -172,9 +172,11 @@ class RentOrderInfoController extends AdminController
 
             $grid->export();
 
-            $titles = ['id' => 'ID', 'order_num' => '訂單編號', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_rv_model_id' => '車型', 'order_amount_001' => '保險費', 'order_amount_002' => '清潔費及電瓶維護費', 'order_rv_amount_info' => '其他費用細項', 'order_one_night_rental' => '租金單價',
-                    'order_total_rental' => '總租金', 'order_night_count' => '天數(晚)', 'order_get_date' => '取車日', 'order_back_date' => '還車日', 'order_bed_count' => '床數', 'order_rv_vehicle' => '分配車輛', 'order_accessory_info' => '額外配備租借資訊',
-                    'order_mileage_plan' => '里程加購方案', 'order_mileage_plan_amount' => '里程加購方案價格', 'order_pay_way' => '付款方式', 'order_client_note' => '客戶備註', 'order_company_note' => '備註', 'order_other_driver_info' => '駕駛人資訊', 'created_at' => '訂單建立日'];
+            $titles = [
+                'id' => 'ID', 'order_num' => '訂單編號', 'order_status' => '狀態', 'order_user' => '會員編號', 'order_rv_model_id' => '車型', 'order_amount_001' => '保險費', 'order_amount_002' => '清潔費及電瓶維護費', 'order_rv_amount_info' => '其他費用細項', 'order_one_night_rental' => '租金單價',
+                'order_total_rental' => '總租金', 'order_night_count' => '天數(晚)', 'order_get_date' => '取車日', 'order_back_date' => '還車日', 'order_bed_count' => '床數', 'order_rv_vehicle' => '分配車輛', 'order_accessory_info' => '額外配備租借資訊',
+                'order_mileage_plan' => '里程加購方案', 'order_mileage_plan_amount' => '里程加購方案價格', 'order_pay_way' => '付款方式', 'order_client_note' => '客戶備註', 'order_company_note' => '備註', 'order_other_driver_info' => '駕駛人資訊', 'created_at' => '訂單建立日'
+            ];
             $grid->export($titles)->rows(function ($rows) {
                 foreach ($rows as $index => $row) {
                     $row['id'] = $index;
@@ -195,7 +197,7 @@ class RentOrderInfoController extends AdminController
 
                     if ($row['order_accessory_info'] != null) {
                         $acci = "";
-                        foreach(json_decode($row['order_accessory_info']) as $key => $value) {
+                        foreach (json_decode($row['order_accessory_info']) as $key => $value) {
                             $acci .= $value->equipment_name . " : " . (int)$value->equipment_total_amount . " / " . $value->equipment_count . "組\t\n";
                         }
                         $row['order_accessory_info'] = $acci;
@@ -214,16 +216,14 @@ class RentOrderInfoController extends AdminController
                     }
 
                     $info = json_decode($row['order_other_driver_info']);
-                    $row['order_other_driver_info'] = "駕駛人：" . $info->dr_name . "\t\n".
-                                                "駕駛人信箱：" . $info->dr_email . "\t\n".
-                                                "駕駛人聯絡電話：" . $info->dr_phone . "\t\n".
-                                                "駕駛人身分證字號：" . $info->dr_IDNumber . "\t\n";
-
+                    $row['order_other_driver_info'] = "駕駛人：" . $info->dr_name . "\t\n" .
+                        "駕駛人信箱：" . $info->dr_email . "\t\n" .
+                        "駕駛人聯絡電話：" . $info->dr_phone . "\t\n" .
+                        "駕駛人身分證字號：" . $info->dr_IDNumber . "\t\n";
                 }
 
                 return $rows;
             });
-
         });
     }
 
@@ -288,7 +288,7 @@ class RentOrderInfoController extends AdminController
             });
             $form->display('id');
             $form->display('order_num');
-            $form->select('order_status')->options(Order::ORDER_STATUS_SELECT);
+            $form->select('order_status')->options(Order::ORDER_STATUS_SELECT)->required();
             $form->display('order_user');
             $form->display('order_rv_model_id');
             $form->display('order_rv_amount_info');
@@ -317,7 +317,7 @@ class RentOrderInfoController extends AdminController
                 // 判断是否是新增操作
                 if ($form->isEditing()) {
                     $id = $form->getKey();
-                    $user = User::find($id);
+                    $user = User::where('order_user', $form->order_user)->first();
                     switch ($form->order_status) {
                         case Order::ORDER_STATUS['os1']:
                             $order_success_email = RentOrderInfoController::sendOrderSuccessEmail($user->email, $id);
@@ -327,28 +327,29 @@ class RentOrderInfoController extends AdminController
                                 return $form->response()->error('服务器出错了~')->redirect('rv_order');
                             }
                             break;
-                        case Order::ORDER_STATUS['os5']: // 回歸 + 刪除回收
+                        case Order::ORDER_STATUS['os5']:
+                            $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user->email);
+                            if (empty($expired_email)) {
+                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                            } else {
+                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                            }
                             break;
                         case Order::ORDER_STATUS['os6']:
+                            $order = Order::find($id);
+                            $order->delete();
 
-                            $backlog = Order::setStockBacklog($id );
-
-                            if($backlog) {
-                                $order = Order::find($id);
-                                $order->delete();
-
-                                $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
-                                if (empty($cancel_email)) {
-                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
-                                } else {
-                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
-                                }
+                            $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
+                            if (empty($cancel_email)) {
+                                return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                            } else {
+                                return $form->response()->error('服务器出错了~')->redirect('rv_order');
                             }
                             break;
                         case Order::ORDER_STATUS['os9']:
-                            $backlog = Order::setStockBacklog($id );
+                            $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
 
-                            if($backlog) {
+                            if ($finish_mail) {
                                 return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                             } else {
                                 return $form->response()->error('服务器出错了~')->redirect('rv_order');
@@ -367,23 +368,18 @@ class RentOrderInfoController extends AdminController
                 }
 
                 return;
-
-                // 中断后续逻辑
-                // return $form->response()->error('服务器出错了~');
             });
 
-            $form->deleting(function (Form $form) {
-                $id = $form->getKey();
+            // $form->deleted(function (Form $form) {
 
-                $backlog = Order::setStockBacklog($id);
+            //     $backlog = Order::setDataReconciliation();
 
-                if (!$backlog) {
-                    return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->redirect('rv_order');
-                }
+            //     if (!$backlog) {
+            //         return $form->response()->error('服务器出错了~ 訂單刪除失敗～')->redirect('rv_order');
+            //     }
 
-                return;
-
-            });
+            //     return;
+            // });
         });
     }
 
@@ -399,7 +395,8 @@ class RentOrderInfoController extends AdminController
         return $verify_fail;
     }
 
-    public static function sendOrderCancelEmail($mail) {
+    public static function sendOrderCancelEmail($mail)
+    {
         $title = '訂單取消';
 
         $details = '您好，您的訂單已由系統取消，有任何問題請洽客服人員。';
@@ -409,19 +406,20 @@ class RentOrderInfoController extends AdminController
         return $cancel_email;
     }
 
-    public static function sendOrderSuccessEmail($mail, $id) {
+    public static function sendOrderSuccessEmail($mail, $id)
+    {
 
         $order = Order::find($id);
         $order_rv_amount_info = json_decode($order->order_rv_amount_info);
 
-        $get = Carbon::parse($order->order_get_date.' '.$order_rv_amount_info->other_value_get_time);
+        $get = Carbon::parse($order->order_get_date . ' ' . $order_rv_amount_info->other_value_get_time);
         $get_year = $get->year;
         $get_month = $get->month;
         $get_day = $get->day;
         $get_hour = $get->hour;
         $get_minute = $get->minute;
 
-        $back = Carbon::parse($order->order_back_date.' '.$order_rv_amount_info->other_value_back_time);
+        $back = Carbon::parse($order->order_back_date . ' ' . $order_rv_amount_info->other_value_back_time);
         $back_year = $back->year;
         $back_month = $back->month;
         $back_day = $back->day;
@@ -432,27 +430,51 @@ class RentOrderInfoController extends AdminController
 
         // $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
         // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
-        $details = '親愛的客戶您好，<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於'.$get_year.'年'.$get_month.'月'.$get_day.'號'.$get_hour.'點前來取車<br>並於'.$back_year.'年'.$back_month.'月'.$back_day.'號'.$back_hour.'點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $'.$order->order_total_rental.'元 謝謝您。';
+        $details = '親愛的客戶您好，<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於' . $get_year . '年' . $get_month . '月' . $get_day . '號' . $get_hour . '點前來取車<br>並於' . $back_year . '年' . $back_month . '月' . $back_day . '號' . $back_hour . '點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $' . $order->order_total_rental . '元 謝謝您。';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $success_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
-        return $cancel_email;
+        return $success_email;
     }
 
-    public static function sendOrderPendingPaymentEmail($mail) {
+    public static function sendOrderPendingPaymentEmail($mail)
+    {
         $title = '訂單已成功送出';
 
         $details = '貼心小提醒!<br>您好，您的露營車預定就差最後一個付款動作喔，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $pending_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 
-        return $cancel_email;
+        return $pending_email;
     }
 
-    public static function sendOrderCreditCardPayFailEmail($mail) {
+    public static function sendOrderCreditCardPayFailEmail($mail)
+    {
         $title = '訂單已成立，付款失敗';
 
         $details = '您好，您的露營車預定信用卡付款失敗，有任何問題請洽客服人員。';
+
+        $fail_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+
+        return $fail_email;
+    }
+
+    public static function sendOrderPaidExpiredEmail($mail)
+    {
+        $title = '訂單未成立，逾期付款';
+
+        $details = '您好，您的露營車預定逾期付款，訂單已由系統取消，如仍需預訂請重新預定，有任何問題請洽客服人員。';
+
+        $expired_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+
+        return $expired_email;
+    }
+
+    public static function sendOrderFinishedEmail($mail)
+    {
+        $title = '訂單已結束';
+
+        $details = '您好，本次的旅程已結束，您的露營車已歸還成功，有任何問題請洽客服人員。<br>祝您順心～';
 
         $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
 

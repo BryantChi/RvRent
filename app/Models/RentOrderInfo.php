@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Admin\Controllers\RentOrderInfoController;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -189,7 +190,7 @@ class RentOrderInfo extends Model
 
     public static function setStockRestore($order_id)
     {
-        $order = static::withTrashed()->findOrFail($order_id);
+        $order = static::onlyTrashed()->findOrFail($order_id);
 
         // 復原訂單車輛
 
@@ -281,12 +282,56 @@ class RentOrderInfo extends Model
             }
         }
 
-        // $ordersTrashed = static::onlyTrashed()->get();
+        // 訂單檢查
+        $orders_info = static::all();
 
-        // foreach ($ordersTrashed as $order_t) {
+        foreach ($orders_info as $i => $order_info) {
+            $create_at = Carbon::parse($order_info->create_at);
+            $update_at = Carbon::parse($order_info->update_at);
+            $user_info = User::where('order_user', $order_info->order_user)->first();
+            switch ($order_info->order_status) {
+                case self::ORDER_STATUS['os2']: // 已成立，待付款
+                    $create_at_af_2d = $create_at->addDays(2);
+                    if ($today >= $create_at_af_2d && empty($order_info->order_remit)) {
+                        $or = static::find($order_info->id);
+                        $or->order_status = self::ORDER_STATUS['os5'];
 
-        // }
-
+                        $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user_info->email);
+                        if (empty($expired_email)) {
+                            $or->save();
+                        }
+                    }
+                    break;
+                case self::ORDER_STATUS['os5']: // 未成立，未付款
+                    $update_at_af_2d = $update_at->addDays(2);
+                    if ($today >= $update_at_af_2d) {
+                        $or = static::find($order_info->id);
+                        $or->order_status = self::ORDER_STATUS['os6'];
+                        $or->save();
+                    }
+                    break;
+                case self::ORDER_STATUS['os6']: // 未成立，取消
+                    $or = static::find($order_info->id);
+                    $or->delete();
+                    $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user_info->email);
+                    break;
+                case self::ORDER_STATUS['os8']: // 未成立，待確認
+                    $create_at_af_2d = $create_at->addDays(2);
+                    if ($today >= $create_at_af_2d) {
+                        $or = static::find($order_info->id);
+                        $or->order_status = self::ORDER_STATUS['os6'];
+                        $or->save();
+                    }
+                    break;
+                case self::ORDER_STATUS['os9']: // 已成立，結束訂單
+                    $update_at_af_7d = $update_at->addDays(7);
+                    if ($today >= $update_at_af_7d) {
+                        $or = static::find($order_info->id);
+                        $or->delete();
+                    }
+                    break;
+            }
+        }
 
 
         return true;

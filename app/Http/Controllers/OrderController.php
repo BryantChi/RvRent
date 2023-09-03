@@ -92,13 +92,9 @@ class OrderController extends Controller
         //
         $order = Order::find($id);
 
-        $backlog = Order::setStockBacklog($id);
+        $order->delete();
 
-        if ($backlog) {
-            $order->delete();
-
-            return \Response::json(['status' => 'success']);
-        }
+        return \Response::json(['status' => 'success']);
 
     }
 
