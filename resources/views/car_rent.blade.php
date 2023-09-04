@@ -402,6 +402,9 @@
         });
 
         function disableDate(arr) {
+            continuousHolidays.push('2023-12-30');
+            continuousHolidays.push('2023-12-31');
+            continuousHolidays.push('2024-01-01');
             // console.log(continuousHolidays);
             var today = new Date();
             $("#checkin-date2").flatpickr({
