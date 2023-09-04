@@ -87,7 +87,7 @@
                                                 {{ $order->order_total_rental }}</span></p>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        @if ($order->order_pay_way == 'remit' && $order->order_remit == '')
+                                        @if (($order->order_pay_way == 'remit' && $order->order_remit == '') || ($order->order_status == '已成立，驗證失敗'))
                                             <a href="javascript:void(0)" data-toggle="modal"
                                                 data-target="#exampleModalCenter" class="btn btn-primary mr-2 remit"
                                                 data-order="{{ route('member.order.upload-remit', ['id' => $order->id]) }}">上傳匯款明細</a>
