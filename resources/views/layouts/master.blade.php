@@ -45,13 +45,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
 
     <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
-    {{-- <link rel="stylesheet"
-        href="{{ asset('assets/js/pdfjs-3.9.179-dist/web/viewer.css') }}"> --}}
-    {{-- <link rel="stylesheet"
-            href="{{ asset('assets/js/pdfjs-3.9.179-dist/web/locale/locale.properties') }}">
-
-    <script src="{{ asset('assets/js/pdfjs-3.9.179-dist/build/pdf.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/js/pdfjs-3.9.179-dist/web/viewer.js') }}"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Main css File -->
