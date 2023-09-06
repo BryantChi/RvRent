@@ -98,10 +98,25 @@ class NewsInfoController extends AdminController
             styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | \
             table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs']]);
             $form->switch('show_status');
-            if (count(News::where('popular', 1)->get()) >= 3) {
-                $form->switch('popular')->disable();
-            } else {
-                $form->switch('popular');
+
+            if ($form->isCreating()) {
+                if (count(News::where('popular', 1)->get()) >= 3) {
+                    $form->switch('popular')->disable();
+                } else {
+                    $form->switch('popular');
+                }
+            }
+
+            if ($form->isEditing()) {
+                if (count(News::where('popular', 1)->get()) >= 3) {
+                    if ($form->model()->popular == 1) {
+                        $form->switch('popular');
+                    } else {
+                        $form->switch('popular')->disable();
+                    }
+                } else {
+                    $form->switch('popular');
+                }
             }
 
 
