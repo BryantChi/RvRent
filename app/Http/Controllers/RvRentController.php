@@ -167,6 +167,7 @@ class RvRentController extends Controller
 
         $accessory = Accessory::all();
         $models = RvModel::find($rvm_id);
+        $series = RvSeries::find($models->rv_series_id);
         $rv_rent_setting = json_decode($models->rv_rent_setting, true);
         $rent_amount_setting = array_values(array_filter($rv_rent_setting, function ($vi) {
             $week = date('w', strtotime($this->time_start_default));
@@ -189,7 +190,7 @@ class RvRentController extends Controller
             Cookie::queue('bed_count', $this->bed_count, 30);
             return \Response::json(['status' => 'success']);
         } else {
-            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models]);
+            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models, 'series' => $series]);
         }
     }
 

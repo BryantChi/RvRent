@@ -17,24 +17,14 @@
                 </div>
                 <div class="col-12 justify-content-md-start justify-content-center">
                     <div id="radio">
-                        <label><input type="radio" name="label" value="1800" data-plan="50公里內">
+                        @foreach (json_decode($series->rv_series_package) as $key => $value)
+                        <label><input type="radio" name="label" value="{{$value}}" data-plan="{{$key}}">
                             <p class="round button">
-                                50公里內<br>
-                                <span class="h2 text-danger">$1800</span>
+                                {{$key}}<br>
+                                <span class="h2 text-danger">${{$value}}</span>
                             </p>
                         </label>
-                        <label><input type="radio" name="label" value="3000" data-plan="100公里內">
-                            <p class="round button">
-                                100公里內<br>
-                                <span class="h2 text-danger">$3000</span>
-                            </p>
-                        </label>
-                        <label><input type="radio" name="label" value="5000" data-plan="200公里內">
-                            <p class="round button">
-                                200公里內<br>
-                                <span class="h2 text-danger">$5000</span>
-                            </p>
-                        </label>
+                        @endforeach
                         <label><input type="radio" name="label" value="0" data-plan="無需加購" checked>
                             <p class="round button">
                                 <span class="h5 text-dark">無需<br>加購</span>

@@ -10,5 +10,8 @@ class RvSeriesInfo extends Model
 {
 	use HasDateTimeFormatter;
     protected $table = 'rv_series_infos';
-    
+
+    protected $cast = [
+        'rv_series_package' => 'json',
+    ];
 }

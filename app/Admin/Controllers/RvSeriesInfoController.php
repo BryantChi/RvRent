@@ -57,6 +57,16 @@ class RvSeriesInfoController extends AdminController
             // ->link(function ($value) {
             //     return env('APP_URL').'uploads/'.$value;
             // });
+
+            $grid->column('rv_series_package')->display(function($packages) {
+                $pg = json_decode($packages);
+                $pgm = '';
+                foreach ($pg as $key => $value) {
+                    $pgm .= '<p class="">'.$key . ' : $' . $value . '</p>';
+                }
+                return $pgm;
+            });
+
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -105,6 +115,8 @@ class RvSeriesInfoController extends AdminController
             $form->display('id');
             $form->text('rv_series_name');
             $form->file('rv_series_file')->move('images/rv/contract')->uniqueName()->maxSize(1024)->accept('pdf')->removable(false);
+
+            $form->keyValue('rv_series_package')->default(['50公里內' => '1800', '100公里內' => '3000', '200公里內' => '5000'])->setKeyLabel('套餐公里')->setValueLabel('套餐價格')->required();
 
             $form->display('created_at');
             $form->display('updated_at');
