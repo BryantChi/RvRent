@@ -116,7 +116,7 @@ class RvModelInfoController extends AdminController
         return Form::make(new RvModelInfo(), function (Form $form) {
 
 
-            $form->tab('Basic', function (Form $form) {
+            $form->tab('基本設定', function (Form $form) {
                 $form->display('id');
                 $form->text('rv_name')->required();
                 $form->image('rv_front_cover')->move('images/rv/' . date('Ym') . '/frontCover')->uniqueName()->maxSize(1024)->rules('mimes:jpg,jpeg,png,gif')->required();
@@ -142,7 +142,7 @@ class RvModelInfoController extends AdminController
 
                 $form->display('created_at');
                 $form->display('updated_at');
-            })->tab('Amount', function (Form $form) {
+            })->tab('租金設定', function (Form $form) {
 
                 $form->array('rv_rent_setting', function ($form) {
                     $form->fieldset('方案', function (NestedForm $form) {
@@ -172,7 +172,29 @@ class RvModelInfoController extends AdminController
 
 
                 })->saveAsJson();
+            })->tab('特殊日期租金設定', function(Form $form) {
+
+                $form->array('rv_rent_special_setting', function ($form) {
+
+                    $form->column(10, function (NestedForm $form) {
+                        $form->text('title', __('標題'))->rules('required', ['required' => '特殊租金設定- 標題 不可為空']);
+                        $form->fieldset('方案', function ($form) {
+                            $form->dateRange('start', 'end', __('日期區間'))->rules('required', ['required' => '特殊租金設定- 日期區間 不可為空']);
+                            $form->currency('rental', __('租金費率/天(夜)'))->symbol('$')->rules('min:1', ['min' => '特殊租金設定- 租金費率/天(夜) 不可為0']);
+                        })->collapsed();
+                    });
+
+                })->saveAsJson();
+
             });
+
+            // $form->saving(function (Form $form) {
+            //     $special_settings = $form->input('rv_rent_special_setting');
+            //     if (empty($special_settings) || $special_settings == null) {
+            //         // return $form->response()->error('特殊租金設定不可為空');
+            //         $form->input('rv_rent_special_setting', null);
+            //     }
+            // });
 
             $form->deleting(function (Form $form) {
                 $data = $form->model()->toArray();

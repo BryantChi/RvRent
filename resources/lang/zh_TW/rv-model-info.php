@@ -9,6 +9,7 @@ return [
         'rv_front_cover' => '露營車封面照',
         'rv_series_id' => '露營車系列',
         'rv_rent_setting' => '租金設定',
+        'rv_rent_special_setting' => '特殊租金設定',
         'attachment_id' => '車輛配件',
         'stock' => '車輛庫存',
         'in_stock' => '即時庫存(當日)',
