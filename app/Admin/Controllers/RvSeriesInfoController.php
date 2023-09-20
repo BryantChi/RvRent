@@ -116,7 +116,7 @@ class RvSeriesInfoController extends AdminController
             $form->display('id');
             $form->text('rv_series_name');
             $form->file('rv_series_file')->move('images/rv/contract')->uniqueName()->maxSize(1024)->accept('pdf')->removable(false);
-            $form->text('rv_series_package_copywriting');
+            $form->textarea('rv_series_package_copywriting')->rows(5)->rules('max:500');
             $form->keyValue('rv_series_package')->default(['50公里內' => '1800', '100公里內' => '3000', '200公里內' => '5000'])->setKeyLabel('套餐公里')->setValueLabel('套餐價格')->required();
 
             $form->display('created_at');
