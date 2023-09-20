@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 style="color: #f0a000">1 - 額外公里數優惠套餐</h4>
-                    <p>租金內含100公里/晚，如未事先加購公里套餐或已加購仍超出限定里程每一公里收取新台幣$80</p>
+                    <p>{!! $series->rv_series_package_copywriting !!}</p>
                 </div>
                 <div class="col-12 justify-content-md-start justify-content-center">
                     <div id="radio">
