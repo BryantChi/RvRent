@@ -169,6 +169,7 @@ class RentOrderInfoController extends AdminController
             //         $batch->add(new BatchRestore(Order::class));
             //     }
             // });
+            $grid->disableBatchDelete();
 
             $grid->export();
 
