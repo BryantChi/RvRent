@@ -345,7 +345,7 @@ class RentOrderInfoController extends AdminController
                                 }
                                 break;
                             case Order::ORDER_STATUS['os5']:
-                                $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user->email);
+                                $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user->email, $id);
                                 if (empty($expired_email)) {
                                     return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                                 } else {
@@ -356,7 +356,7 @@ class RentOrderInfoController extends AdminController
                                 $order = Order::find($id);
                                 $order->delete();
 
-                                $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email);
+                                $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user->email, $id);
                                 if (empty($cancel_email)) {
                                     return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
                                 } else {
@@ -367,7 +367,7 @@ class RentOrderInfoController extends AdminController
                                 $today = Carbon::today();
                                 $back_date = Carbon::parse($form->order_back_date);
                                 if ($today >= $back_date) {
-                                    $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
+                                    $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email, $id);
 
                                     if ($finish_mail) {
                                         return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
@@ -381,7 +381,7 @@ class RentOrderInfoController extends AdminController
                                 }
                                 break;
                             case Order::ORDER_STATUS['os10']:
-                                $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email);
+                                $verify_fail = RentOrderInfoController::sendOrderVerifyFailEmail($user->email, $id);
 
                                 if (empty($verify_fail)) {
                                     return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
@@ -409,25 +409,30 @@ class RentOrderInfoController extends AdminController
         });
     }
 
-    public static function sendOrderVerifyFailEmail($mail)
+    public static function sendOrderVerifyFailEmail($mail, $id)
     {
+        $order = Order::find($id);
 
         $title = '訂單驗證失敗';
 
         $details = '您好，您的訂單驗證失敗，請於48小時內與客服人員聯絡';
 
-        $verify_fail = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $verify_fail = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $verify_fail;
     }
 
-    public static function sendOrderCancelEmail($mail)
+    public static function sendOrderCancelEmail($mail, $id)
     {
+        $order = Order::find($id);
+
         $title = '訂單取消';
 
-        $details = '您好，您的訂單已由系統取消，有任何問題請洽客服人員。';
+        $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的訂單已由系統取消，有任何問題請洽客服人員。';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $cancel_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
@@ -458,51 +463,64 @@ class RentOrderInfoController extends AdminController
         // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
         $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於' . $get_year . '年' . $get_month . '月' . $get_day . '號' . $get_hour . '點前來取車<br>並於' . $back_year . '年' . $back_month . '月' . $back_day . '號' . $back_hour . '點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $' . (Int) ($order->order_total_rental/2) . '元 謝謝您。';
 
-        $success_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $success_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $success_email;
     }
 
-    public static function sendOrderPendingPaymentEmail($mail)
+    public static function sendOrderPendingPaymentEmail($mail, $id)
     {
+        $order = Order::find($id);
+
         $title = '訂單已成功送出';
 
-        $details = '貼心小提醒!<br>您好，您的露營車預定就差最後一個付款動作喔，有任何問題請洽客服人員。';
+        $details = '貼心小提醒!<br>親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定就差最後一個付款動作喔，有任何問題請洽客服人員。';
 
-        $pending_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $pending_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $pending_email;
     }
 
-    public static function sendOrderCreditCardPayFailEmail($mail)
+    public static function sendOrderCreditCardPayFailEmail($mail, $id)
     {
+        $order = Order::find($id);
+
         $title = '訂單已成立，付款失敗';
 
-        $details = '您好，您的露營車預定信用卡付款失敗，有任何問題請洽客服人員。';
+        $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定信用卡付款失敗，有任何問題請洽客服人員。';
 
-        $fail_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $fail_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $fail_email;
     }
 
-    public static function sendOrderPaidExpiredEmail($mail)
+    public static function sendOrderPaidExpiredEmail($mail, $id)
     {
+        $order = Order::find($id);
+
         $title = '訂單未成立，逾期付款';
 
-        $details = '您好，您的露營車預定逾期付款，訂單已由系統取消，如仍需預訂請重新預定，有任何問題請洽客服人員。';
+        $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定逾期付款，訂單已由系統取消，如仍需預訂請重新預定，有任何問題請洽客服人員。';
 
-        $expired_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $expired_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $expired_email;
     }
 
-    public static function sendOrderFinishedEmail($mail)
+    public static function sendOrderFinishedEmail($mail, $id)
     {
+        $order = Order::find($id);
+
         $title = '訂單已結束';
 
-        $details = '您好，本次的旅程已結束，您的露營車已歸還成功，有任何問題請洽客服人員。<br>祝您順心～';
+        $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>本次的旅程已結束，您的露營車已歸還成功，有任何問題請洽客服人員。<br>祝您順心～';
 
-        $cancel_email = Mail::to($mail)->send(new OrderServicesMail($title, $details));
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $cancel_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
