@@ -326,7 +326,11 @@ class RentOrderInfoController extends AdminController
                 return;
             });
             $id = $form->getKey();
-            $ors = Order::find($id);
+            if ($form->isEditing()) {
+                $ors = Order::withTrashed()->findOrFail($id);
+            } else {
+                $ors = Order::find($id);
+            }
             $lastOrderStatus = $ors->order_status;
             $form->saved(function (Form $form) use($lastOrderStatus) {
                 // 判断是否是新增操作
