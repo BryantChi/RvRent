@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Actions\Order\BatchRestore;
+use App\Admin\Actions\Order\OrderDeleteMuti;
 use App\Admin\Repositories\RentOrderInfo;
 use App\Mail\OrderServicesMail;
 use App\Models\RvModelInfo;
@@ -164,11 +165,12 @@ class RentOrderInfoController extends AdminController
                 $filter->scope('trashed', '回收站')->onlyTrashed();
             });
 
-            // $grid->batchActions(function (Grid\Tools\BatchActions $batch) {
-            //     if (request('_scope_') == 'trashed') {
-            //         $batch->add(new BatchRestore(Order::class));
-            //     }
-            // });
+            $grid->batchActions(function (Grid\Tools\BatchActions $batch) {
+                // if (request('_scope_') == 'trashed') {
+                //     $batch->add(new BatchRestore(Order::class));
+                // }
+                $batch->add(new OrderDeleteMuti());
+            });
             $grid->disableBatchDelete();
 
             $grid->export();
