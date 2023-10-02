@@ -316,6 +316,12 @@ class RvRentController extends Controller
                 $this->amount_data->order_other_driver_info = json_encode($other_dr_info);
                 $this->amount_data->order_client_note = $input['order_client_note'];
 
+                if ($user->phone == '') {
+                    $userinfo = User::find($user->id);
+                    $userinfo->phone = $user->phone;
+                    $userinfo->save();
+                }
+
                 $image = $request->file('driving_licence');
 
                 if ($image) {

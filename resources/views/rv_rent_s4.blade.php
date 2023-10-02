@@ -322,14 +322,16 @@
                 }
             }
 
-            if ($('#phone').val() == null || $('#IDNumber').val() == null) {
+            if ($('#phone').val() == null || $('#phone').val() == '' || $('#IDNumber').val() == null || $('#IDNumber').val() == '') {
                 Swal.fire("注意!", "承租人資料相關欄位不可空白", "warning");
                 return
             }
 
             if (!$('#same_user').is(':checked')) {
                 if ($('#dr_name').val() == null || $('#dr_email').val() == null || $('#dr_phone').val() == null ||
-                    $('#dr_IDNumber').val() == null || $('#dr_driving-licence')[0].files[0] == null) {
+                    $('#dr_IDNumber').val() == null || $('#dr_driving-licence')[0].files[0] == null ||
+                    $('#dr_name').val() == '' || $('#dr_email').val() == '' || $('#dr_phone').val() == '' ||
+                    $('#dr_IDNumber').val() == '' ) {
                     Swal.fire("注意!", "司機資料相關欄位不可空白", "warning");
                     return
                 }
