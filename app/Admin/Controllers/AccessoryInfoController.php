@@ -37,7 +37,7 @@ class AccessoryInfoController extends AdminController
             });
             $grid->column('accessory_buy_date');
             $grid->column('accessory_quantity');
-            // $grid->column('accessory_instock');
+            $grid->column('accessory_instock');
             $grid->column('accessory_unit_price');
             $grid->column('accessory_gross_price');
             $grid->column('accessory_rent_price');

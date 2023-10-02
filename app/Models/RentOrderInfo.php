@@ -228,11 +228,12 @@ class RentOrderInfo extends Model
 
         // 車型庫存與最後正確的
         foreach ($rvModels as $model) {
+            $checkAllVehicles = RvVehicle::where('model_id', $model->id)->get();
             $checkOutVehicle = RvVehicle::where('model_id', $model->id)->where('vehicle_status', 'rent_out')->get();
             $checkVehicle = RvVehicle::where('model_id', $model->id)->whereIn('vehicle_status', ['rent_stay', 'rent_out'])->get();
             $rvm = RvModel::find($model->id);
             $rvm->stock = count($checkVehicle);
-            $rvm->in_stock = count($checkVehicle) - count($checkOutVehicle);
+            $rvm->in_stock = count($checkVehicle);
             $rvm->save();
         }
 
@@ -258,16 +259,15 @@ class RentOrderInfo extends Model
                 // 今日庫存運算
                 if ($check) {
                     $rvms = RvModel::find($order->order_rv_model_id);
-                    if ($rvms->in_stock > 0 && $rvms->stock > 0) {
+                    if ($rvms->stock > 0 && $rvms->in_stock > 0 && $rvms->stock >= $rvms->in_stock) {
                         $rvms->in_stock -= 1;
-                        $rvms->stock -= 1;
-                        $rvms->save();
                     }
+                    $rvms->save();
 
                     if ($vehicle->vehicle_status == 'rent_stay') {
                         $vehicle->vehicle_status = 'rent_out';
-                        $vehicle->save();
                     }
+                    $vehicle->save();
 
 
                     foreach (json_decode($order->order_accessory_info) as $ac) {
@@ -275,9 +275,14 @@ class RentOrderInfo extends Model
                         $accessory->accessory_instock = $accessory->accessory_quantity;
                         if ($accessory->accessory_quantity > 0) {
                             $accessory->accessory_instock -= $ac->equipment_count;
-                            $accessory->save();
                         }
+                        $accessory->save();
                     }
+                } else {
+                    if ($today >= $back && $vehicle->vehicle_status == self::ORDER_STATUS['os9']) {
+                        $vehicle->vehicle_status = 'rent_out';
+                    }
+                    $vehicle->save();
                 }
             }
         }

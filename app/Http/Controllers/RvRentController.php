@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Cookie;
 use stdClass;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class RvRentController extends Controller
 {
@@ -169,6 +170,7 @@ class RvRentController extends Controller
         $models = RvModel::find($rvm_id);
         $series = RvSeries::find($models->rv_series_id);
         $rv_rent_setting = json_decode($models->rv_rent_setting, true);
+        $rv_rent_special_setting = json_decode($models->rv_rent_special_setting, true);
         $rent_amount_setting = array_values(array_filter($rv_rent_setting, function ($vi) {
             $week = date('w', strtotime($this->time_start_default));
             $firstDate  = new \DateTime($this->time_start_default);
@@ -176,6 +178,28 @@ class RvRentController extends Controller
             $intvl = $secondDate->diff($firstDate);
             return $week == $vi["week"] && $intvl->d == $vi["day"];
         }));
+
+        $rent_amount_special_setting = array_values(array_filter($rv_rent_special_setting, function ($vi) {
+            $base_start = Carbon::parse($this->time_start_default);
+            $base_end = Carbon::parse($this->time_end_default);
+            $period1 = CarbonPeriod::create($base_start, $base_end);
+
+            $start = Carbon::parse($vi["start"]);
+            $end = Carbon::parse($vi["end"]);
+            $period2 = CarbonPeriod::create($start, $end);
+
+            return $period1->overlaps($period2);
+        }));
+
+        $period = false;
+        $period_count = 0;
+        if (count($rent_amount_special_setting) > 0) {
+            $setting = $rent_amount_special_setting[0];
+            $start = Carbon::parse($setting["start"]);
+            $end = Carbon::parse($setting["end"]);
+            $period = CarbonPeriod::create($start, $end);
+            $period_count = $period->count();
+        }
 
         if (count($rent_amount_setting) == 0) {
             Cookie::queue(\Cookie::forget('date_get'));
@@ -190,7 +214,7 @@ class RvRentController extends Controller
             Cookie::queue('bed_count', $this->bed_count, 30);
             return \Response::json(['status' => 'success']);
         } else {
-            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models, 'series' => $series]);
+            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'rent_amount_special_setting' => $rent_amount_special_setting, 'model' => $models, 'series' => $series, 'period' => $period, 'period_count' => $period_count]);
         }
     }
 
@@ -368,9 +392,10 @@ class RvRentController extends Controller
 
         $model_filter = array_filter($models->toArray(), function ($v) {
             $rv_rent_setting = json_decode($v["rv_rent_setting"]);
+            $rv_rent_special_setting = json_decode($v["rv_rent_special_setting"]);
             if (!is_null($rv_rent_setting) || is_array($rv_rent_setting)) {
                 $checkStock = Order::isBetweenDays($this->time_start_default, $this->time_end_default, $v['id']);
-                return count(array_filter($rv_rent_setting, function ($vi) {
+                return count(array_filter($rv_rent_setting, function ($vi) use($rv_rent_special_setting) {
                     $week = date('w', strtotime($this->time_start_default));
                     $data_back = date('Y-m-d', strtotime('+' . $vi->day . ' day', strtotime($this->time_start_default))) . ' ' . $vi->back;
 

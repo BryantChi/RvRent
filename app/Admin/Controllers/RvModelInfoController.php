@@ -185,7 +185,7 @@ class RvModelInfoController extends AdminController
                             $form->currency('rental', __('租金費率/天(夜)'))->symbol('$')->rules('min:1', ['min' => '特殊租金設定- 租金費率/天(夜) 不可為0']);
                             $form->currency('overtime', __('超租加收/天(夜)'))->symbol('$')->rules('min:1', ['min' => '特殊租金設定- 超租加收/天(夜) 不可為0']);
                             $form->number('favorable_day', __('優惠適用前後天數(夜)'))->attribute('min', 0);
-                            $form->currency('favorable_amount', __('優惠適用折扣'))->symbol('$')->default(0.00);
+                            $form->currency('favorable_amount', __('優惠適用折扣'))->symbol('$')->default(0);
                         })->collapsed();
                     });
 

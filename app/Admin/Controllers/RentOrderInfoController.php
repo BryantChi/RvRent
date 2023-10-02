@@ -364,12 +364,20 @@ class RentOrderInfoController extends AdminController
                                 }
                                 break;
                             case Order::ORDER_STATUS['os9']:
-                                $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
+                                $today = Carbon::today();
+                                $back_date = Carbon::parse($form->order_back_date);
+                                if ($today >= $back_date) {
+                                    $finish_mail = RentOrderInfoController::sendOrderFinishedEmail($user->email);
 
-                                if ($finish_mail) {
-                                    return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                    if ($finish_mail) {
+                                        return $form->response()->success('已更新狀態，並發信通知會員')->redirect('rv_order');
+                                    } else {
+                                        return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                    }
                                 } else {
-                                    return $form->response()->error('服务器出错了~')->redirect('rv_order');
+                                    $odr->order_status = $lastOrderStatus;
+                                    $odr->save();
+                                    return $form->response()->error('訂單未達還車日~')->redirect('rv_order');
                                 }
                                 break;
                             case Order::ORDER_STATUS['os10']:
