@@ -310,7 +310,7 @@ class RentOrderInfo extends Model
                         $or = static::find($order_info->id);
                         $or->order_status = self::ORDER_STATUS['os5'];
 
-                        $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user_info->email);
+                        $expired_email = RentOrderInfoController::sendOrderPaidExpiredEmail($user_info->email, $order_info->id);
                         if (empty($expired_email)) {
                             $or->save();
                         }
@@ -327,7 +327,7 @@ class RentOrderInfo extends Model
                 case self::ORDER_STATUS['os6']: // 未成立，取消
                     $or = static::find($order_info->id);
                     $or->delete();
-                    $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user_info->email);
+                    $cancel_email = RentOrderInfoController::sendOrderCancelEmail($user_info->email, $order_info->id);
                     break;
                 case self::ORDER_STATUS['os8']: // 未成立，待確認
                     $create_at_af_2d = $create_at->addDays(2);
