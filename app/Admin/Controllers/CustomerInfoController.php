@@ -123,7 +123,9 @@ class CustomerInfoController extends AdminController
             // $form->text('email_verified_at');
             if ($form->isCreating()) {
                 $form->password('password')->required();
-            } else {
+            }
+
+            if ($form->isEditing()) {
                 $form->password('password')->value($form->model()->password)->disable();
             }
             // $form->password('password_check', __('確認密碼'));
