@@ -9,18 +9,17 @@
         <div class="container" style="overflow: hidden;">
             <div class="row justify-content-md-start justify-content-center mb-3 mx-auto w-100">
                 <form class="sp-form col-md-8 px-0">
-                    <div class="hd-header mb-2 d-flex align-items-center"
-                        style="cursor: pointer;width: max-content;"
-                        data-toggle="popover" data-container="body"
-                        data-trigger="hover" data-placement="top" data-content="點擊查看">
-                        <h4 class="pb-0 mb-0">最新假期方案</h4>
+                    <div class="hd-header mb-2 d-flex align-items-center" style="cursor: pointer;width: max-content;"
+                        data-toggle="popover" data-container="body" data-trigger="hover" data-placement="top"
+                        data-content="點擊查看">
+                        <h4 class="pb-0 mb-0">連續假期專案</h4>
                         <span class="px-3"><i class="fas fa-chevron-down"></i></span>
                     </div>
                     <div class="row justufy-content-center" id="hd-search">
                         <div class="col-md-4">
                             <div class="form-group mb-4 mb-md-0 d-flex align-items-center">
-                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">月份</span> <span
-                                    class="text-danger">*</span></label>
+                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">月份</span>
+                                    <span class="text-danger">*</span></label>
                                 <select class="form-control custom-select d-inline" id="sp_month">
                                     <option value="">請選擇</option>
                                     <option value="1">一月</option>
@@ -40,8 +39,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-4 mb-md-0 d-flex align-items-center">
-                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">系列</span> <span
-                                    class="text-danger">*</span></label>
+                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">系列</span>
+                                    <span class="text-danger">*</span></label>
                                 <select class="form-control custom-select d-inline" id="sp_series">
                                     <option value="">請選擇</option>
                                     @foreach ($sp_series ?? [] as $spseries)
@@ -52,12 +51,12 @@
                         </div>
                         <div class="col-md text-md-left text-right">
                             <input type="button" id="sp-search" name="sp-search" class="btn btn-primary3"
-                                    onclick="specialQuery('{{ Route('IndexSpecialSearch') }}')" value="搜尋" />
+                                onclick="specialQuery('{{ Route('IndexSpecialSearch') }}')" value="搜尋" />
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="row justify-content-center mb-5 mx-auto sp-item-container" id="special-plan">
+            <div class="row justify-content-center mb-5 mx-auto owl-carousel owl-theme sp-item-container" id="special-plan">
                 @include('car_rent_special_item')
             </div>
 
@@ -70,7 +69,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <form class="">
-                        <h4 class="mb-3">搜尋旅程</h4>
+                        <h4 class="mb-3">平日週末旅程</h4>
                         <div class="row justify-content-center align-content-center p-0 m-0 g-0">
                             <div class="col-md-12 col-5 p-md-1 p-0">
                                 <div class="form-group mb-4 mb-md-0">
@@ -251,6 +250,28 @@
         var isFromHomeSearch = "{{ request()->is('indexModelSearch') }}";
         if (isFromHomeSearch) $('.models-select').show();
 
+        $(function() {
+            $("#special-plan").owlCarousel({
+                loop: false,
+                nav: true,
+                dots: true,
+                autoplay: false,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 1
+                    },
+                    992: {
+                        items: 3
+                    }
+                }
+            });
+        });
+
         function modelsQuery(src) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();
@@ -340,35 +361,24 @@
                     setTimeout(function() {
                         $('#loading').css("display", "none");
                     }, 3000);
-                    $(".sp-item-container").empty();
-                    $(".sp-item-container").html(res);
+                    // $(".sp-item-container").empty();
+                    // $(".sp-item-container").append(res);
                     if (res.indexOf('sp-item-box') == -1) {
+                        // $('.sp-item-container').removeClass('owl-carousel owl-theme');
                         $(".sp-item-container").append(
                             '<div class="col-12 w-100 text-center text-secondary"><h4>查無資料</h4></div>');
                     } else {
-                        $('.sp-item-container').addClass('owl-carousel owl-theme');
+                        let loop = true;
+                        if ($('.sp-item-box').length < 3 && $(window).width() > 768) {
+                            loop = false;
+                        }
+                        // $(".sp-item-container").addClass('owl-carousel owl-theme');
                         setTimeout(function() {
-                            $('#special-plan').owlCarousel({
-                                loop:true,
-                                nav: true,
-                                dots: true,
-                                autoplay:true,
-                                autoplayTimeout:3000,
-                                autoplayHoverPause:true,
-                                responsive:{
-                                    0:{
-                                        items:1
-                                    },
-                                    600:{
-                                        items:1
-                                    },
-                                    992:{
-                                        items:3
-                                    }
-                                }
-                            });
-                        }, 1000);
-
+                            $("#special-plan").trigger('replace.owl.carousel', [res]).trigger(
+                                'refresh.owl.carousel');
+                            // $("#special-plan").trigger('refresh.owl.carousel');
+                        }, 3000);
+                        $("#special-plan").trigger('refresh.owl.carousel');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -503,7 +513,8 @@
         });
 
         $.ajax({
-            url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + (new Date().getFullYear()+1) + ".json",
+            url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + (new Date().getFullYear() + 1) +
+                ".json",
             method: 'GET',
             dataType: 'json',
             success: function(data) {

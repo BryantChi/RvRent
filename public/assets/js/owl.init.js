@@ -37,7 +37,7 @@ $('#client-testi').owlCarousel({
   });
 
 //   $('#special-plan').owlCarousel({
-//     loop:true,
+//     loop:false,
 //     nav: true,
 //     dots: true,
 //     autoplay:true,
