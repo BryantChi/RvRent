@@ -411,7 +411,7 @@ class RvRentController extends Controller
                     $order_save = Order::create((array) $this->amount_data);
 
                     if ($order_save && $this->amount_data->order_status == Order::ORDER_STATUS['os2']) {
-                        RentOrderInfoController::sendOrderPendingPaymentEmail($user->email);
+                        RentOrderInfoController::sendOrderPendingPaymentEmail($user->email, $order_save->id);
                     }
                 } catch (QueryException $e) {
                     //throw $th;
