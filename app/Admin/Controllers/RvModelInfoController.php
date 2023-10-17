@@ -11,6 +11,7 @@ use Dcat\Admin\Http\Controllers\AdminController;
 use App\Models\RvAttachmentInfo as RvAttachment;
 use App\Models\RvSeriesInfo as RvSeries;
 use App\Models\RvVehicleInfo as RvVehicle;
+use Carbon\Carbon;
 
 class RvModelInfoController extends AdminController
 {
@@ -184,12 +185,36 @@ class RvModelInfoController extends AdminController
                             $form->time('back', __('還車時間'))->format('HH:00')->rules('required', ['required' => '特殊租金設定- 還車時間 不可為空']);
                             $form->currency('rental', __('租金費率/天(夜)'))->symbol('$')->rules('min:1', ['min' => '特殊租金設定- 租金費率/天(夜) 不可為0']);
                             $form->currency('overtime', __('超租加收/天(夜)'))->symbol('$')->rules('min:1', ['min' => '特殊租金設定- 超租加收/天(夜) 不可為0']);
-                            $form->number('favorable_day', __('優惠適用前後天數(夜)'))->attribute('min', 0);
-                            $form->currency('favorable_amount', __('優惠適用折扣'))->symbol('$')->default(0);
+                            $form->table('other_price', __('其他收費'), function ($table) {
+                                $table->text('item', __('項目'));
+                                $table->currency('price', __('價格'))->symbol('$');
+                                $table->select('type', __('計算方式'))->options(['night' => '天', 'times' => '次'])->default('night');
+                            })->saving(function ($v) {
+                                return json_encode($v);
+                            });
+                            $form->currency('milage', __('里程數/夜'))->symbol('km');
+                            $form->text('note', __('備註'));
+                            // $form->number('favorable_day', __('優惠適用前後天數(夜)'))->attribute('min', 0);
+                            // $form->currency('favorable_amount', __('優惠適用折扣'))->symbol('$')->default(0)->value(0.00);
+                            // $form->table('item_day_rental', __('專案適用天數'), function ($table) {
+                            //     $table->text('item_name', __('項目'));
+                            //     $table->number('item_days', __('天數'))->attribute('min', 0);
+                            //     $table->currency('item_price', __('租金'))->symbol('$')->rules('min:1', ['min' => '租金 不可為0']);
+                            // })->rules('required', ['required' => '專案適用天數不可為空'])->saving(function ($v) {
+                            //     return json_encode($v);
+                            // });
+
                         })->collapsed();
                     });
 
-                })->saveAsJson();
+                })->saving(function ($v) {
+                    $a = [];
+                    foreach ($v as $k => $r) {
+                        $r['id'] = Carbon::now()->getTimestamp() . $k . mt_rand(1000,9999);
+                        array_push($a, $r);
+                    }
+                    return json_encode($a);
+                });
 
             });
 

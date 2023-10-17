@@ -51,13 +51,14 @@ Route::get('/contact', function() {
 //     return view('car_rent', ['title' => '即刻租車', 'pageInfo' => $pageInfo]);
 // })->name('car_rent');
 Route::any('/indexModelSearch', [RvRentController::class, 'filterModelsDefault'])->name('IndexModelSearch');
+Route::any('/indexSpecialSearch', [RvRentController::class, 'getSpecialDaysPlan'])->name('IndexSpecialSearch');
 
 Route::any('car_rent', [RvRentController::class, 'index'])->name('car_rent');
 
 Route::any('/Rv_Detail/{id}', [RvRentController::class, 'show'])->name('Rv_Detail');
 
 Route::any('/remove-carrent-cookie', [RvRentController::class, 'removeCarRentCookie'])->name('remove-carrent-cookie');
-Route::any('/car_rent_s2/{rvm_id}', [RvRentController::class, 'stepOneShow'])->name('car_rent_s2');
+Route::any('/car_rent_s2/{rvm_id}/{spid?}', [RvRentController::class, 'stepOneShow'])->name('car_rent_s2');
 // ->middleware(['auth', 'verified'])
 Route::any('/car_rent_s3/{rvm_id}', [RvRentController::class, 'showStepTwo'])->name('car_rent_s3')->middleware(['auth']);
 

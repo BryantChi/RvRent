@@ -7,6 +7,66 @@
 
     <section class="section">
         <div class="container" style="overflow: hidden;">
+            <div class="row justify-content-md-start justify-content-center mb-3 mx-auto w-100">
+                <form class="sp-form col-md-8 px-0">
+                    <div class="hd-header mb-2 d-flex align-items-center"
+                        style="cursor: pointer;width: max-content;"
+                        data-toggle="popover" data-container="body"
+                        data-trigger="hover" data-placement="top" data-content="點擊查看">
+                        <h4 class="pb-0 mb-0">最新假期方案</h4>
+                        <span class="px-3"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="row justufy-content-center" id="hd-search">
+                        <div class="col-md-4">
+                            <div class="form-group mb-4 mb-md-0 d-flex align-items-center">
+                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">月份</span> <span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control custom-select d-inline" id="sp_month">
+                                    <option value="">請選擇</option>
+                                    <option value="1">一月</option>
+                                    <option value="2">二月</option>
+                                    <option value="3">三月</option>
+                                    <option value="4">四月</option>
+                                    <option value="5">五月</option>
+                                    <option value="6">六月</option>
+                                    <option value="7">七月</option>
+                                    <option value="8">八月</option>
+                                    <option value="9">九月</option>
+                                    <option value="10">十月</option>
+                                    <option value="11">十一月</option>
+                                    <option value="12">十二月</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-4 mb-md-0 d-flex align-items-center">
+                                <label class="d-flex pr-3"><span style="letter-spacing: 8px;white-space:nowrap;">系列</span> <span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control custom-select d-inline" id="sp_series">
+                                    <option value="">請選擇</option>
+                                    @foreach ($sp_series ?? [] as $spseries)
+                                        <option value="{{ $spseries->id }}">{{ $spseries->rv_series_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md text-md-left text-right">
+                            <input type="button" id="sp-search" name="sp-search" class="btn btn-primary3"
+                                    onclick="specialQuery('{{ Route('IndexSpecialSearch') }}')" value="搜尋" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row justify-content-center mb-5 mx-auto sp-item-container" id="special-plan">
+                @include('car_rent_special_item')
+            </div>
+
+            <div class="row my-5">
+                <div class="col-md-12">
+                    <div class="mx-auto" style="border-bottom:1px dashed #4444447f;height:1px;width:90%"></div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-3">
                     <form class="">
@@ -248,20 +308,99 @@
             });
         }
 
-        function modelsSelect(src) {
+        function specialQuery(src) {
+            let month = $('#sp_month :selected').val();
+            let series = $('#sp_series :selected').val();
+
+            if (month == "") {
+                Swal.fire("注意！", "請選擇月份！", "warning");
+                return;
+            }
+
+            if (series == "") {
+                Swal.fire("注意！", "請選擇系列！", "warning");
+                return;
+            }
+
+            $.ajax({
+                beforeSend: function() {
+                    //將div顯示
+                    $('#loading').css("display", "");
+                },
+                url: src,
+                type: 'POST',
+                data: {
+                    month: month,
+                    series: series,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    // var obj = $.parseJSON(res);
+                    // console.log(res);
+                    setTimeout(function() {
+                        $('#loading').css("display", "none");
+                    }, 3000);
+                    $(".sp-item-container").empty();
+                    $(".sp-item-container").html(res);
+                    if (res.indexOf('sp-item-box') == -1) {
+                        $(".sp-item-container").append(
+                            '<div class="col-12 w-100 text-center text-secondary"><h4>查無資料</h4></div>');
+                    } else {
+                        $('.sp-item-container').addClass('owl-carousel owl-theme');
+                        setTimeout(function() {
+                            $('#special-plan').owlCarousel({
+                                loop:true,
+                                nav: true,
+                                dots: true,
+                                autoplay:true,
+                                autoplayTimeout:3000,
+                                autoplayHoverPause:true,
+                                responsive:{
+                                    0:{
+                                        items:1
+                                    },
+                                    600:{
+                                        items:1
+                                    },
+                                    992:{
+                                        items:3
+                                    }
+                                }
+                            });
+                        }, 1000);
+
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#loading').css("display", "none");
+                    Swal.fire("錯誤!", "程序失敗", "error");
+                },
+                // complete: function () {
+                //     //再次隱藏
+                //     // $('#loading').css("display", "none");
+
+                //     //測試可利用setTimeout 讓loading效果明顯
+                //     setTimeout(function () { $('#loading').css("display", "none"); }, 3000);
+
+                // }
+            });
+        }
+
+        function modelsSelect(src, mode = null) {
             car_date_get = $('#checkin-date2').val();
             car_date_back = $('#checkout-date2').val();
             car_bed_num = $('#bed-count').val();
-
-            var get = new Date($('#checkin-date2').val());
-            var back = new Date($('#checkout-date2').val());
-            if (back <= get || car_bed_num == 0 ||
-                "{{ Cookie::get('date_get') }}" == null ||
-                "{{ Cookie::get('date_back') }}" == null ||
-                "{{ Cookie::get('bed_count') }}" == null) {
-                Swal.fire("注意！", "請先篩選您的旅程！", "warning");
-                $('.models-select').hide(300);
-                return;
+            if (mode == null) {
+                var get = new Date($('#checkin-date2').val());
+                var back = new Date($('#checkout-date2').val());
+                if (back <= get || car_bed_num == 0 ||
+                    "{{ Cookie::get('date_get') }}" == null ||
+                    "{{ Cookie::get('date_back') }}" == null ||
+                    "{{ Cookie::get('bed_count') }}" == null) {
+                    Swal.fire("注意！", "請先篩選您的旅程！", "warning");
+                    $('.models-select').hide(300);
+                    return;
+                }
             }
 
             $.ajax({
@@ -432,7 +571,17 @@
         }
     </script>
 
-
+    <script>
+        $(function() {
+            $('#hd-search').toggle('hide');
+            $('.hd-header').popover('show');
+            $('.hd-header').click(function() {
+                $(this).popover('hide');
+                $(this).popover('disable');
+                $('#hd-search').toggle(600);
+            });
+        });
+    </script>
 
     <style>
 

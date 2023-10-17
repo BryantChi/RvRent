@@ -183,7 +183,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end align-items-center px-3">
-                            <p class="h5 px-3 mt-3 ml-auto">天數： <span
+                            <p class="h5 px-3 mt-3 ml-auto">總天數： <span
                                     style="color: #ea3c06;">{{ (int) $rent_amount_setting['day'] }}</span> <span
                                     class="h4">晚</span></p>
                         </div>

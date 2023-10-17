@@ -22,6 +22,7 @@ use stdClass;
 use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Cmixin\EnhancedPeriod;
 
 class RvRentController extends Controller
 {
@@ -41,6 +42,7 @@ class RvRentController extends Controller
     {
         //
         $rvModelInfo = RvModel::all();
+        $sp_series = RvSeries::get(['id', 'rv_series_name']);
         // $model_filter = array_filter($rvModelInfo->toArray(), function ($v) {
         //     $a = json_decode($v["rv_rent_setting"]);
         //     return count(array_filter($a, function ($vi) {
@@ -58,7 +60,7 @@ class RvRentController extends Controller
             $attachmentInfo->attachments[$rvModel->id] = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
             $attachmentInfo->attachments[$rvModel->id]->ordercount = count(Order::where('order_rv_model_id', $rvModel->id)->get());
         }
-        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
+        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series]);
     }
 
     /**
@@ -142,17 +144,35 @@ class RvRentController extends Controller
         return \Response::json(['status' => 'success']);
     }
 
-    public function stepOneShow(Request $request, $rvm_id)
+    public function stepOneShow(Request $request, $rvm_id, $spid = null)
     {
         if (Auth::check() == false) {
             return \Response::json(['status' => 'authFail']);
         }
-
+        // CarbonPeriod::mixin(EnhancedPeriod::class);
         $input = $request->all();
         if (count($input) > 0) {
             $this->time_start_default = $input['date_get'];
             $this->time_end_default = $input['date_back'];
             $this->bed_count = $input['bed_count'];
+        }
+
+        $accessory = Accessory::all();
+        $models = RvModel::find($rvm_id);
+        $series = RvSeries::find($models->rv_series_id);
+        $rv_rent_setting = json_decode($models->rv_rent_setting, true);
+        $rv_rent_special_setting = json_decode($models->rv_rent_special_setting, true);
+
+        if (!empty($spid)) {
+            $spTemp = array_values(array_filter($rv_rent_special_setting, function ($vi) use ($spid) {
+                return $vi["id"] == $spid;
+            }));
+            Cookie::queue('date_get', $spTemp[0]['start'], 30);
+            Cookie::queue('date_back', $spTemp[0]['end'], 30);
+            Cookie::queue('bed_count', $models->bed_count, 30);
+            $this->time_start_default = $spTemp[0]['start'];
+            $this->time_end_default = $spTemp[0]['end'];
+            $this->bed_count = $models->bed_count;
         }
 
         if ($request->method() == 'GET') {
@@ -166,11 +186,6 @@ class RvRentController extends Controller
             }
         }
 
-        $accessory = Accessory::all();
-        $models = RvModel::find($rvm_id);
-        $series = RvSeries::find($models->rv_series_id);
-        $rv_rent_setting = json_decode($models->rv_rent_setting, true);
-        $rv_rent_special_setting = json_decode($models->rv_rent_special_setting, true);
         $rent_amount_setting = array_values(array_filter($rv_rent_setting, function ($vi) {
             $week = date('w', strtotime($this->time_start_default));
             $firstDate  = new \DateTime($this->time_start_default);
@@ -179,27 +194,59 @@ class RvRentController extends Controller
             return $week == $vi["week"] && $intvl->d == $vi["day"];
         }));
 
-        $rent_amount_special_setting = array_values(array_filter($rv_rent_special_setting, function ($vi) {
-            $base_start = Carbon::parse($this->time_start_default);
-            $base_end = Carbon::parse($this->time_end_default);
-            $period1 = CarbonPeriod::create($base_start, $base_end);
-
-            $start = Carbon::parse($vi["start"]);
-            $end = Carbon::parse($vi["end"]);
-            $period2 = CarbonPeriod::create($start, $end);
-
-            return $period1->overlaps($period2);
-        }));
-
-        $period = false;
-        $period_count = 0;
-        if (count($rent_amount_special_setting) > 0) {
-            $setting = $rent_amount_special_setting[0];
-            $start = Carbon::parse($setting["start"]);
-            $end = Carbon::parse($setting["end"]);
-            $period = CarbonPeriod::create($start, $end);
-            $period_count = $period->count();
+        if (!empty($spid)) {
+            $rent_amount_setting = array_values(array_filter($rv_rent_special_setting, function ($vi) use ($spid) {
+                return $vi["id"] == $spid;
+            }));
+            $sp_start = Carbon::parse($this->time_start_default);
+            $sp_end = Carbon::parse($this->time_end_default);
+            $period1 = $sp_start->diffInDays($sp_end);
+            $rent_amount_setting[0]['day'] = $period1 - 1;
+            if ($sp_start->dayOfWeek == 0 || $sp_end->dayOfWeek == 7) {
+                $rent_amount_setting[0]['week'] = 0;
+            } else {
+                $rent_amount_setting[0]['week'] = $sp_start->dayOfWeek;
+            }
+            $rent_amount_setting[0]['plan'] = '';
+            $rent_amount_setting[0]['plan_title'] = '';
         }
+        // $rent_amount_special_setting = array_values(array_filter($rv_rent_special_setting, function ($vi) {
+        //     $base_start = Carbon::parse($this->time_start_default);
+        //     $base_end = Carbon::parse("2023-10-08");
+        //     $period1 = CarbonPeriod::create($base_start, $base_end);
+
+        //     $start = Carbon::parse($vi["start"]);
+        //     $end = Carbon::parse($vi["end"]);
+        //     $period2 = CarbonPeriod::create($start, $end);
+
+        //     $overlapDays = 0;
+        //     // overlaps 不包含
+        //     // overlapsWith 包含
+        //     if ($period1->overlaps($period2)) {
+        //         $overlapStart = $base_start->max($start);
+        //         $overlapEnd = $base_end->min($end);
+
+        //         if ($overlapStart <= $overlapEnd) {
+        //             $overlapPeriod = CarbonPeriod::create($overlapStart, $overlapEnd);
+        //             $overlapDays = $overlapPeriod->count() - 1;
+        //         }
+        //     }
+
+        //     return $period1->overlaps($period2);
+        // }));
+
+
+
+        // dd($rent_amount_special_setting);
+        // $period = false;
+        // $period_count = 0;
+        // if (count($rent_amount_special_setting) > 0) {
+        //     $setting = $rent_amount_special_setting[0];
+        //     $start = Carbon::parse($setting["start"]);
+        //     $end = Carbon::parse($setting["end"]);
+        //     $period = CarbonPeriod::create($start, $end);
+        //     $period_count = $period->count();
+        // }
 
         if (count($rent_amount_setting) == 0) {
             Cookie::queue(\Cookie::forget('date_get'));
@@ -214,7 +261,7 @@ class RvRentController extends Controller
             Cookie::queue('bed_count', $this->bed_count, 30);
             return \Response::json(['status' => 'success']);
         } else {
-            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'rent_amount_special_setting' => $rent_amount_special_setting, 'model' => $models, 'series' => $series, 'period' => $period, 'period_count' => $period_count]);
+            return view('rv_rent_s2', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'accessory' => $accessory, 'rent_amount_setting' => $rent_amount_setting[0], 'model' => $models, 'series' => $series]);
         }
     }
 
@@ -392,6 +439,7 @@ class RvRentController extends Controller
     {
         $input = $request->all();
         $models = RvModel::all();
+        $sp_series = RvSeries::get(['id', 'rv_series_name']);
         $this->time_start_default = $input['date_get'];
         $this->time_end_default = $input['date_back'];
         $this->bed_count = $input['bed_count'];
@@ -426,7 +474,34 @@ class RvRentController extends Controller
         if ($request->ajax()) {
             return \Response::json(\View::make('car_rent_items', array('rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo))->render());
         } else {
-            return View::make('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count]);
+            return View::make('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series]);
+        }
+    }
+
+    public function getSpecialDaysPlan(Request $request)
+    {
+        $input = $request->all();
+        $month = $input['month'];
+        $series = $input['series'];
+
+        $models = RvModel::where('rv_series_id', $series)->get();
+        $sp_models = [];
+        $sp_filter = [];
+        foreach($models as $index => $model) {
+            if ($model->rv_series_id != $series) continue;
+            $sp_setting = json_decode($model->rv_rent_special_setting, true);
+            if (!is_null($sp_setting) || is_array($sp_setting)) {
+                $sp_filter[$model->id] = array_values(array_filter($sp_setting, function($v) use($month) {
+                    $sp_start = Carbon::parse($v['start']);
+                    $sp_start_m = $sp_start->month;
+                    return $sp_start_m == $month;
+                }));
+                $sp_models[$model->id] = $model;
+            }
+        }
+        // dd($sp_models);
+        if ($request->ajax()) {
+            return \Response::json(\View::make('car_rent_special_item', array('sp_models' => $sp_models,'sp_filter' => $sp_filter))->render());
         }
     }
 }
