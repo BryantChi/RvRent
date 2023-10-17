@@ -13,7 +13,7 @@
 
                         <ul class="list-unstyled d-flex justify-content-between align-items-center border-top mt-3 pt-3 mb-0">
                             <li class="text-muted"><a href="javascript:void(0)" class="btn btn-primary3" onclick="modelsSelect('{{ route('car_rent_s2', ['rvm_id' => $key, 'spid' => $item['id']]) }}', 'sp')">選擇 <i data-feather="arrow-right" class="fea icon-sm"></i></a></li>
-                            <li class="text-muted ml-auto"><i data-feather="dollar-sign" class="fea icon-sm text-primary"></i> {{ $item['rental'] }} / 夜</li>
+                            <li class="text-muted ml-auto"><i data-feather="dollar-sign" class="fea icon-sm text-primary"></i> {{ (Int) $item['rental'] }} / 夜</li>
                         </ul>
                     </div>
                 </div>

@@ -201,7 +201,7 @@ class RvRentController extends Controller
             $sp_start = Carbon::parse($this->time_start_default);
             $sp_end = Carbon::parse($this->time_end_default);
             $period1 = $sp_start->diffInDays($sp_end);
-            $rent_amount_setting[0]['day'] = $period1 - 1;
+            $rent_amount_setting[0]['day'] = $period1;
             if ($sp_start->dayOfWeek == 0 || $sp_end->dayOfWeek == 7) {
                 $rent_amount_setting[0]['week'] = 0;
             } else {
