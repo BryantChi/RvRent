@@ -364,14 +364,23 @@
                     // $(".sp-item-container").empty();
                     // $(".sp-item-container").append(res);
                     if (res.indexOf('sp-item-box') == -1) {
-                        // $('.sp-item-container').removeClass('owl-carousel owl-theme');
-                        $(".sp-item-container").append(
-                            '<div class="col-12 w-100 text-center text-secondary"><h4>查無資料</h4></div>');
+                        // let owl_length = $("#special-plan owl-item").length;
+                        // for(var i = 0; i < itemCount; i++) {
+                        //     $(".owl-carousel").trigger('remove.owl.carousel', [i]).trigger('refresh.owl.carousel');
+                        // }
+                        let no_sp_data = '<div class="col-12 w-100 text-start text-secondary no-spdata"><h4>查無資料</h4></div>'
+                        $("#special-plan").owlCarousel({
+                            loop: false,
+                            items: 1
+                        }).trigger('replace.owl.carousel', [no_sp_data]).trigger(
+                                'refresh.owl.carousel');
+                        // $(".sp-item-container").append(
+                        //     '<div class="col-12 w-100 text-center text-secondary no-spdata"><h4>查無資料</h4></div>');
                     } else {
-                        let loop = true;
-                        if ($('.sp-item-box').length < 3 && $(window).width() > 768) {
-                            loop = false;
-                        }
+                        // let loop = true;
+                        // if ($('.sp-item-box').length < 3 && $(window).width() > 768) {
+                        //     loop = false;
+                        // }
                         // $(".sp-item-container").addClass('owl-carousel owl-theme');
                         setTimeout(function() {
                             $("#special-plan").trigger('replace.owl.carousel', [res]).trigger(
