@@ -48,7 +48,7 @@
     <!-- Loader End -->
 
     <!-- Back to home Start -->
-    <div class="back-to-home rounded d-none d-sm-block">
+    <div class="back-to-home rounded d-none2 d-sm-block2">
         <a href="{{ route('index') }}" class="text-white rounded d-inline-block text-center"><i data-feather="home"
                 class="fea icon-sm"></i></a>
     </div>

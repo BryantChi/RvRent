@@ -368,7 +368,8 @@
                         // for(var i = 0; i < itemCount; i++) {
                         //     $(".owl-carousel").trigger('remove.owl.carousel', [i]).trigger('refresh.owl.carousel');
                         // }
-                        let no_sp_data = '<div class="col-12 w-100 text-start text-secondary no-spdata"><h4>查無資料</h4></div>'
+                        $('.owl-stage-outer').addClass('d-flex justify-content-center');
+                        let no_sp_data = '<div class="col-12 w-100 text-center text-secondary no-spdata"><h4>查無資料</h4></div>'
                         $("#special-plan").owlCarousel({
                             loop: false,
                             items: 1
@@ -382,11 +383,12 @@
                         //     loop = false;
                         // }
                         // $(".sp-item-container").addClass('owl-carousel owl-theme');
+                        $('.owl-stage-outer').removeClass('d-flex justify-content-center');
                         setTimeout(function() {
                             $("#special-plan").trigger('replace.owl.carousel', [res]).trigger(
                                 'refresh.owl.carousel');
                             // $("#special-plan").trigger('refresh.owl.carousel');
-                        }, 3000);
+                        }, 1500);
                         $("#special-plan").trigger('refresh.owl.carousel');
                     }
                 },
