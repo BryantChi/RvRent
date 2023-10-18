@@ -167,9 +167,9 @@ class RvRentController extends Controller
             $spTemp = array_values(array_filter($rv_rent_special_setting, function ($vi) use ($spid) {
                 return $vi["id"] == $spid;
             }));
-            Cookie::queue('date_get', $spTemp[0]['start'], 30);
-            Cookie::queue('date_back', $spTemp[0]['end'], 30);
-            Cookie::queue('bed_count', $models->bed_count, 30);
+            // Cookie::queue('date_get', $spTemp[0]['start'], 30);
+            // Cookie::queue('date_back', $spTemp[0]['end'], 30);
+            // Cookie::queue('bed_count', $models->bed_count, 30);
             $this->time_start_default = $spTemp[0]['start'];
             $this->time_end_default = $spTemp[0]['end'];
             $this->bed_count = $models->bed_count;
@@ -491,12 +491,15 @@ class RvRentController extends Controller
             if ($model->rv_series_id != $series) continue;
             $sp_setting = json_decode($model->rv_rent_special_setting, true);
             if (!is_null($sp_setting) || is_array($sp_setting)) {
-                $sp_filter[$model->id] = array_values(array_filter($sp_setting, function($v) use($month) {
+                $model_id = $model->id;
+                $sp_filter[$model_id] = array_values(array_filter($sp_setting, function($v) use($month, $model_id) {
                     $sp_start = Carbon::parse($v['start']);
                     $sp_start_m = $sp_start->month;
-                    return $sp_start_m == $month;
+
+                    $checkStock = Order::isBetweenDays($v['start'], $v['end'], $model_id);
+                    return $sp_start_m == $month && $checkStock;
                 }));
-                $sp_models[$model->id] = $model;
+                $sp_models[$model_id] = $model;
             }
         }
         // dd($sp_models);
