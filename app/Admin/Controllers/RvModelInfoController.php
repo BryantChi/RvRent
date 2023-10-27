@@ -193,6 +193,7 @@ class RvModelInfoController extends AdminController
                                 return json_encode($v);
                             });
                             $form->currency('milage', __('里程數/夜'))->symbol('km');
+                            $form->switch('reserved', __('預約額滿'));
                             $form->text('note', __('備註'));
                             // $form->number('favorable_day', __('優惠適用前後天數(夜)'))->attribute('min', 0);
                             // $form->currency('favorable_amount', __('優惠適用折扣'))->symbol('$')->default(0)->value(0.00);
