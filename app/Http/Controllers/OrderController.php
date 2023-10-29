@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\Controllers\RentOrderInfoController;
 use App\Admin\Repositories\PageSettingInfo;
 use Illuminate\Http\Request;
 use App\Models\RentOrderInfo as Order;
@@ -117,6 +118,8 @@ class OrderController extends Controller
             $order->order_remit = 'images/order_remit/' . $order->order_num . '/photos/' . $filename_remit;
             $order->order_status = Order::getOrderStatus('paid_remit');
             $order->save();
+
+            RentOrderInfoController::sendOrderUploadInfoNoticeEmail($id);
 
             return \Response::json(['status' => 'success']);
         } else {

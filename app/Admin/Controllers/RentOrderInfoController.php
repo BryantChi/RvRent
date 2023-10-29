@@ -448,6 +448,8 @@ class RentOrderInfoController extends AdminController
     {
 
         $order = Order::find($id);
+        $user_name = User::where('customer_id', $order->order_user)->value('name');
+        $rv_name = RvModelInfo::where('id', $order->order_rv_model_id)->value('rv_name');
         $order_rv_amount_info = json_decode($order->order_rv_amount_info);
 
         $get = Carbon::parse($order->order_get_date . ' ' . $order_rv_amount_info->other_value_get_time);
@@ -466,9 +468,7 @@ class RentOrderInfoController extends AdminController
 
         $title = '訂單驗證通過，已成立';
 
-        // $details = '恭喜！您的訂單成立且已通過驗證，祝您有個美好的旅程，有任何問題請洽客服人員。';
-        // $details = '親愛的客戶您好，恭喜您訂單完成資料也已認證確認 👍 請於幾月幾號幾點前來取車並於x月x號幾點前完成還車喔 現場取車時再用信用卡授權並支付尾款xxxx元 謝謝您。';
-        $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>恭喜您訂單完成資料也已認證確認 👍 <br>請於' . $get_year . '年' . $get_month . '月' . $get_day . '號' . $get_hour . '點前來取車<br>並於' . $back_year . '年' . $back_month . '月' . $back_day . '號' . $back_hour . '點前完成還車喔 <br><br>現場取車時再用信用卡授權並支付尾款 $' . (Int) ($order->order_total_rental/2) . '元 謝謝您。';
+        $details = "Dear {$user_name}會員<br><br>親愛的{$user_name}會員客戶您好，訂單編號：{$order->order_num}<br>您預訂的露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle} <br>預定取車 {$order->order_get_date} 還車日 {$order->order_back_date}<br>恭喜您訂單完成資料也已認證確認 👍<br>請於{$get_year}年{$get_month}月{$get_day}號{$get_hour}點前來取車<br>並於{$back_year}年{$back_month}月{$back_day}號{$back_hour}點前完成還車喔<br><br>現場取車時再用信用卡授權並支付尾款 $".(Int) ($order->order_total_rental/2)."元 謝謝您。";
 
         $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
         $success_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
@@ -479,10 +479,12 @@ class RentOrderInfoController extends AdminController
     public static function sendOrderPendingPaymentEmail($mail, $id)
     {
         $order = Order::find($id);
+        $user_name = User::where('customer_id', $order->order_user)->value('name');
+        $rv_name = RvModelInfo::where('id', $order->order_rv_model_id)->value('rv_name');
 
         $title = '訂單已成功送出';
 
-        $details = '貼心小提醒!<br>親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定就差最後一個付款動作喔，有任何問題請洽客服人員。';
+        $details = "貼心小提醒!<br>親愛的{$user_name}會員客戶您好，訂單編號：{$order->order_num}<br>您的露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle}  <br>預定取車日 {$order->order_get_date} 還車日 {$order->order_back_date} <br>就差最後一個付款動作囉，請於48小時之內完成匯款動作並將資料上傳喔，以免訂單被系統取消 謝謝🙏 <br>如有任何問題請洽客服人員。";
 
         $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
         $pending_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
@@ -528,6 +530,23 @@ class RentOrderInfoController extends AdminController
 
         $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
         $cancel_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
+
+        return $cancel_email;
+    }
+
+    public static function sendOrderUploadInfoNoticeEmail($id)
+    {
+        $order = Order::find($id);
+        $user_name = User::where('customer_id', $order->order_user)->value('name');
+        $rv_name = RvModelInfo::where('id', $order->order_rv_model_id)->value('rv_name');
+
+
+        $title = "訂單{$order->order_num}，匯款資料已上傳";
+
+        $details = "{$user_name}會員客戶，訂單編號：{$order->order_num} <br>預訂露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle}  <br>預定取車日 {$order->order_get_date} 還車日 {$order->order_back_date} <br>上傳資料囉";
+
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $cancel_email = Mail::to($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
     }
