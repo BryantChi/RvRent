@@ -314,8 +314,8 @@
 
         function comfirmOrder(src) {
             var userCheck = Boolean(parseInt('{{ (Boolean) $user->driving_licence_certified }}')) == true;
-            var idPattern = /^[A-Z][12]\d{8}$/;
-            var residentPattern = /^[A-Z][A-D]\d{8}$/;
+            var idPattern = /^[A-Z]{1,2}[0-9]{8,9}$/;
+            // var residentPattern = /^[A-Z][A-D]\d{8}$/;
             $('#IDNumber').removeClass('is-invalid');
             $('#dr_IDNumber').removeClass('is-invalid');
 
@@ -330,7 +330,7 @@
                 Swal.fire("注意!", "承租人資料相關欄位不可空白", "warning");
                 return
             } else {
-                if (!idPattern.test($('#IDNumber').val()) || !residentPattern.test($('#IDNumber').val())) {
+                if (!idPattern.test($('#IDNumber').val())) {
                     Swal.fire("注意!", "司機資料-身分證或居留證格式錯誤", "warning");
                     $('#IDNumber').addClass('is-invalid');
                     return
@@ -345,7 +345,7 @@
                     Swal.fire("注意!", "司機資料相關欄位不可空白", "warning");
                     return
                 } else {
-                    if (!idPattern.test($('#dr_IDNumber').val()) || !residentPattern.test($('#dr_IDNumber').val())) {
+                    if (!idPattern.test($('#dr_IDNumber').val())) {
                         Swal.fire("注意!", "司機資料-身分證或居留證格式錯誤", "warning");
                         $('#dr_IDNumber').addClass('is-invalid');
                         return
