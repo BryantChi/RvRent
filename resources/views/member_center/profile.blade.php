@@ -74,7 +74,7 @@
                                 @enderror
                             </div>
                             <div class="form-group position-relative">
-                                <label class="font-weight-bold"> 身分證字號 </label>
+                                <label class="font-weight-bold"> 身分證字號或居留證 </label>
                                 <input name="IDNumber" type="text"
                                     class="form-control bg-white @error('IDNumber') is-invalid @enderror"
                                     id="IDNumber" name="IDNumber" value="{{ $user->IDNumber }}">

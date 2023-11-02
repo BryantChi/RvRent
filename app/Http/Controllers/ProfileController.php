@@ -76,7 +76,7 @@ class ProfileController extends Controller
             'name' => 'required|max:80',
             'IDNumber' => [
                 'required',
-                'regex:/^[A-Za-z][12]\d{8}$/'
+                'regex:/^[A-Z]{1,2}[0-9]{8,9}$/'
             ],
             'nick_name' => 'max:80',
             'country' => 'required|max:80',
@@ -91,8 +91,8 @@ class ProfileController extends Controller
         ], [
             'name.required' => '請填寫名稱',
             'name.max' => '最大長度80字',
-            'IDNumber.required' => '請填寫身分證字號',
-            'IDNumber.regex' => '身分證格式錯誤',
+            'IDNumber.required' => '請填寫身分證字號或居留證',
+            'IDNumber.regex' => '身分證或居留證格式錯誤',
             'nick_name.max' => '最大長度80字',
             'country.required' => '請填寫國家',
             'country.max' => '最大長度80字',

@@ -165,7 +165,7 @@
                                 <input type="tel" class="form-control" id="dr_phone" name="dr_phone" required>
                             </div>
                             <div class="form-group">
-                                <label for="dr_IDNumber">身分證字號</label>
+                                <label for="dr_IDNumber">身分證字號或居留證</label>
                                 <input type="email" class="form-control" id="dr_IDNumber" name="dr_IDNumber" required>
                             </div>
 
@@ -314,6 +314,10 @@
 
         function comfirmOrder(src) {
             var userCheck = Boolean(parseInt('{{ (Boolean) $user->driving_licence_certified }}')) == true;
+            var idPattern = /^[A-Z][12]\d{8}$/;
+            var residentPattern = /^[A-Z][A-D]\d{8}$/;
+            $('#IDNumber').removeClass('is-invalid');
+            $('#dr_IDNumber').removeClass('is-invalid');
 
             if (!userCheck) {
                 if ($('#driving-licence')[0].files[0] == null) {
@@ -325,6 +329,12 @@
             if ($('#phone').val() == null || $('#phone').val() == '' || $('#IDNumber').val() == null || $('#IDNumber').val() == '') {
                 Swal.fire("注意!", "承租人資料相關欄位不可空白", "warning");
                 return
+            } else {
+                if (!idPattern.test($('#IDNumber').val()) || !residentPattern.test($('#IDNumber').val())) {
+                    Swal.fire("注意!", "司機資料-身分證或居留證格式錯誤", "warning");
+                    $('#IDNumber').addClass('is-invalid');
+                    return
+                }
             }
 
             if (!$('#same_user').is(':checked')) {
@@ -334,6 +344,12 @@
                     $('#dr_IDNumber').val() == '' ) {
                     Swal.fire("注意!", "司機資料相關欄位不可空白", "warning");
                     return
+                } else {
+                    if (!idPattern.test($('#dr_IDNumber').val()) || !residentPattern.test($('#dr_IDNumber').val())) {
+                        Swal.fire("注意!", "司機資料-身分證或居留證格式錯誤", "warning");
+                        $('#dr_IDNumber').addClass('is-invalid');
+                        return
+                    }
                 }
             }
 
