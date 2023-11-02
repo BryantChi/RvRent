@@ -315,7 +315,7 @@
         function comfirmOrder(src) {
             var userCheck = Boolean(parseInt('{{ (Boolean) $user->driving_licence_certified }}')) == true;
             var idPattern = /^[A-Z]{1,2}[0-9]{8,9}$/;
-            // var residentPattern = /^[A-Z][A-D]\d{8}$/;
+            // var residentPattern = /^[A-Z]\d{9}$|^[A-Z]{2}\d{8}$/;
             $('#IDNumber').removeClass('is-invalid');
             $('#dr_IDNumber').removeClass('is-invalid');
 
