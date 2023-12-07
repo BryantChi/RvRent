@@ -145,7 +145,7 @@
     {{-- <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script> --}}
 
 
-    <script src="{{ asset('assets/js/flatpickr.init.js') }}"></script>
+    <script src="{{ asset('assets/js/flatpickr.init.js') }}?v=20231207"></script>
     <!-- SLIDER -->
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/owl.init.js') }}"></script>
