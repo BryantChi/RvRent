@@ -63,9 +63,28 @@
             </div>
         </div>
     </section>
+
 @endsection
 @push('scripts')
     <script>
         localStorage.removeItem('savedInput');
+
+        <?php
+            $arr_lock = '';
+            foreach (json_decode($lock->date) as $key => $val) {
+                if ($key == 0) {
+                    $arr_lock .= "'$val->lock'";
+                } else {
+                    $arr_lock .= ",'$val->lock'";
+                }
+
+
+            }
+
+            echo "let arr_lock = [". $arr_lock ."];";
+        ?>
+        // console.log(arr_lock);
+        disableDate(arr_lock);
     </script>
 @endpush
+

@@ -11,6 +11,7 @@ use App\Models\RvSeriesInfo as RvSeries;
 use App\Models\RvAttachmentInfo as RvAttachment;
 use App\Models\RvVehicleInfo as RvVehicle;
 use App\Models\AccessoryInfo as Accessory;
+use App\Models\RvDateLockInfo as RvDateLock;
 use App\Admin\Repositories\PageSettingInfo;
 use App\Admin\Repositories\RvAttachmentInfo as RvAttachmentRepository;
 use Doctrine\DBAL\Query\QueryException;
@@ -43,6 +44,7 @@ class RvRentController extends Controller
         //
         $rvModelInfo = RvModel::all();
         $sp_series = RvSeries::get(['id', 'rv_series_name']);
+        $lock_date = RvDateLock::first();
         // $model_filter = array_filter($rvModelInfo->toArray(), function ($v) {
         //     $a = json_decode($v["rv_rent_setting"]);
         //     return count(array_filter($a, function ($vi) {
@@ -60,7 +62,7 @@ class RvRentController extends Controller
             $attachmentInfo->attachments[$rvModel->id] = RvAttachmentRepository::getAttachment($rvModel->attachment_id);
             $attachmentInfo->attachments[$rvModel->id]->ordercount = count(Order::where('order_rv_model_id', $rvModel->id)->get());
         }
-        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series]);
+        return view('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($rvModelInfo)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series, 'lock' => $lock_date]);
     }
 
     /**
@@ -440,6 +442,7 @@ class RvRentController extends Controller
         $input = $request->all();
         $models = RvModel::all();
         $sp_series = RvSeries::get(['id', 'rv_series_name']);
+        $lock_date = RvDateLock::first();
         $this->time_start_default = $input['date_get'];
         $this->time_end_default = $input['date_back'];
         $this->bed_count = $input['bed_count'];
@@ -474,7 +477,7 @@ class RvRentController extends Controller
         if ($request->ajax()) {
             return \Response::json(\View::make('car_rent_items', array('rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo))->render());
         } else {
-            return View::make('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series]);
+            return View::make('car_rent', ['title' => $this->title, 'pageInfo' => PageSettingInfo::getBanners('/car_rent'), 'rvModelInfo' => json_decode(json_encode($models)), 'attachmentInfo' => $attachmentInfo, 'date_get' => $this->time_start_default, 'date_back' => $this->time_end_default, 'bed_count' => $this->bed_count, 'sp_series' => $sp_series, 'lock' => $lock_date]);
         }
     }
 

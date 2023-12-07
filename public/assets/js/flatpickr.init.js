@@ -17,88 +17,88 @@ $("#checkout-date").flatpickr({
 
 // 使用jQuery ajax來取得JSON資料
 var continuousHolidays = [];
-$.ajax({
-    url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + new Date().getFullYear() + ".json",
-    method: 'GET',
-    dataType: 'json',
-    success: function(data) {
-         // 用於存儲連續假期的結果
-        let currentHolidays = []; // 暫時存儲當前連續的假期
+// $.ajax({
+//     url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + new Date().getFullYear() + ".json",
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//          // 用於存儲連續假期的結果
+//         let currentHolidays = []; // 暫時存儲當前連續的假期
 
-        // 迭代資料
-        for (let i = 0; i < data.length; i++) {
-            // 如果當天是假期
-            if (data[i].isHoliday) {
-                currentHolidays.push(formatDateToYMD(data[i].date)); // 加入暫時陣列
+//         // 迭代資料
+//         for (let i = 0; i < data.length; i++) {
+//             // 如果當天是假期
+//             if (data[i].isHoliday) {
+//                 currentHolidays.push(formatDateToYMD(data[i].date)); // 加入暫時陣列
 
-                // 如果是資料的最後一天且當前連續假期的長度大於等於3，則加入結果陣列
-                if (i == data.length - 1 && currentHolidays.length >= 3) {
-                    continuousHolidays.push(currentHolidays);
-                }
-            } else {
-                // 如果當天不是假期，但之前有連續的假期
-                if (currentHolidays.length >= 3) {
-                    $.each(currentHolidays, function(index, value) {
-                        continuousHolidays.push(value);
-                    })
-                }
-                // 清空暫時陣列
-                currentHolidays = [];
-            }
-        }
+//                 // 如果是資料的最後一天且當前連續假期的長度大於等於3，則加入結果陣列
+//                 if (i == data.length - 1 && currentHolidays.length >= 3) {
+//                     continuousHolidays.push(currentHolidays);
+//                 }
+//             } else {
+//                 // 如果當天不是假期，但之前有連續的假期
+//                 if (currentHolidays.length >= 3) {
+//                     $.each(currentHolidays, function(index, value) {
+//                         continuousHolidays.push(value);
+//                     })
+//                 }
+//                 // 清空暫時陣列
+//                 currentHolidays = [];
+//             }
+//         }
 
-        // 顯示結果
-        // console.log(continuousHolidays);
-        disableDate(continuousHolidays);
-    },
-    error: function(err) {
-        console.error("Error fetching data:", err);
-    }
-});
+//         // 顯示結果
+//         // console.log(continuousHolidays);
+//         disableDate(continuousHolidays);
+//     },
+//     error: function(err) {
+//         console.error("Error fetching data:", err);
+//     }
+// });
 
-$.ajax({
-    url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + (new Date().getFullYear()+1) + ".json",
-    method: 'GET',
-    dataType: 'json',
-    success: function(data) {
-         // 用於存儲連續假期的結果
-        let currentHolidays = []; // 暫時存儲當前連續的假期
+// $.ajax({
+//     url: "https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/" + (new Date().getFullYear()+1) + ".json",
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//          // 用於存儲連續假期的結果
+//         let currentHolidays = []; // 暫時存儲當前連續的假期
 
-        // 迭代資料
-        for (let i = 0; i < data.length; i++) {
-            // 如果當天是假期
-            if (data[i].isHoliday) {
-                currentHolidays.push(formatDateToYMD(data[i].date)); // 加入暫時陣列
+//         // 迭代資料
+//         for (let i = 0; i < data.length; i++) {
+//             // 如果當天是假期
+//             if (data[i].isHoliday) {
+//                 currentHolidays.push(formatDateToYMD(data[i].date)); // 加入暫時陣列
 
-                // 如果是資料的最後一天且當前連續假期的長度大於等於3，則加入結果陣列
-                if (i == data.length - 1 && currentHolidays.length >= 3) {
-                    continuousHolidays.push(currentHolidays);
-                }
-            } else {
-                // 如果當天不是假期，但之前有連續的假期
-                if (currentHolidays.length >= 3) {
-                    $.each(currentHolidays, function(index, value) {
-                        continuousHolidays.push(value);
-                    })
-                }
-                // 清空暫時陣列
-                currentHolidays = [];
-            }
-        }
+//                 // 如果是資料的最後一天且當前連續假期的長度大於等於3，則加入結果陣列
+//                 if (i == data.length - 1 && currentHolidays.length >= 3) {
+//                     continuousHolidays.push(currentHolidays);
+//                 }
+//             } else {
+//                 // 如果當天不是假期，但之前有連續的假期
+//                 if (currentHolidays.length >= 3) {
+//                     $.each(currentHolidays, function(index, value) {
+//                         continuousHolidays.push(value);
+//                     })
+//                 }
+//                 // 清空暫時陣列
+//                 currentHolidays = [];
+//             }
+//         }
 
-        // 顯示結果
-        // console.log(continuousHolidays);
-        disableDate(continuousHolidays);
-    },
-    error: function(err) {
-        console.error("Error fetching data:", err);
-    }
-});
+//         // 顯示結果
+//         // console.log(continuousHolidays);
+//         disableDate(continuousHolidays);
+//     },
+//     error: function(err) {
+//         console.error("Error fetching data:", err);
+//     }
+// });
 
 function disableDate(arr) {
-    continuousHolidays.push('2023-12-30');
-    continuousHolidays.push('2023-12-31');
-    continuousHolidays.push('2024-01-01');
+    // continuousHolidays.push('2023-12-30');
+    // continuousHolidays.push('2023-12-31');
+    // continuousHolidays.push('2024-01-01');
     // console.log(continuousHolidays);
     var today = new Date();
     $("#checkin-date").flatpickr({

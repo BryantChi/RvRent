@@ -28,5 +28,6 @@ Route::group([
     $router->resource('/rv_attachment', 'RvAttachmentInfoController');
     $router->resource('/rv_vehicle', 'RvVehicleInfoController');
     $router->resource('/rv_order', 'RentOrderInfoController');
+    $router->resource('/rv_date_lock', 'RvDateLockInfoController');
 
 });
