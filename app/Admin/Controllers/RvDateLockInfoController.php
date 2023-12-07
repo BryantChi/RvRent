@@ -23,8 +23,21 @@ class RvDateLockInfoController extends AdminController
             $grid->showColumnSelector();
             // 显示快捷编辑按钮
             $grid->showQuickEditButton();
+            $grid->disableViewButton();
+            $grid->disableDeleteButton();
             $grid->column('id')->sortable();
-            $grid->column('date');
+            $grid->column('date')->display(function($date) {
+                $arr_lock = '';
+                foreach(json_decode($date) as $key => $val) {
+                    if ($key == 0) {
+                        $arr_lock .= $val->lock;
+                    } else {
+                        $arr_lock .= ", $val->lock";
+                    }
+                }
+
+                return $arr_lock;
+            });
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
 
@@ -38,6 +51,7 @@ class RvDateLockInfoController extends AdminController
                 $grid->disableCreateButton();
             }
             $grid->disableFilter();
+            $grid->disableBatchDelete();
         });
     }
 
