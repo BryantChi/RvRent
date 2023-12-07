@@ -297,9 +297,12 @@ class RentOrderInfo extends Model
             $back = Carbon::parse($order_info->order_back_date);
 
             if ($today >= $get && $today >= $back) {
-                $or = static::find($order_info->id);
-                // $or->order_status = self::ORDER_STATUS['os6'];
-                $or->delete();
+                if ($order_info->status == self::ORDER_STATUS['os5'] || $order_info->status == self::ORDER_STATUS['os6'] ||
+                 $order_info->status == self::ORDER_STATUS['os7'] || $order_info->status == self::ORDER_STATUS['os8']) {
+                    $or = static::find($order_info->id);
+                    // $or->order_status = self::ORDER_STATUS['os6'];
+                    $or->delete();
+                }
             }
 
             $user_info = User::where('customer_id', $order_info->order_user)->first();
