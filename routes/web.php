@@ -77,6 +77,11 @@ Route::any('rent_witness', function () {
     return view('rent_witness', ['title' => '租車見證', 'pageInfo' => $pageInfo]);
 })->name('rent_witness');
 
+Route::any('/privacy_policy', function () {
+    $pageInfo = PageSettingInfo::getBanners('/privacy_policy');
+    return view('privacy_policy', ['title' => '隱私權政策', 'pageInfo' => $pageInfo]);
+})->name('privacy_policy');
+
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Auth::routes(['verify' => true]);

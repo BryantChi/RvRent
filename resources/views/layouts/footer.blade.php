@@ -21,6 +21,7 @@
                     <li class="list-inline-item"><a href="https://lin.ee/pSapwg7" class="rounded-circle"><i class="fa-brands fa-line"></i></a></li>
                     <li class="list-inline-item"><a href="https://www.youtube.com/@9o-traveller/playlists" class="rounded-circle"><i class="fa-brands fa-youtube"></i></a></li>
                 </ul>
+                <a href="{{ route('privacy_policy') }}" class="text-foot text-center">Privacy & Policy<br>隱私權政策</a>
             </div>
             <div class="col-md-4 align-self-end">
                 <ul class="list-unstyled footer-list mt-4 text-md-right">
