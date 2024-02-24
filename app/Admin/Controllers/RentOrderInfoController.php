@@ -424,7 +424,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '您好，您的訂單驗證失敗，請於48小時內與客服人員聯絡';
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $verify_fail = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $verify_fail;
@@ -438,7 +438,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的訂單已由系統取消，有任何問題請洽客服人員。';
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $cancel_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
@@ -470,7 +470,7 @@ class RentOrderInfoController extends AdminController
 
         $details = "Dear {$user_name}會員<br><br>親愛的{$user_name}會員客戶您好，訂單編號：{$order->order_num}<br>您預訂的露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle} <br>預定取車 {$order->order_get_date} 還車日 {$order->order_back_date}<br>恭喜您訂單完成資料也已認證確認 👍<br>請於{$get_year}年{$get_month}月{$get_day}號{$get_hour}點前來取車<br>並於{$back_year}年{$back_month}月{$back_day}號{$back_hour}點前完成還車喔<br><br>現場取車時再用信用卡授權並支付尾款 $".(Int) ($order->order_total_rental/2)."元 謝謝您。";
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $success_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $success_email;
@@ -486,7 +486,7 @@ class RentOrderInfoController extends AdminController
 
         $details = "貼心小提醒!<br>親愛的{$user_name}會員客戶您好，訂單編號：{$order->order_num}<br>您的露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle}  <br>預定取車日 {$order->order_get_date} 還車日 {$order->order_back_date} <br>就差最後一個付款動作囉，請於48小時之內完成匯款動作並將資料上傳喔，以免訂單被系統取消 謝謝🙏 <br>如有任何問題請洽客服人員。";
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $pending_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $pending_email;
@@ -500,7 +500,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定信用卡付款失敗，有任何問題請洽客服人員。';
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $fail_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $fail_email;
@@ -514,7 +514,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>您的露營車預定逾期付款，訂單已由系統取消，如仍需預訂請重新預定，有任何問題請洽客服人員。';
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $expired_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $expired_email;
@@ -528,7 +528,7 @@ class RentOrderInfoController extends AdminController
 
         $details = '親愛的客戶您好，訂單編號：' . $order->order_num . '<br>本次的旅程已結束，您的露營車已歸還成功，有任何問題請洽客服人員。<br>祝您順心～';
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $cancel_email = Mail::to($mail)->bcc($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
@@ -545,7 +545,7 @@ class RentOrderInfoController extends AdminController
 
         $details = "{$user_name}會員客戶，訂單編號：{$order->order_num} <br>預訂露營車 車種 {$rv_name} 車號 {$order->order_rv_vehicle}  <br>預定取車日 {$order->order_get_date} 還車日 {$order->order_back_date} <br>上傳資料囉";
 
-        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw'];
+        $bcc_mail = ['oma@o-ma.com.tw', 'ela@o-ma.com.tw', 'simon@o-ma.com.tw', 'gary.tsai@o-ma.com.tw', 'brown@o-ma.com.tw', '9o-traveller@o-ma.com.tw'];
         $cancel_email = Mail::to($bcc_mail)->send(new OrderServicesMail($title, $details));
 
         return $cancel_email;
